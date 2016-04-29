@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -16,13 +17,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 
 import javafx.application.Platform;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import mcstuff.api.ClassEnumerator;
 import mcstuff.api.I_ModuleHost;
 import mcstuff.api.module.I_Module;
 import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
+import mcstuff.javafx.spring.SpringFXMLLoader;
 
 @SpringBootApplication
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {
@@ -31,6 +33,9 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 
 	private Stage currentStage;
 	private Set<I_Module> modules = new HashSet<>();
+
+	@Autowired
+	private SpringFXMLLoader fxmlLoader;
 
 	@Bean
 	@Primary
@@ -47,14 +52,20 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				loadModules();
+				try {
+					loadModules();
 
-				stage.setTitle(windowTitle);
-				stage.setScene(new Scene(new BorderPane()));
-				stage.setResizable(true);
-				stage.centerOnScreen();
+					stage.setTitle(windowTitle);
 
-				setCurrentStage(stage, true, false);
+					Parent root = (Parent) fxmlLoader.load("/mcstuff/startup/StartupScene.fxml");
+					stage.setScene(new Scene(root));
+					stage.setResizable(true);
+					stage.centerOnScreen();
+					setCurrentStage(stage, true, false);
+				} catch (Throwable t) {
+					logger.error("Error starting up", t);
+					Platform.exit();
+				}
 			}
 		});
 	}
@@ -62,14 +73,15 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	public void loadModules() {
 		try {
 			List<Class<?>> classes = ClassEnumerator.getClassesForPackage(MODULE_PACKAGE);
-			for(Class<?> clazz : classes) {
-				if(I_Module.class.isAssignableFrom(clazz)) {
+			for (Class<?> clazz : classes) {
+				if (I_Module.class.isAssignableFrom(clazz)) {
 					I_Module module = (I_Module) applicationContext.getBean(clazz);
+					logger.info("Initializing Module: " + module.getTitle());
 					module.initialize(this);
 					modules.add(module);
 				}
 			}
-		} catch(Throwable t) {
+		} catch (Throwable t) {
 			logger.error("Error loading modules, shutting down", t);
 			Platform.exit();
 		}

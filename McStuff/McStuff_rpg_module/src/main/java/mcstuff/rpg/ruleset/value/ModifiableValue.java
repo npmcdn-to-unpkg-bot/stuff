@@ -1,4 +1,4 @@
-package rpg.ruleset.value;
+package mcstuff.rpg.ruleset.value;
 
 import java.util.Date;
 import java.util.Iterator;

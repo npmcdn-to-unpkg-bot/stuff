@@ -19,6 +19,7 @@
  allprojects {
  	apply plugin: 'eclipse'
  	apply plugin: 'java'
+ 	
  }
  
  subprojects {
@@ -26,6 +27,15 @@
 	
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
+
+ 	eclipse {
+ 		project {
+ 			natures 'org.eclipse.xtext.ui.shared.xtextNature'
+ 			classpath {
+ 				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+ 			}
+ 		}
+ 	}
 	
 	// In this section you declare where to find the dependencies of your project
 	repositories {

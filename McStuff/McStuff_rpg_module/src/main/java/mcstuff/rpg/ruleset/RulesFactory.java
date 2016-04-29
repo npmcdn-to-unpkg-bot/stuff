@@ -1,4 +1,4 @@
-package rpg.ruleset;
+package mcstuff.rpg.ruleset;
 
 public class RulesFactory {
     private RulesFactory() { }

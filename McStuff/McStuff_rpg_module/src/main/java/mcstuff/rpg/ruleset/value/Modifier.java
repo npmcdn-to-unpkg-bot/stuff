@@ -1,11 +1,11 @@
-package rpg.ruleset.value;
+package mcstuff.rpg.ruleset.value;
 
 import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
-import rpg.ruleset.core.E_ModifierType;
+import mcstuff.rpg.ruleset.core.E_ModifierType;
 
 public class Modifier<T> extends Value<T> {
 	private ReadOnlyObjectWrapper<E_ModifierType> modifierType = new ReadOnlyObjectWrapper<>();
@@ -22,11 +22,11 @@ public class Modifier<T> extends Value<T> {
 		this.expiresOn.setValue(expiresOn);
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<rpg.ruleset.core.E_ModifierType> modifierTypeProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.E_ModifierType> modifierTypeProperty() {
 		return this.modifierType.getReadOnlyProperty();
 	}	
 
-	public final rpg.ruleset.core.E_ModifierType getModifierType() {
+	public final mcstuff.rpg.ruleset.core.E_ModifierType getModifierType() {
 		return this.modifierTypeProperty().get();
 	}
 

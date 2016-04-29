@@ -6,20 +6,19 @@ import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import mcstuff.api.I_ModuleHost;
 import mcstuff.api.module.I_Module;
+import mcstuff.api.module.ModuleBase;
 
 @Component
-public class RPGModule implements I_Module {
+public class RPGModule extends ModuleBase implements I_Module {
 
 	@Override
 	public MenuItem getMenuItem() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
-		return null;
+		return "McStuff RPG Module";
 	}
 
 	@Override
