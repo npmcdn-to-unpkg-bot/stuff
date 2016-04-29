@@ -25,9 +25,9 @@ import javafx.application.Application;
  */
 public abstract class AbstractJavaFxApplicationSupport extends Application {
 
-	private static String[] savedArgs;
+	protected static String[] savedArgs;
 
-	private ConfigurableApplicationContext applicationContext;
+	protected ConfigurableApplicationContext applicationContext;
 
 	@Override
 	public void init() throws Exception {
