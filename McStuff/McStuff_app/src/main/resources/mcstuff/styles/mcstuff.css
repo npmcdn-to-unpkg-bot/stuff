@@ -8,6 +8,12 @@
 	-fx-border-color: teal; 
 }
 
+#paneModules {
+	-fx-border-width: 0.5px;
+	-fx-border-color: teal; 
+	-fx-background-color: linear-gradient( from -30.0% 0.0% to 100.0% 100.0%, rgb(51,102,102) 0.0, rgb(0,0,0) 100.0)	
+}
+
 #txtLogo {
 	-fx-font: 100px Tahoma;
     -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, teal 50%);

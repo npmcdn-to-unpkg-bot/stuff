@@ -2,9 +2,9 @@ package mcstuff.modules;
 
 import org.springframework.stereotype.Component;
 
-import javafx.scene.control.MenuItem;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import mcstuff.api.I_ModuleHost;
+import javafx.util.Callback;
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.ModuleBase;
 
@@ -12,19 +12,18 @@ import mcstuff.api.module.ModuleBase;
 public class RPGModule extends ModuleBase implements I_Module {
 
 	@Override
-	public MenuItem getMenuItem() {
-		return null;
+	public Callback<ActionEvent, Void> getSelectionCallback() {
+		return new Callback<ActionEvent, Void>() {
+			@Override
+			public Void call(ActionEvent event) {
+				return onSelection(event);
+			}
+		};
 	}
-
+	
 	@Override
 	public String getTitle() {
 		return "McStuff RPG Module";
-	}
-
-	@Override
-	public void initialize(I_ModuleHost host) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -37,6 +36,11 @@ public class RPGModule extends ModuleBase implements I_Module {
 	public void hide() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public Void onSelection(ActionEvent event) {
+		getHost().setCurrentModule(this);
+		return null;		
 	}
 
 }

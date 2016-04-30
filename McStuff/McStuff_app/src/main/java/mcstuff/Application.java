@@ -30,9 +30,12 @@ import mcstuff.javafx.spring.SpringFXMLLoader;
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	private static final String MODULE_PACKAGE = "mcstuff.modules";
-
+	private static Application instance;
+	
 	private Stage currentStage;
+	private Scene defaultView;
 	private Set<I_Module> modules = new HashSet<>();
+	private I_Module currentModule;
 
 	@Autowired
 	private SpringFXMLLoader fxmlLoader;
@@ -46,9 +49,14 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 
 	@Value("${app.ui.title:McStuff}") //
 	private String windowTitle;
+	
+	public static Application getInstance() {
+		return instance;
+	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		instance = this;
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -58,10 +66,11 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 					stage.setTitle(windowTitle);
 
 					Parent root = (Parent) fxmlLoader.load("/mcstuff/startup/StartupScene.fxml");
-					stage.setScene(new Scene(root));
-					stage.setResizable(true);
-					stage.centerOnScreen();
-					setCurrentStage(stage, true, false);
+					defaultView = new Scene(root);
+					
+					setCurrentStage(stage);
+					showDefaultView();
+					
 				} catch (Throwable t) {
 					logger.error("Error starting up", t);
 					Platform.exit();
@@ -86,6 +95,14 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 			Platform.exit();
 		}
 	}
+	
+	@Override
+	public void showDefaultView() {
+		currentStage.setScene(defaultView);
+		currentStage.setResizable(true);
+		currentStage.centerOnScreen();
+		currentStage.show();
+	}
 
 	public static void main(String[] args) {
 		launchApp(Application.class, args);
@@ -102,17 +119,32 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	}
 
 	@Override
-	public void setCurrentStage(Stage stage, boolean bShow, boolean bWait) {
+	public void setCurrentStage(Stage stage) {
 		if (currentStage != null) {
 			currentStage.hide();
 		}
-		this.currentStage = stage;
-		if (bShow) {
-			if (bWait) {
-				this.currentStage.showAndWait();
-			} else {
-				this.currentStage.show();
-			}
+		currentStage = stage;
+	}
+	
+	public Set<I_Module> getModules() {
+		return modules;
+	}
+	
+	@Override
+	public I_Module getCurrentModule() {
+		return currentModule;
+	}
+	
+	@Override
+	public void setCurrentModule(I_Module module) {
+		if(currentModule != null) {
+			currentModule.hide();
+		}
+		currentModule = module;
+		if(currentModule != null) {
+			currentModule.show(currentStage);
+		} else {
+			showDefaultView();
 		}
 	}
 

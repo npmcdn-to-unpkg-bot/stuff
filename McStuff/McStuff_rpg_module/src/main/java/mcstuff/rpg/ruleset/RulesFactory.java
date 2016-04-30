@@ -1,5 +1,7 @@
 package mcstuff.rpg.ruleset;
 
+import mcstuff.rpg.ruleset.value.Value;
+
 public class RulesFactory {
     private RulesFactory() { }
 
@@ -9,5 +11,9 @@ public class RulesFactory {
 
     public static RulesFactory getInstance() {
             return RulesFactoryHolder.INSTANCE;
+    }
+    
+    public Value<?> createNewValue(Object rawValue) {
+    	return new Value<>(rawValue);
     }
 }

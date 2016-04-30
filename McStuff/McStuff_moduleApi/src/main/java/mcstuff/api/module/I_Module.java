@@ -1,13 +1,14 @@
 package mcstuff.api.module;
 
-import javafx.scene.control.MenuItem;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import mcstuff.api.I_ModuleHost;
 
 public interface I_Module {
-	MenuItem getMenuItem();
-	String getTitle();
 	void initialize(I_ModuleHost host);
+	String getTitle();
+	Callback<ActionEvent, Void> getSelectionCallback();
 	void show(Stage stage);
 	void hide();
 }
