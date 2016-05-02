@@ -1,4 +1,4 @@
-package mcstuff.api;
+package mcstuff.util;
 
 import java.io.File;
 import java.io.IOException;

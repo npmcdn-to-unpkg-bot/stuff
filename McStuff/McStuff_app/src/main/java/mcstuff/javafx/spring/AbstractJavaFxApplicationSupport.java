@@ -15,22 +15,35 @@
  */
 package mcstuff.javafx.spring;
 
+import java.io.File;
+import java.io.RandomAccessFile;
+import java.nio.channels.FileLock;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 
 /**
  * @author Thomas Darimont
  */
 public abstract class AbstractJavaFxApplicationSupport extends Application {
 
+	private static final Logger logger = LoggerFactory.getLogger(AbstractJavaFxApplicationSupport.class);
 	protected static String[] savedArgs;
 
 	protected ConfigurableApplicationContext applicationContext;
 
 	@Override
 	public void init() throws Exception {
+		if(!lockInstance("McStuff")) {
+			logger.error("Another instance already running, shutting down");
+			Platform.exit();
+			return;
+		}
 		applicationContext = SpringApplication.run(getClass(), savedArgs);
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 	}
@@ -44,6 +57,31 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
 	protected static void launchApp(Class<? extends AbstractJavaFxApplicationSupport> appClass, String[] args) {
 		AbstractJavaFxApplicationSupport.savedArgs = args;
 		Application.launch(appClass, args);
+	}
+
+	private static boolean lockInstance(final String lockFile) {
+		try {
+			final File file = new File(lockFile);
+			final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
+			if (fileLock != null) {
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					public void run() {
+						try {
+							fileLock.release();
+							randomAccessFile.close();
+							file.delete();
+						} catch (Exception e) {
+							logger.error("Unable to remove lock file: " + lockFile, e);
+						}
+					}
+				});
+				return true;
+			}
+		} catch (Exception e) {
+			logger.error("Unable to create and/or lock file: " + lockFile, e);
+		}
+		return false;
 	}
 
 }

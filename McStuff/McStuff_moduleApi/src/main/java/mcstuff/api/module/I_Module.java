@@ -11,4 +11,7 @@ public interface I_Module {
 	Callback<ActionEvent, Void> getSelectionCallback();
 	void show(Stage stage);
 	void hide();
+	int hashCode();
+	boolean equals(Object obj);
+	String toString();
 }

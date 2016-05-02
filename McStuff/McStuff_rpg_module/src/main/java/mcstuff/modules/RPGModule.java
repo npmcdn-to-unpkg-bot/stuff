@@ -12,9 +12,11 @@ import mcstuff.api.module.ModuleBase;
 
 @Component
 public class RPGModule extends ModuleBase implements I_Module {
-	
+
 	@Autowired
 	private ApplicationConfig appConfig;
+	
+	private String title = "McStuff RPG Module";
 
 	@Override
 	public Callback<ActionEvent, Void> getSelectionCallback() {
@@ -28,7 +30,7 @@ public class RPGModule extends ModuleBase implements I_Module {
 	
 	@Override
 	public String getTitle() {
-		return "McStuff RPG Module";
+		return title;
 	}
 
 	@Override
@@ -48,4 +50,34 @@ public class RPGModule extends ModuleBase implements I_Module {
 		return null;		
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RPGModule other = (RPGModule) obj;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RPGModule [title=" + title + "]";
+	}
+	
 }

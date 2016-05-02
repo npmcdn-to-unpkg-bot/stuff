@@ -6,16 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import mcstuff.api.ClassEnumerator;
 import mcstuff.api.I_ModuleHost;
 import mcstuff.api.module.I_Module;
 import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
+import mcstuff.util.ClassEnumerator;
 
 @SpringBootApplication
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {
@@ -36,6 +35,7 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	public void start(Stage stage) throws Exception {
 		instance = this;
 		appConfig.setModuleHost(this);
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -89,8 +89,10 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	}
 
 	@Override
-	public ApplicationContext getContext() {
-		return applicationContext;
+	public void shutDown() {
+		Platform.exit();
 	}
+
+	
 	
 }

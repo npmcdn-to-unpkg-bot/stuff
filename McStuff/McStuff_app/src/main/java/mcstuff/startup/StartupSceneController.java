@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,8 @@ import mcstuff.api.module.I_Module;
 @Component
 public class StartupSceneController implements Initializable {
 	
+	private static final Logger logger = LoggerFactory.getLogger(StartupSceneController.class);
+	
 	@Autowired
 	private ApplicationConfig appConfig;
 	
@@ -31,11 +35,14 @@ public class StartupSceneController implements Initializable {
 		Set<I_Module> modules = appConfig.getModules();
 		for(I_Module module : modules) {
 			Button btnModule = new Button();
+			btnModule.getStyleClass().add("btn_record-sales");
 			btnModule.setText(module.getTitle());
 			btnModule.onActionProperty().set(new EventHandler<ActionEvent>() {				
 				@Override
 				public void handle(ActionEvent event) {
+					logger.info("Module {} activiated",new Object[] {module});
 					module.getSelectionCallback().call(event);
+					event.consume();
 				}
 			});
 			paneModules.getChildren().add(btnModule);
