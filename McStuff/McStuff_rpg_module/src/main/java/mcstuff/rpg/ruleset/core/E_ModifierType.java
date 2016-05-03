@@ -8,4 +8,10 @@ public enum E_ModifierType {
 		this.source = source;
 		this.target = target;
 	}
+	public E_ModifierSource getSource() {
+		return source;
+	}
+	public E_ModifierTarget getTarget() {
+		return target;
+	}
 }
