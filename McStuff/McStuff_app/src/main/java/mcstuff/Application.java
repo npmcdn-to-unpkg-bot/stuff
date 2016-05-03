@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import mcstuff.api.I_ModuleHost;
+import javafx.stage.WindowEvent;
 import mcstuff.api.module.I_Module;
+import mcstuff.api.module.I_ModuleHost;
 import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
 import mcstuff.util.ClassEnumerator;
 
@@ -29,25 +31,48 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		return instance;
 	}
 	
-	private Scene defaultView;
+	private Stage mainStage = null;
+	private Stage moduleStage = null;
+	private Scene defaultView = null;
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		instance = this;
+		mainStage = stage;
 		appConfig.setModuleHost(this);
+		Platform.setImplicitExit(false);
 		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				try {
 					loadModules();
+					
+					mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {						
+						@Override
+						public void handle(WindowEvent event) {
+							shutDown();
+							event.consume();
+						}
+					});
+					
+					moduleStage = new Stage();
+					moduleStage.setOnCloseRequest(new EventHandler<WindowEvent>() {			
+						@Override
+						public void handle(WindowEvent event) {
+							moduleStage.hide();
+							showDefaultView();
+							event.consume();				
+						}
+					});
 
-					stage.setTitle(appConfig.getAppTitle());
+
+					mainStage.setTitle(appConfig.getAppTitle());
 
 					Parent root = (Parent) appConfig.getFXMLLoader().load("/mcstuff/startup/StartupScene.fxml");
 					defaultView = new Scene(root);
 					
-					appConfig.setCurrentStage(stage);
+					appConfig.setCurrentStage(mainStage);
 					showDefaultView();
 					
 				} catch (Throwable t) {
@@ -75,13 +100,23 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		}
 	}
 	
+	public void activateModule(I_Module module) {
+		logger.info("Activating {}",new Object[] {module});
+		appConfig.setCurrentStage(moduleStage);
+		module.getSelectionCallback().call(null);
+		if(!moduleStage.isShowing()) {
+			moduleStage.centerOnScreen();
+			moduleStage.show();
+		}
+	}
+	
 	@Override
 	public void showDefaultView() {
-		Stage currentStage = appConfig.getCurrentStage();
-		currentStage.setScene(defaultView);
-		currentStage.setResizable(true);
-		currentStage.centerOnScreen();
-		currentStage.show();
+		appConfig.setCurrentStage(mainStage);
+		mainStage.setScene(defaultView);
+		mainStage.setResizable(true);
+		mainStage.centerOnScreen();
+		mainStage.show();
 	}
 
 	public static void main(String[] args) {

@@ -3,7 +3,6 @@ package mcstuff.modules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mcstuff.ApplicationConfig;
@@ -19,11 +18,11 @@ public class RPGModule extends ModuleBase implements I_Module {
 	private String title = "McStuff RPG Module";
 
 	@Override
-	public Callback<ActionEvent, Void> getSelectionCallback() {
-		return new Callback<ActionEvent, Void>() {
+	public Callback<Void, Void> getSelectionCallback() {
+		return new Callback<Void, Void>() {
 			@Override
-			public Void call(ActionEvent event) {
-				return onSelection(event);
+			public Void call(Void vArg) {
+				return onSelection();
 			}
 		};
 	}
@@ -45,7 +44,7 @@ public class RPGModule extends ModuleBase implements I_Module {
 
 	}
 	
-	public Void onSelection(ActionEvent event) {
+	public Void onSelection() {
 		appConfig.setCurrentModule(this);
 		return null;		
 	}

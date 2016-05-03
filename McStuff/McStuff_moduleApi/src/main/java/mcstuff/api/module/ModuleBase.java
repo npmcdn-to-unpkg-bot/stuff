@@ -1,7 +1,6 @@
 package mcstuff.api.module;
 
 import javafx.stage.Stage;
-import mcstuff.api.I_ModuleHost;
 
 public abstract class ModuleBase implements I_Module {
 	
