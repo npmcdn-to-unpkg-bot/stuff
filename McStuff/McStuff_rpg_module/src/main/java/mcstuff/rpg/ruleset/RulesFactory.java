@@ -13,7 +13,7 @@ public class RulesFactory {
             return RulesFactoryHolder.INSTANCE;
     }
     
-    public Value<?> createNewValue(Object rawValue) {
+    public <T> Value<T> createNewValue(T rawValue) {
     	return new Value<>(rawValue);
     }
 }

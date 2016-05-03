@@ -103,6 +103,7 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	public void activateModule(I_Module module) {
 		logger.info("Activating {}",new Object[] {module});
 		appConfig.setCurrentStage(moduleStage);
+		moduleStage.setTitle(module.getTitle());
 		module.getSelectionCallback().call(null);
 		if(!moduleStage.isShowing()) {
 			moduleStage.centerOnScreen();
