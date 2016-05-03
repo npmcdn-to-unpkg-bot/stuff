@@ -3,6 +3,8 @@ package mcstuff.modules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import mcstuff.ApplicationConfig;
@@ -14,41 +16,44 @@ public class RPGModule extends ModuleBase implements I_Module {
 
 	@Autowired
 	private ApplicationConfig appConfig;
-	
+		
 	private String title = "McStuff RPG Module";
-
-	@Override
-	public Callback<Void, Void> getSelectionCallback() {
-		return new Callback<Void, Void>() {
-			@Override
-			public Void call(Void vArg) {
-				return onSelection();
-			}
-		};
-	}
-	
 	@Override
 	public String getTitle() {
 		return title;
 	}
 
+	private boolean visible = false;
+	public boolean isVisible() {
+		return visible;
+	}
+
+	@Override
+	public Callback<Void, Void> getSelectionCallback() {
+		final I_Module module = this;
+		return new Callback<Void, Void>() {
+			@Override
+			public Void call(Void vArg) {
+				appConfig.setCurrentModule(module);
+				return null;
+			}
+		};
+	}
+	
 	@Override
 	public void show(Stage stage) {
-		// TODO Auto-generated method stub
-
+		Parent root = (Parent) appConfig.getFXMLLoader().load("/mcstuff/rpg/ui/RPGMain.fxml");
+		Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+		visible = true;
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
+		visible = false;
 	}
 	
-	public Void onSelection() {
-		appConfig.setCurrentModule(this);
-		return null;		
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -81,7 +81,7 @@ public class ApplicationConfig {
 		}
 		this.currentModule = currentModule;
 		if (this.currentModule != null) {
-			this.currentModule.show(currentStage);
+			moduleHost.showModule(this.currentModule);
 		} else {
 			moduleHost.showDefaultView();
 		}

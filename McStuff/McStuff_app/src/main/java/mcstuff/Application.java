@@ -31,6 +31,10 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		return instance;
 	}
 	
+	public static void main(String[] args) {
+		launchApp(Application.class, args);
+	}
+	
 	private Stage mainStage = null;
 	private Stage moduleStage = null;
 	private Scene defaultView = null;
@@ -105,9 +109,9 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		appConfig.setCurrentStage(moduleStage);
 		moduleStage.setTitle(module.getTitle());
 		module.getSelectionCallback().call(null);
-		if(!moduleStage.isShowing()) {
-			moduleStage.centerOnScreen();
-			moduleStage.show();
+		if(!mainStage.isShowing() && !moduleStage.isShowing()) {
+			logger.info("Module did not display, showing main window");
+			mainStage.show();
 		}
 	}
 	
@@ -120,14 +124,23 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		mainStage.show();
 	}
 
-	public static void main(String[] args) {
-		launchApp(Application.class, args);
+	@Override
+	public void showModule(I_Module module) {
+		try {
+			module.show(moduleStage);
+		} catch(Exception ex) {
+			logger.error("Error loading module {} : {}", module, ex);
+			moduleStage.hide();
+			mainStage.show();
+		}
+		
 	}
 
 	@Override
 	public void shutDown() {
 		Platform.exit();
 	}
+
 
 	
 	
