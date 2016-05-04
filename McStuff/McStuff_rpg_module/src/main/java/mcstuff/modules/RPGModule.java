@@ -29,7 +29,7 @@ public class RPGModule extends ModuleBase implements I_Module {
 	}
 
 	@Override
-	public Callback<Void, Void> getSelectionCallback() {
+	public Callback<Void, Void> getActivationCallback() {
 		final I_Module module = this;
 		return new Callback<Void, Void>() {
 			@Override

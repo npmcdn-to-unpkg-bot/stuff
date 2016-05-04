@@ -108,7 +108,7 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		logger.info("Activating {}",new Object[] {module});
 		appConfig.setCurrentStage(moduleStage);
 		moduleStage.setTitle(module.getTitle());
-		module.getSelectionCallback().call(null);
+		module.getActivationCallback().call(null);
 		if(!mainStage.isShowing() && !moduleStage.isShowing()) {
 			logger.info("Module did not display, showing main window");
 			mainStage.show();

@@ -6,7 +6,7 @@ import javafx.util.Callback;
 public interface I_Module {
 	void initialize(I_ModuleHost host);
 	String getTitle();
-	Callback<Void, Void> getSelectionCallback();
+	Callback<Void, Void> getActivationCallback();
 	void show(Stage stage);
 	void hide();
 	int hashCode();
