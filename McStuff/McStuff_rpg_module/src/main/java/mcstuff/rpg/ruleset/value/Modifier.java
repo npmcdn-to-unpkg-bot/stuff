@@ -5,28 +5,28 @@ import java.util.Date;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
-import mcstuff.rpg.ruleset.core.E_ModifierType;
+import mcstuff.rpg.ruleset.core.ModifierType;
 
-public class Modifier<T> extends Value<T> {
-	private ReadOnlyObjectWrapper<E_ModifierType> modifierType = new ReadOnlyObjectWrapper<>();
+public class Modifier<V> extends Value<V> {
+	private ReadOnlyObjectWrapper<ModifierType> modifierType = new ReadOnlyObjectWrapper<>();
 	private ObjectProperty<Date> expiresOn = new SimpleObjectProperty<>();
 
-	public Modifier(E_ModifierType modifierType, T value) {
+	public Modifier(ModifierType modifierType, V value) {
 		super(value);		
 		this.modifierType.setValue(modifierType);
 	}
 	
-	public Modifier(E_ModifierType modifierType, T value, Date expiresOn) {
+	public Modifier(ModifierType modifierType, V value, Date expiresOn) {
 		super(value);		
 		this.modifierType.setValue(modifierType);
 		this.expiresOn.setValue(expiresOn);
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.E_ModifierType> modifierTypeProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<ModifierType> modifierTypeProperty() {
 		return this.modifierType.getReadOnlyProperty();
 	}	
 
-	public final mcstuff.rpg.ruleset.core.E_ModifierType getModifierType() {
+	public final ModifierType getModifierType() {
 		return this.modifierTypeProperty().get();
 	}
 

@@ -8,32 +8,32 @@ import javafx.beans.property.ReadOnlySetProperty;
 import javafx.beans.property.ReadOnlySetWrapper;
 import javafx.collections.ObservableSet;
 
-public abstract class ModifiableValue<T> extends Value<T> {
+public abstract class ModifiableValue<V> extends Value<V> {
 	
-	private ReadOnlySetWrapper<Modifier<T>> modifiers = new ReadOnlySetWrapper<>();
+	private ReadOnlySetWrapper<Modifier<V>> modifiers = new ReadOnlySetWrapper<>();
 
-	public ModifiableValue(T value) {
+	public ModifiableValue(V value) {
 		super(value);
 	}
 
-	public ModifiableValue(T value, Set<Modifier<T>> modifiers) {
+	public ModifiableValue(V value, Set<Modifier<V>> modifiers) {
 		super(value);
 		this.modifiers.addAll(modifiers);
 	}
 
-	public final ReadOnlySetProperty<Modifier<T>> modifiersProperty() {
+	public final ReadOnlySetProperty<Modifier<V>> modifiersProperty() {
 		return this.modifiers.getReadOnlyProperty();
 	}
 	
-	public final ObservableSet<Modifier<T>> getModifiers() {
+	public final ObservableSet<Modifier<V>> getModifiers() {
 		return this.modifiersProperty().get();
 	}
 	
-	public abstract T getModifiedValue();
+	public abstract V getModifiedValue();
 	
 	public void refreshModifiers() {
-		for(Iterator<Modifier<T>> itModifier = modifiers.iterator(); itModifier.hasNext();) {
-			Modifier<T> modifier = itModifier.next();
+		for(Iterator<Modifier<V>> itModifier = modifiers.iterator(); itModifier.hasNext();) {
+			Modifier<V> modifier = itModifier.next();
 			if(modifier.getExpiresOn().after(new Date())) {
 				itModifier.remove();
 			}
