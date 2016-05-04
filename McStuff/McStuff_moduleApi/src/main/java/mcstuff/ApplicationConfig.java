@@ -19,6 +19,9 @@ import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.javafx.spring.SpringFXMLLoader;
 
+/**
+* 
+**/
 @Component
 @Configuration
 public class ApplicationConfig {
