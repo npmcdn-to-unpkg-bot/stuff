@@ -35,13 +35,19 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+	
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	runtime 'org.apache.derby:derby:10+' 
 }
 
 
 eclipse {
-	classpath {
-		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+	project {
+ 		natures 'org.springframework.ide.eclipse.core.springnature'
+		classpath {
+			 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+			 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+		}
 	}
 }
