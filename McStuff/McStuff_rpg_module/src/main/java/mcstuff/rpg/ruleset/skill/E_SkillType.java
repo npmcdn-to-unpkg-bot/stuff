@@ -28,7 +28,6 @@ public enum E_SkillType implements I_ModifierQualifier {
 	STEALTH,
 	SURVIVAL,
 	SWIM,
-	USE_MAGIC_DEVICE,
-	;
-	
+	USE_MAGIC_DEVICE,;
+
 }

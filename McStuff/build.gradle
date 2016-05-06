@@ -30,6 +30,7 @@
 
  	eclipse {
  		project {
+ 			natures 'org.springframework.ide.eclipse.core.springnature'
  			natures 'org.eclipse.xtext.ui.shared.xtextNature'
  			classpath {
  				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'

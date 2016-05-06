@@ -7,114 +7,69 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import mcstuff.api.module.I_Module;
+import mcstuff.api.module.I_ModuleHost;
+import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
+import mcstuff.util.ClassEnumerator;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import mcstuff.api.module.I_Module;
-import mcstuff.api.module.I_ModuleHost;
-import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
-import mcstuff.util.ClassEnumerator;
 
 @SpringBootApplication
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	private static final String MODULE_PACKAGE = "mcstuff.modules";
 	private static Application instance;
-		
-	@Autowired
-	private ApplicationConfig appConfig;
-	
+
 	public static Application getInstance() {
 		return instance;
 	}
-	
-	public static void main(String[] args) {
+
+	public static void main(final String[] args) {
 		launchApp(Application.class, args);
 	}
-	
+
+	@Autowired
+	private ApplicationConfig appConfig;
+
 	private Stage mainStage = null;
 	private Stage moduleStage = null;
 	private Scene defaultView = null;
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		instance = this;
-		mainStage = stage;
-		appConfig.setModuleHost(this);
-		Platform.setImplicitExit(false);
-		
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					loadModules();
-					
-					mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {						
-						@Override
-						public void handle(WindowEvent event) {
-							shutDown();
-							event.consume();
-						}
-					});
-					
-					moduleStage = new Stage();
-					moduleStage.setOnCloseRequest(new EventHandler<WindowEvent>() {			
-						@Override
-						public void handle(WindowEvent event) {
-							moduleStage.hide();
-							showDefaultView();
-							event.consume();				
-						}
-					});
-
-
-					mainStage.setTitle(appConfig.getAppTitle());
-
-					Parent root = (Parent) appConfig.getFXMLLoader().load("/mcstuff/startup/StartupScene.fxml");
-					defaultView = new Scene(root);
-					
-					appConfig.setCurrentStage(mainStage);
-					showDefaultView();
-					
-				} catch (Throwable t) {
-					logger.error("Error starting up", t);
-					Platform.exit();
-				}
-			}
+	public void activateModule(final I_Module module) {
+		logger.info("Activating {}", new Object[] {
+			module
 		});
+		appConfig.setCurrentStage(moduleStage);
+		moduleStage.setTitle(module.getTitle());
+		module.getActivationCallback().call(null);
+		if (!mainStage.isShowing() && !moduleStage.isShowing()) {
+			logger.info("Module did not display, showing main window");
+			mainStage.show();
+		}
 	}
 
 	public void loadModules() {
 		try {
-			List<Class<?>> classes = ClassEnumerator.getClassesForPackage(MODULE_PACKAGE);
-			for (Class<?> clazz : classes) {
+			final List<Class<?>> classes = ClassEnumerator.getClassesForPackage(MODULE_PACKAGE);
+			for (final Class<?> clazz : classes) {
 				if (I_Module.class.isAssignableFrom(clazz)) {
-					I_Module module = (I_Module) applicationContext.getBean(clazz);
+					final I_Module module = (I_Module) applicationContext.getBean(clazz);
 					logger.info("Initializing Module: " + module.getTitle());
 					module.initialize(this);
 					appConfig.getModules().add(module);
 				}
 			}
-		} catch (Throwable t) {
+		} catch (final Throwable t) {
 			logger.error("Error loading modules, shutting down", t);
 			Platform.exit();
 		}
 	}
-	
-	public void activateModule(I_Module module) {
-		logger.info("Activating {}",new Object[] {module});
-		appConfig.setCurrentStage(moduleStage);
-		moduleStage.setTitle(module.getTitle());
-		module.getActivationCallback().call(null);
-		if(!mainStage.isShowing() && !moduleStage.isShowing()) {
-			logger.info("Module did not display, showing main window");
-			mainStage.show();
-		}
-	}
-	
+
 	@Override
 	public void showDefaultView() {
 		appConfig.setCurrentStage(mainStage);
@@ -125,15 +80,15 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 	}
 
 	@Override
-	public void showModule(I_Module module) {
+	public void showModule(final I_Module module) {
 		try {
 			module.show(moduleStage);
-		} catch(Exception ex) {
+		} catch (final Exception ex) {
 			logger.error("Error loading module {} : {}", module, ex);
 			moduleStage.hide();
 			mainStage.show();
 		}
-		
+
 	}
 
 	@Override
@@ -141,7 +96,51 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		Platform.exit();
 	}
 
+	@Override
+	public void start(final Stage stage) throws Exception {
+		instance = this;
+		mainStage = stage;
+		appConfig.setModuleHost(this);
+		Platform.setImplicitExit(false);
 
-	
-	
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					loadModules();
+
+					mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+						@Override
+						public void handle(final WindowEvent event) {
+							shutDown();
+							event.consume();
+						}
+					});
+
+					moduleStage = new Stage();
+					moduleStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+						@Override
+						public void handle(final WindowEvent event) {
+							moduleStage.hide();
+							showDefaultView();
+							event.consume();
+						}
+					});
+
+					mainStage.setTitle(appConfig.getAppTitle());
+
+					final Parent root = (Parent) appConfig.getFXMLLoader().load("/mcstuff/startup/StartupScene.fxml");
+					defaultView = new Scene(root);
+
+					appConfig.setCurrentStage(mainStage);
+					showDefaultView();
+
+				} catch (final Throwable t) {
+					logger.error("Error starting up", t);
+					Platform.exit();
+				}
+			}
+		});
+	}
+
 }

@@ -12,10 +12,11 @@ import javafx.scene.layout.AnchorPane;
 @Component
 public class RPGMainController implements Initializable {
 
-	@FXML AnchorPane rootPane;
+	@FXML
+	AnchorPane rootPane;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(final URL location, final ResourceBundle resources) {
 
 	}
 

@@ -4,18 +4,18 @@ import java.util.Set;
 
 public class ModifiableIntegerValue extends ModifiableValue<Integer> {
 
-	public ModifiableIntegerValue(Integer value) {
+	public ModifiableIntegerValue(final Integer value) {
 		super(value);
 	}
 
-	public ModifiableIntegerValue(Integer value, Set<Modifier<Integer>> modifiers) {
+	public ModifiableIntegerValue(final Integer value, final Set<Modifier<Integer>> modifiers) {
 		super(value, modifiers);
 	}
 
 	@Override
 	public Integer getModifiedValue() {
 		int iValue = getValue();
-		for(Modifier<Integer> modifier : getModifiers()) {
+		for (final Modifier<Integer> modifier : getModifiers()) {
 			iValue += modifier.getValue();
 		}
 		return iValue;

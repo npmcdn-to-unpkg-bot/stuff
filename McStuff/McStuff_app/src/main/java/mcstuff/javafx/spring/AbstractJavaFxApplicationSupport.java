@@ -35,11 +35,43 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractJavaFxApplicationSupport.class);
 	protected static String[] savedArgs;
 
+	protected static void launchApp(final Class<? extends AbstractJavaFxApplicationSupport> appClass,
+			final String[] args) {
+		AbstractJavaFxApplicationSupport.savedArgs = args;
+		Application.launch(appClass, args);
+	}
+
+	private static boolean lockInstance(final String lockFile) {
+		try {
+			final File file = new File(lockFile);
+			final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
+			if (fileLock != null) {
+				Runtime.getRuntime().addShutdownHook(new Thread() {
+					@Override
+					public void run() {
+						try {
+							fileLock.release();
+							randomAccessFile.close();
+							file.delete();
+						} catch (final Exception e) {
+							logger.error("Unable to remove lock file: " + lockFile, e);
+						}
+					}
+				});
+				return true;
+			}
+		} catch (final Exception e) {
+			logger.error("Unable to create and/or lock file: " + lockFile, e);
+		}
+		return false;
+	}
+
 	protected ConfigurableApplicationContext applicationContext;
 
 	@Override
 	public void init() throws Exception {
-		if(!lockInstance("McStuff")) {
+		if (!lockInstance("McStuff")) {
 			logger.error("Another instance already running, shutting down");
 			Platform.exit();
 			return;
@@ -52,36 +84,6 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
 	public void stop() throws Exception {
 		super.stop();
 		applicationContext.close();
-	}
-
-	protected static void launchApp(Class<? extends AbstractJavaFxApplicationSupport> appClass, String[] args) {
-		AbstractJavaFxApplicationSupport.savedArgs = args;
-		Application.launch(appClass, args);
-	}
-
-	private static boolean lockInstance(final String lockFile) {
-		try {
-			final File file = new File(lockFile);
-			final RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
-			final FileLock fileLock = randomAccessFile.getChannel().tryLock();
-			if (fileLock != null) {
-				Runtime.getRuntime().addShutdownHook(new Thread() {
-					public void run() {
-						try {
-							fileLock.release();
-							randomAccessFile.close();
-							file.delete();
-						} catch (Exception e) {
-							logger.error("Unable to remove lock file: " + lockFile, e);
-						}
-					}
-				});
-				return true;
-			}
-		} catch (Exception e) {
-			logger.error("Unable to create and/or lock file: " + lockFile, e);
-		}
-		return false;
 	}
 
 }
