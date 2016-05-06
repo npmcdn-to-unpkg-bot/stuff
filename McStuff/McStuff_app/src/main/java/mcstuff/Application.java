@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -108,7 +109,7 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 			public void run() {
 				try {
 					loadModules();
-
+					mainStage.getIcons().add(new Image("/mcstuff/startup/logo.png"));
 					mainStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 						@Override
 						public void handle(final WindowEvent event) {
@@ -118,6 +119,7 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 					});
 
 					moduleStage = new Stage();
+					moduleStage.getIcons().add(new Image("/mcstuff/startup/logo.png"));
 					moduleStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 						@Override
 						public void handle(final WindowEvent event) {
