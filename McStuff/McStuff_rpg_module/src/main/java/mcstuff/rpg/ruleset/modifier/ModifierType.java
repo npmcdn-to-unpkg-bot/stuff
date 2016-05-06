@@ -1,4 +1,4 @@
-package mcstuff.rpg.ruleset.core;
+package mcstuff.rpg.ruleset.modifier;
 
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -19,11 +19,11 @@ public class ModifierType {
 		this.stackable.setValue(stackable);
 	}
 
-	public final mcstuff.rpg.ruleset.core.ModifierSource getSource() {
+	public final mcstuff.rpg.ruleset.modifier.ModifierSource getSource() {
 		return sourceProperty().get();
 	}
 
-	public final mcstuff.rpg.ruleset.core.ModifierTarget getTarget() {
+	public final mcstuff.rpg.ruleset.modifier.ModifierTarget getTarget() {
 		return targetProperty().get();
 	}
 
@@ -31,7 +31,7 @@ public class ModifierType {
 		return stackableProperty().get();
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.ModifierSource> sourceProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.modifier.ModifierSource> sourceProperty() {
 		return source.getReadOnlyProperty();
 	}
 
@@ -39,7 +39,7 @@ public class ModifierType {
 		return stackable.getReadOnlyProperty();
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.ModifierTarget> targetProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.modifier.ModifierTarget> targetProperty() {
 		return target.getReadOnlyProperty();
 	}
 

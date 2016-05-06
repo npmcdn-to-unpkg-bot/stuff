@@ -1,12 +1,12 @@
-package mcstuff.rpg.ruleset.value;
+package mcstuff.rpg.ruleset.modifier;
 
 import java.util.Date;
-
-import mcstuff.rpg.ruleset.core.ModifierType;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
+
+import mcstuff.rpg.ruleset.value.Value;
 
 public class Modifier<V> extends Value<V> {
 	private final ReadOnlyObjectWrapper<ModifierType> modifierType = new ReadOnlyObjectWrapper<>();

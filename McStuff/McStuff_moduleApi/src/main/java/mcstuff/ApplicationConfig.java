@@ -14,11 +14,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import javafx.stage.Stage;
+
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.javafx.spring.SpringFXMLLoader;
-
-import javafx.stage.Stage;
 
 @Component
 @Configuration

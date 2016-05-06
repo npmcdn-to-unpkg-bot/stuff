@@ -2,6 +2,8 @@ package mcstuff.rpg.ruleset.value;
 
 import java.util.Set;
 
+import mcstuff.rpg.ruleset.modifier.Modifier;
+
 public class ModifiableIntegerValue extends ModifiableValue<Integer> {
 
 	public ModifiableIntegerValue(final Integer value) {

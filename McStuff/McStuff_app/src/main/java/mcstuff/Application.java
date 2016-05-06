@@ -7,17 +7,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import mcstuff.api.module.I_Module;
-import mcstuff.api.module.I_ModuleHost;
-import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
-import mcstuff.util.ClassEnumerator;
-
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import mcstuff.api.module.I_Module;
+import mcstuff.api.module.I_ModuleHost;
+import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
+import mcstuff.util.ClassEnumerator;
 
 @SpringBootApplication
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {

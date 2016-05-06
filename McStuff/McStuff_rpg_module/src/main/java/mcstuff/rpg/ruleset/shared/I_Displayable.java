@@ -1,4 +1,4 @@
-package mcstuff.rpg.ruleset.core;
+package mcstuff.rpg.ruleset.shared;
 
 import org.apache.commons.lang3.text.WordUtils;
 

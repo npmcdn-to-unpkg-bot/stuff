@@ -7,10 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mcstuff.Application;
-import mcstuff.ApplicationConfig;
-import mcstuff.api.module.I_Module;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +14,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
+
+import mcstuff.Application;
+import mcstuff.ApplicationConfig;
+import mcstuff.api.module.I_Module;
 
 @Component
 public class StartupSceneController implements Initializable {

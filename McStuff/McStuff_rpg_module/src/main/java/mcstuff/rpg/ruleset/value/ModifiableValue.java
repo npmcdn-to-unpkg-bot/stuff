@@ -8,6 +8,8 @@ import javafx.beans.property.ReadOnlySetProperty;
 import javafx.beans.property.ReadOnlySetWrapper;
 import javafx.collections.ObservableSet;
 
+import mcstuff.rpg.ruleset.modifier.Modifier;
+
 public abstract class ModifiableValue<V> extends Value<V> {
 
 	private final ReadOnlySetWrapper<Modifier<V>> modifiers = new ReadOnlySetWrapper<>();

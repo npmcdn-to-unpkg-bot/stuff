@@ -1,4 +1,4 @@
-package mcstuff.rpg.ruleset.core;
+package mcstuff.rpg.ruleset.modifier;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 
@@ -12,19 +12,19 @@ public class ModifierSource {
 		this.qualifier.setValue(qualifier);
 	}
 
-	public final mcstuff.rpg.ruleset.core.I_ModifierQualifier getQualifier() {
+	public final mcstuff.rpg.ruleset.modifier.I_ModifierQualifier getQualifier() {
 		return qualifierProperty().get();
 	}
 
-	public final mcstuff.rpg.ruleset.core.E_ModifierSourceType getSourceType() {
+	public final mcstuff.rpg.ruleset.modifier.E_ModifierSourceType getSourceType() {
 		return sourceTypeProperty().get();
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.I_ModifierQualifier> qualifierProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.modifier.I_ModifierQualifier> qualifierProperty() {
 		return qualifier.getReadOnlyProperty();
 	}
 
-	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.core.E_ModifierSourceType> sourceTypeProperty() {
+	public final javafx.beans.property.ReadOnlyObjectProperty<mcstuff.rpg.ruleset.modifier.E_ModifierSourceType> sourceTypeProperty() {
 		return sourceType.getReadOnlyProperty();
 	}
 

@@ -3,14 +3,14 @@ package mcstuff.modules;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import mcstuff.ApplicationConfig;
-import mcstuff.api.module.I_Module;
-import mcstuff.api.module.ModuleBase;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+
+import mcstuff.ApplicationConfig;
+import mcstuff.api.module.I_Module;
+import mcstuff.api.module.ModuleBase;
 
 @Component
 public class RPGModule extends ModuleBase implements I_Module {

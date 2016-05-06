@@ -1,6 +1,6 @@
 package mcstuff.rpg.ruleset.skill;
 
-import mcstuff.rpg.ruleset.core.I_ModifierQualifier;
+import mcstuff.rpg.ruleset.modifier.I_ModifierQualifier;
 
 public enum E_SkillType implements I_ModifierQualifier {
 	ACROBATICS,

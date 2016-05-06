@@ -1,4 +1,4 @@
-package mcstuff.rpg.ruleset.core;
+package mcstuff.rpg.ruleset.modifier;
 
 import java.util.HashSet;
 import java.util.Set;

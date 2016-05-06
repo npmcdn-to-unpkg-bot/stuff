@@ -1,8 +1,8 @@
 package mcstuff.rpg.ruleset.ability;
 
-import mcstuff.rpg.ruleset.value.ModifiableIntegerValue;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
+
+import mcstuff.rpg.ruleset.value.ModifiableIntegerValue;
 
 public class Ability {
 	private ReadOnlyObjectWrapper<E_AbilityType> abilityType = new ReadOnlyObjectWrapper<>();
