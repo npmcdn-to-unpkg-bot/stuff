@@ -41,7 +41,6 @@ dependencies {
 	runtime 'org.apache.derby:derby:10+' 
 }
 
-
 eclipse {
 	project {
  		natures 'org.springframework.ide.eclipse.core.springnature'
@@ -51,3 +50,5 @@ eclipse {
 		}
 	}
 }
+
+
