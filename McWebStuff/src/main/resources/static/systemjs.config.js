@@ -19,7 +19,7 @@
   var packages = {
     'app':                        { main: 'main.ts',  defaultExtension: 'ts' },
     'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { defaultExtension: 'js' },
+    'angular2-in-memory-web-api': { defaultExtension: 'js' }
   };
 
   var packageNames = [

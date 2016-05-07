@@ -11,30 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var dialog_service_1 = require('./shared/dialog.service');
-var home_component_1 = require('./home.component');
 var magic_component_1 = require('./magic/magic.component');
-var AppComponent = (function () {
-    function AppComponent(router, dialog) {
+var HomeComponent = (function () {
+    function HomeComponent(router, dialog) {
         this.router = router;
         this.dialog = dialog;
     }
-    AppComponent.prototype.ngOnInit = function () {
-        this.router.navigate(['/home']);
+    HomeComponent.prototype.routerOnActivate = function (curr) {
     };
-    AppComponent = __decorate([
+    HomeComponent = __decorate([
         core_1.Component({
-            selector: 'McWebStuff',
-            templateUrl: 'app/app.html',
+            templateUrl: 'app/home.html',
             providers: [dialog_service_1.DialogService],
-            directives: [router_1.ROUTER_DIRECTIVES]
+            directives: [router_1.ROUTER_DIRECTIVES],
         }),
         router_1.Routes([
-            { path: '/home', component: home_component_1.HomeComponent },
             { path: '/magic', component: magic_component_1.MagicComponent },
         ]), 
         __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService])
-    ], AppComponent);
-    return AppComponent;
+    ], HomeComponent);
+    return HomeComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.HomeComponent = HomeComponent;
+//# sourceMappingURL=home.component.js.map
