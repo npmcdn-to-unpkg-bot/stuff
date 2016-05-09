@@ -17,9 +17,11 @@ var MagicComponent = (function () {
         this.router = router;
         this.dialog = dialog;
         this.currSegment = null;
+        this.mcWebJS = new McWebJS();
     }
     MagicComponent.prototype.routerOnActivate = function (curr) {
         this.currSegment = curr;
+        //this.mcWebJS.doSomething();
     };
     MagicComponent.prototype.routerCanDeactivate = function () {
         // Otherwise ask the user with the dialog service and return its

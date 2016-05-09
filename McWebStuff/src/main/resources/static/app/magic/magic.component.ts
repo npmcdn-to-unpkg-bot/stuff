@@ -3,6 +3,8 @@ import { ROUTER_DIRECTIVES, Routes, Router, RouteSegment, OnActivate, CanDeactiv
 import { DialogService }  from '../shared/dialog.service';
 import { HomeComponent } from '../home.component';
 
+declare var McWebJS: any;
+
 @Component({
   templateUrl: 'app/magic/magic.html',
   providers:  [DialogService],
@@ -15,19 +17,20 @@ import { HomeComponent } from '../home.component';
 
 export class MagicComponent implements OnActivate, CanDeactivate {
 	currSegment = null;
-	constructor(
-			 private router: Router,
-			 private dialog: DialogService) {
-	  }
+	mcWebJS: any;
+	
+	constructor(private router: Router, private dialog: DialogService) {
+		this.mcWebJS = new McWebJS();
+	}
 	
 	routerOnActivate(curr: RouteSegment) {
 	    this.currSegment = curr;
-	  }
+	    //this.mcWebJS.doSomething();
+	}
 	
-	  routerCanDeactivate(): any {
-	   
+	routerCanDeactivate(): any {
 	    // Otherwise ask the user with the dialog service and return its
 	    // promise which resolves to true or false when the user decides
 	    return this.dialog.confirm('Discard changes?');
-	  }
+	}
 }
