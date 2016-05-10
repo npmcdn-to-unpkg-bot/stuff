@@ -1,4 +1,4 @@
-package person.mdc;
+package person.mdc.web;
 
 import javax.sql.DataSource;
 

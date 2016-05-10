@@ -1,5 +1,5 @@
 import { Component }     from '@angular/core';
-import { ROUTER_DIRECTIVES, Routes, OnActivate, Router, RouteSegment } from '@angular/router';
+import { ROUTER_DIRECTIVES, OnActivate, Router, RouteSegment } from '@angular/router';
 import { DialogService }  from './shared/dialog.service';
 import { MagicComponent } from './magic/magic.component';
 
@@ -8,10 +8,6 @@ import { MagicComponent } from './magic/magic.component';
   providers:  [DialogService],
   directives: [ROUTER_DIRECTIVES],
 })
-
-@Routes([
-	{path: '/magic', component: MagicComponent},
-])
 
 export class HomeComponent implements OnActivate {
 	constructor(

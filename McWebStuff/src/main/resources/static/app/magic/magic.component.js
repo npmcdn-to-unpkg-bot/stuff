@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var dialog_service_1 = require('../shared/dialog.service');
-var home_component_1 = require('../home.component');
 var MagicComponent = (function () {
     function MagicComponent(router, dialog) {
         this.router = router;
@@ -34,10 +33,7 @@ var MagicComponent = (function () {
             templateUrl: 'app/magic/magic.html',
             providers: [dialog_service_1.DialogService],
             directives: [router_1.ROUTER_DIRECTIVES],
-        }),
-        router_1.Routes([
-            { path: '/home', component: home_component_1.HomeComponent },
-        ]), 
+        }), 
         __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService])
     ], MagicComponent);
     return MagicComponent;

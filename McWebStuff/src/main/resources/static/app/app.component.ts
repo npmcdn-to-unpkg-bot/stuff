@@ -3,6 +3,7 @@ import { Routes, Router, RouteSegment, ROUTER_DIRECTIVES } from '@angular/router
 import { Location } from '@angular/common';
 import { DialogService }  from './shared/dialog.service';
 import { HomeComponent } from './home.component';
+import { BBSComponent } from './bbs/bbs.component';
 import { MagicComponent } from './magic/magic.component';
 
 
@@ -15,7 +16,9 @@ import { MagicComponent } from './magic/magic.component';
 
 @Routes([
   {path: '/home', component: HomeComponent},
+  {path: '/bbs', component: BBSComponent},
   {path: '/magic', component: MagicComponent},
+  
 ])
 
 export class AppComponent implements OnInit {

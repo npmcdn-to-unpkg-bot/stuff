@@ -13,6 +13,7 @@ var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 var dialog_service_1 = require('./shared/dialog.service');
 var home_component_1 = require('./home.component');
+var bbs_component_1 = require('./bbs/bbs.component');
 var magic_component_1 = require('./magic/magic.component');
 var AppComponent = (function () {
     function AppComponent(_location, _router, _dialog) {
@@ -32,6 +33,7 @@ var AppComponent = (function () {
         }),
         router_1.Routes([
             { path: '/home', component: home_component_1.HomeComponent },
+            { path: '/bbs', component: bbs_component_1.BBSComponent },
             { path: '/magic', component: magic_component_1.MagicComponent },
         ]), 
         __metadata('design:paramtypes', [common_1.Location, router_1.Router, dialog_service_1.DialogService])

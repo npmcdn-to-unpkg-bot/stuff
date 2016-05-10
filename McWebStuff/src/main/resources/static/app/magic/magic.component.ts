@@ -1,7 +1,6 @@
 import { Component }     from '@angular/core';
-import { ROUTER_DIRECTIVES, Routes, Router, RouteSegment, OnActivate, CanDeactivate } from '@angular/router';
+import { ROUTER_DIRECTIVES, Router, RouteSegment, OnActivate, CanDeactivate } from '@angular/router';
 import { DialogService }  from '../shared/dialog.service';
-import { HomeComponent } from '../home.component';
 
 declare var McWebJS: any;
 
@@ -10,10 +9,6 @@ declare var McWebJS: any;
   providers:  [DialogService],
   directives: [ROUTER_DIRECTIVES],
 })
-
-@Routes([
-	{path: '/home', component: HomeComponent},
-])
 
 export class MagicComponent implements OnActivate, CanDeactivate {
 	currSegment = null;
