@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Routes, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Routes, Router, RouteSegment, ROUTER_DIRECTIVES } from '@angular/router';
+import { Location } from '@angular/common';
 import { DialogService }  from './shared/dialog.service';
 import { HomeComponent } from './home.component';
 import { MagicComponent } from './magic/magic.component';
@@ -18,14 +19,16 @@ import { MagicComponent } from './magic/magic.component';
 ])
 
 export class AppComponent implements OnInit {
+  
   constructor(
-		 private router: Router,
-		 private dialog: DialogService) {
-	  
+		 private _location: Location,
+		 private _router: Router,
+		 private _dialog: DialogService) {
   }
 
   ngOnInit() {
-    this.router.navigate(['/home']);
+	  this._router.navigate(['/home']);
   }
+  
 }
 

@@ -31,6 +31,7 @@ export class MagicComponent implements OnActivate, CanDeactivate {
 	routerCanDeactivate(): any {
 	    // Otherwise ask the user with the dialog service and return its
 	    // promise which resolves to true or false when the user decides
-	    return this.dialog.confirm('Discard changes?');
+	    //return this.dialog.confirm('Discard changes?');
+		return true;
 	}
 }

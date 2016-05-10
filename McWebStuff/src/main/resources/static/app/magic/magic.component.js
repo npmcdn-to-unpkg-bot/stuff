@@ -26,7 +26,8 @@ var MagicComponent = (function () {
     MagicComponent.prototype.routerCanDeactivate = function () {
         // Otherwise ask the user with the dialog service and return its
         // promise which resolves to true or false when the user decides
-        return this.dialog.confirm('Discard changes?');
+        //return this.dialog.confirm('Discard changes?');
+        return true;
     };
     MagicComponent = __decorate([
         core_1.Component({

@@ -1,21 +1,23 @@
-<div class="container">
-	<div class="panel panel-default">
-		<div class="container-fluid">
-			<span class="h1">McWebStuff <small>(A Spring Boot + Angular-2 Sample WebApp)</small></span>
-			<nav class="navbar navbar-default">
-				<div class="container">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#">Navigation:</a>
-					</div>
-					<div class="nav navbar-nav" style="padding:5px;">
-						<a class="btn btn-primary" [routerLink]="['/home']">Home</a>
-						<a class="btn btn-primary" [routerLink]="['/magic']">Magic</a>
-					</div>
+<div class="panel panel-info" style="margin: 5px;">
+	<div class="panel-heading">
+		<span class="h1">McWebStuff <small>(A Spring Boot +
+				Angular-2 Sample WebApp)</small></span>
+	</div>
+	<div class="panel-body">
+		<nav class="navbar navbar-primary">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Navigation:</a>
 				</div>
-			</nav>
-		</div>
+				<div class="nav navbar-nav" style="padding: 5px;">
+					<a class="btn btn-primary" [routerLink]="['/home']">Home</a> <a
+						class="btn btn-primary" [routerLink]="['/magic']">Magic</a>
+				</div>
+			</div>
+		</nav>
 	</div>
-	<div class="panel panel-default">
-		<router-outlet></router-outlet>
-	</div>
+</div>
+<div class="panel panel-default" style="margin: 5px;">
+	<div class="panel-heading">{{_location.path()}}</div>
+	<div class="panel-body"><router-outlet></router-outlet></div>
 </div>

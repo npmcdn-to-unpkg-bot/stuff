@@ -10,16 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
+var common_1 = require('@angular/common');
 var dialog_service_1 = require('./shared/dialog.service');
 var home_component_1 = require('./home.component');
 var magic_component_1 = require('./magic/magic.component');
 var AppComponent = (function () {
-    function AppComponent(router, dialog) {
-        this.router = router;
-        this.dialog = dialog;
+    function AppComponent(_location, _router, _dialog) {
+        this._location = _location;
+        this._router = _router;
+        this._dialog = _dialog;
     }
     AppComponent.prototype.ngOnInit = function () {
-        this.router.navigate(['/home']);
+        this._router.navigate(['/home']);
     };
     AppComponent = __decorate([
         core_1.Component({
@@ -32,7 +34,7 @@ var AppComponent = (function () {
             { path: '/home', component: home_component_1.HomeComponent },
             { path: '/magic', component: magic_component_1.MagicComponent },
         ]), 
-        __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService])
+        __metadata('design:paramtypes', [common_1.Location, router_1.Router, dialog_service_1.DialogService])
     ], AppComponent);
     return AppComponent;
 }());
