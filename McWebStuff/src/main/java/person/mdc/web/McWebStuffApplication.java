@@ -1,5 +1,9 @@
 package person.mdc.web;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import org.springframework.boot.CommandLineRunner;
@@ -8,9 +12,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import person.mdc.web.model.Account;
 import person.mdc.web.model.AccountRepository;
+import person.mdc.web.model.Privilege;
+import person.mdc.web.model.PrivilegeRepository;
+import person.mdc.web.model.Role;
+import person.mdc.web.model.RoleRepository;
 
 @SpringBootApplication
 public class McWebStuffApplication {
@@ -22,16 +32,47 @@ public class McWebStuffApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(final AccountRepository accountRepository) {
+	CommandLineRunner init(final AccountRepository accountRepository, RoleRepository roleRepository,
+			PrivilegeRepository privilegeRepository, final PasswordEncoder passwordEncoder) {
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... arg0) throws Exception {
-				Account acct = accountRepository.findByUsername("misha");
+				
+				Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
+		        Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
+		        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);        
+		        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+		        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
+		 
+		        Account acct = accountRepository.findByUsername("misha");
 				if(acct == null) {
-					accountRepository.save(new Account("misha", "masha"));
+			        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+					acct = new Account("misha", passwordEncoder.encode("masha"));
+					acct.getRoles().add(adminRole);
+					accountRepository.save(acct);
 				}
-
 			}
+			
+			@Transactional
+		    private Privilege createPrivilegeIfNotFound(String name) {
+		        Privilege privilege = privilegeRepository.findByName(name);
+		        if (privilege == null) {
+		            privilege = new Privilege(name);
+		            privilegeRepository.save(privilege);
+		        }
+		        return privilege;
+		    }
+		 
+		    @Transactional
+		    private Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
+		        Role role = roleRepository.findByName(name);
+		        if (role == null) {
+		            role = new Role(name);
+		            role.getPrivileges().addAll(privileges);
+		            roleRepository.save(role);
+		        }
+		        return role;
+		    }
 		};
 	}
 
