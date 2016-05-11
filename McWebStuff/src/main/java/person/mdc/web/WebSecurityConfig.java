@@ -30,6 +30,18 @@ import person.mdc.web.model.Role;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	public static enum E_Role {
+		ROLE_USER,
+		ROLE_ADMIN,
+		ROLE_EDITOR,
+	}
+	
+	public static enum E_Privilege {
+		READ,
+		WRITE,
+		SUGGEST,
+	}
 
 	@Autowired
 	AccountRepository accountRepository;

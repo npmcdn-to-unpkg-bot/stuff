@@ -15,6 +15,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
+import person.mdc.web.WebSecurityConfig.E_Privilege;
+import person.mdc.web.WebSecurityConfig.E_Role;
 import person.mdc.web.model.Account;
 import person.mdc.web.model.AccountRepository;
 import person.mdc.web.model.Privilege;
@@ -38,15 +40,16 @@ public class McWebStuffApplication {
 			@Override
 			public void run(String... arg0) throws Exception {
 				
-				Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
-		        Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
-		        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);        
-		        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-		        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
+				Privilege readPrivilege = createPrivilegeIfNotFound(E_Privilege.READ);
+		        Privilege writePrivilege = createPrivilegeIfNotFound(E_Privilege.WRITE);
+		        Privilege suggestPrivilege = createPrivilegeIfNotFound(E_Privilege.SUGGEST);
+		        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege, suggestPrivilege);        
+		        createRoleIfNotFound(E_Role.ROLE_ADMIN, adminPrivileges);
+		        createRoleIfNotFound(E_Role.ROLE_USER, Arrays.asList(readPrivilege));
 		 
 		        Account acct = accountRepository.findByUsername("misha");
 				if(acct == null) {
-			        Role adminRole = roleRepository.findByName("ROLE_ADMIN");
+			        Role adminRole = roleRepository.findByName(E_Role.ROLE_ADMIN.toString());
 					acct = new Account("misha", passwordEncoder.encode("masha"));
 					acct.getRoles().add(adminRole);
 					accountRepository.save(acct);
@@ -54,20 +57,20 @@ public class McWebStuffApplication {
 			}
 			
 			@Transactional
-		    private Privilege createPrivilegeIfNotFound(String name) {
-		        Privilege privilege = privilegeRepository.findByName(name);
+		    private Privilege createPrivilegeIfNotFound(E_Privilege privilegeEnum) {
+		        Privilege privilege = privilegeRepository.findByName(privilegeEnum.toString());
 		        if (privilege == null) {
-		            privilege = new Privilege(name);
+		            privilege = new Privilege(privilegeEnum.toString());
 		            privilegeRepository.save(privilege);
 		        }
 		        return privilege;
 		    }
 		 
 		    @Transactional
-		    private Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
-		        Role role = roleRepository.findByName(name);
+		    private Role createRoleIfNotFound(E_Role roleEnum, Collection<Privilege> privileges) {
+		        Role role = roleRepository.findByName(roleEnum.toString());
 		        if (role == null) {
-		            role = new Role(name);
+		            role = new Role(roleEnum.toString());
 		            role.getPrivileges().addAll(privileges);
 		            roleRepository.save(role);
 		        }
