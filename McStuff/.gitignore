@@ -4,4 +4,4 @@
 /.settings
 /build
 /bin
-
+/.dbeaver-data-sources.xml
