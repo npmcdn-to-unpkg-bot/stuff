@@ -12,23 +12,29 @@ var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
 var dialog_service_1 = require('./shared/dialog.service');
+var security_service_1 = require('./shared/security.service');
 var home_component_1 = require('./home.component');
 var bbs_component_1 = require('./bbs/bbs.component');
 var magic_component_1 = require('./magic/magic.component');
 var AppComponent = (function () {
-    function AppComponent(_location, _router, _dialog) {
+    function AppComponent(_security, _location, _router, _dialog) {
+        this._security = _security;
         this._location = _location;
         this._router = _router;
         this._dialog = _dialog;
     }
     AppComponent.prototype.ngOnInit = function () {
-        this._router.navigate(['/home']);
+        var vm = this;
+        this._security.getCurrentAuth().then(function () {
+            vm._auth = vm._security.getAuth();
+            vm._router.navigate(['/home']);
+        });
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'McWebStuff',
             templateUrl: 'app/app.html',
-            providers: [dialog_service_1.DialogService],
+            providers: [dialog_service_1.DialogService, security_service_1.SecurityService],
             directives: [router_1.ROUTER_DIRECTIVES]
         }),
         router_1.Routes([
@@ -36,7 +42,7 @@ var AppComponent = (function () {
             { path: '/bbs', component: bbs_component_1.BBSComponent },
             { path: '/magic', component: magic_component_1.MagicComponent },
         ]), 
-        __metadata('design:paramtypes', [common_1.Location, router_1.Router, dialog_service_1.DialogService])
+        __metadata('design:paramtypes', [security_service_1.SecurityService, common_1.Location, router_1.Router, dialog_service_1.DialogService])
     ], AppComponent);
     return AppComponent;
 }());

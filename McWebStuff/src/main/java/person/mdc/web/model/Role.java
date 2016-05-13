@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,9 +24,8 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
  
+	@Column(name = "NAME", nullable = false)
     private String name;
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Collection<Account> accounts = new HashSet<>();
  
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -42,19 +42,14 @@ public class Role implements Serializable {
 		this.name = name;
 	}
 
-	public Role(String name, Collection<Account> accounts, Collection<Privilege> privileges) {
+	public Role(String name, Collection<Privilege> privileges) {
 		super();
 		this.name = name;
-		this.accounts = accounts;
 		this.privileges = privileges;
 	}
 
 	public Long getId() {
 		return id;
-	}
-
-	public Collection<Account> getAccounts() {
-		return accounts;
 	}
 
 	public Collection<Privilege> getPrivileges() {

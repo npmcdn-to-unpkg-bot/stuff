@@ -50,7 +50,7 @@ public class McWebStuffApplication {
 		        Account acct = accountRepository.findByUsername("misha");
 				if(acct == null) {
 			        Role adminRole = roleRepository.findByName(E_Role.ROLE_ADMIN.toString());
-					acct = new Account("misha", passwordEncoder.encode("masha"));
+					acct = new Account("misha", passwordEncoder.encode("masha"), "Misha", "michael.cassidy@ldschurch.org");
 					acct.getRoles().add(adminRole);
 					accountRepository.save(acct);
 				}

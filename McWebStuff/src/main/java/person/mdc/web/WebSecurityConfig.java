@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,14 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	protected UserDetailsService userDetailsService() {
+		
 		return new UserDetailsService() {
-
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				Account account = accountRepository.findByUsername(username);
 				if (account != null) {
-					return new User(account.getUsername(), account.getPassword(), true, true, true, true,
-							getAuthorities(account.getRoles()));
+					UserDetails details = account.getUserDetails(getAuthorities(account.getRoles()));
+					return details;
 				} else {
 					throw new UsernameNotFoundException("could not find the user '" + username + "'");
 				}
@@ -113,6 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().formLogin().permitAll()
 			.and().logout().permitAll()
 			.and().anonymous().disable();
+		http.csrf().disable();
 		
 	}
 
