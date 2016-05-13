@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var common_1 = require('@angular/common');
-var dialog_service_1 = require('./shared/dialog.service');
-var security_service_1 = require('./shared/security.service');
+var dialog_service_1 = require('./shared/service/dialog.service');
+var security_service_1 = require('./shared/service/security.service');
 var home_component_1 = require('./home.component');
 var bbs_component_1 = require('./bbs/bbs.component');
 var magic_component_1 = require('./magic/magic.component');
@@ -24,10 +24,9 @@ var AppComponent = (function () {
         this._dialog = _dialog;
     }
     AppComponent.prototype.ngOnInit = function () {
-        var vm = this;
-        this._security.getCurrentAuth().then(function () {
-            vm._auth = vm._security.getAuth();
-            vm._router.navigate(['/home']);
+        var app = this;
+        this._security.getCurrentAuthFromServer().then(function () {
+            app._router.navigate(['/home']);
         });
     };
     AppComponent = __decorate([

@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var dialog_service_1 = require('../shared/dialog.service');
+var dialog_service_1 = require('../shared/service/dialog.service');
 var MagicComponent = (function () {
     function MagicComponent(router, dialog) {
         this.router = router;

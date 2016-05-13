@@ -13,18 +13,25 @@ var http_1 = require('@angular/http');
 var SecurityService = (function () {
     function SecurityService(_http) {
         this._http = _http;
-        this._securityUrl = 'rest/security'; // URL to web api
+        this._securityUrl = 'rest/security';
         this._auth = null;
     }
     SecurityService.prototype.getAuth = function () {
         return this._auth;
     };
-    SecurityService.prototype.getCurrentAuth = function () {
-        var _this = this;
-        return this._http.get(this._securityUrl + '/currentAuth')
-            .forEach(function (res) {
-            _this._auth = res.json();
-        });
+    SecurityService.prototype.getCurrentAuthFromServer = function () {
+        if (this._auth) {
+            return new Promise(function (resolve, reject) {
+                resolve(null);
+            });
+        }
+        else {
+            var service = this;
+            return this._http.get(this._securityUrl + '/currentAuth')
+                .forEach(function (res) {
+                service._auth = res.json();
+            });
+        }
     };
     SecurityService = __decorate([
         core_1.Injectable(), 

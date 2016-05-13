@@ -1,6 +1,6 @@
 import { Component }     from '@angular/core';
 import { ROUTER_DIRECTIVES, Router, RouteSegment, OnActivate, CanDeactivate } from '@angular/router';
-import { DialogService }  from '../shared/dialog.service';
+import { DialogService }  from '../shared/service/dialog.service';
 
 declare var McWebJS: any;
 

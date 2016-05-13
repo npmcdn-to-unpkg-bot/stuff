@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Routes, Router, RouteSegment, ROUTER_DIRECTIVES } from '@angular/router';
 import { Location } from '@angular/common';
-import { DialogService }  from './shared/dialog.service';
-import { SecurityService } from './shared/security.service';
+import { DialogService }  from './shared/service/dialog.service';
+import { SecurityService } from './shared/service/security.service';
 import { HomeComponent } from './home.component';
 import { BBSComponent } from './bbs/bbs.component';
 import { MagicComponent } from './magic/magic.component';
@@ -23,7 +23,6 @@ import { MagicComponent } from './magic/magic.component';
 ])
 
 export class AppComponent implements OnInit {
-  private _auth : any;
   constructor(
 		 private _security: SecurityService,
 		 private _location: Location,
@@ -32,10 +31,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-	  let vm = this;
-	  this._security.getCurrentAuth().then(function(){
-		  vm._auth = vm._security.getAuth();
-		  vm._router.navigate(['/home']);
+	  let app = this;
+	  this._security.getCurrentAuthFromServer().then(function(){
+		  app._router.navigate(['/home']);
 	  });
   }
   

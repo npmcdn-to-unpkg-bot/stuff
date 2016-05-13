@@ -10,15 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var dialog_service_1 = require('../shared/dialog.service');
+var dialog_service_1 = require('../shared/service/dialog.service');
+var security_service_1 = require('../shared/service/security.service');
 var BBSComponent = (function () {
-    function BBSComponent(router, dialog) {
-        this.router = router;
-        this.dialog = dialog;
-        this.currSegment = null;
+    function BBSComponent(_router, _dialog, _security) {
+        this._router = _router;
+        this._dialog = _dialog;
+        this._security = _security;
+        this._currSegment = null;
+        this._auth = null;
+        this._auth = this._security.getAuth();
     }
     BBSComponent.prototype.routerOnActivate = function (curr) {
-        this.currSegment = curr;
+        this._currSegment = curr;
     };
     BBSComponent.prototype.routerCanDeactivate = function () {
         return true;
@@ -26,10 +30,10 @@ var BBSComponent = (function () {
     BBSComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/bbs/bbs.html',
-            providers: [dialog_service_1.DialogService],
+            providers: [dialog_service_1.DialogService, security_service_1.SecurityService],
             directives: [router_1.ROUTER_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService])
+        __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService, security_service_1.SecurityService])
     ], BBSComponent);
     return BBSComponent;
 }());

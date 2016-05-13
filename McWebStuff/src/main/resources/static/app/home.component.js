@@ -10,21 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var dialog_service_1 = require('./shared/dialog.service');
 var HomeComponent = (function () {
-    function HomeComponent(router, dialog) {
+    function HomeComponent(router) {
         this.router = router;
-        this.dialog = dialog;
     }
     HomeComponent.prototype.routerOnActivate = function (curr) {
     };
     HomeComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/home.html',
-            providers: [dialog_service_1.DialogService],
+            providers: [],
             directives: [router_1.ROUTER_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [router_1.Router, dialog_service_1.DialogService])
+        __metadata('design:paramtypes', [router_1.Router])
     ], HomeComponent);
     return HomeComponent;
 }());
