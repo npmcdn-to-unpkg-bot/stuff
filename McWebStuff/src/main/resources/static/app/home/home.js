@@ -10,23 +10,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var security_service_1 = require('../services/security.service');
-require("rxjs/Rx");
-var HomeComponent = (function () {
-    function HomeComponent(_securityService) {
+var Home = (function () {
+    function Home(_securityService) {
         this._securityService = _securityService;
     }
-    HomeComponent.prototype.ngOnInit = function () {
+    Home.prototype.ngOnInit = function () {
         var home = this;
         this._securityService.getCurrentAuth().subscribe(function (auth) { return home._auth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
-    HomeComponent = __decorate([
+    Home = __decorate([
         core_1.Component({
             moduleId: module.id,
-            templateUrl: 'home.component.html'
+            templateUrl: 'home.html'
         }), 
         __metadata('design:paramtypes', [security_service_1.SecurityService])
-    ], HomeComponent);
-    return HomeComponent;
+    ], Home);
+    return Home;
 }());
-exports.HomeComponent = HomeComponent;
-//# sourceMappingURL=home.component.js.map
+exports.Home = Home;
+//# sourceMappingURL=home.js.map

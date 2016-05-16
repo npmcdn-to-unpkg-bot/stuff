@@ -10,23 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var security_service_1 = require('../services/security.service');
-require("rxjs/Rx");
-var BBSComponent = (function () {
-    function BBSComponent(_securityService) {
+var bbs_service_1 = require('../services/bbs.service');
+var BBS = (function () {
+    function BBS(_securityService, _bbsService) {
         this._securityService = _securityService;
+        this._bbsService = _bbsService;
     }
-    BBSComponent.prototype.ngOnInit = function () {
+    BBS.prototype.ngOnInit = function () {
         var bbs = this;
-        this._securityService.getCurrentAuth().subscribe(function (auth) { return bbs._auth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
+        this._securityService.getCurrentAuth().subscribe(function (auth) { return bbs.currentAuth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
+        this._bbsService.getMessageBoards().subscribe(function (boards) { return bbs.messageBoards = boards; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
-    BBSComponent = __decorate([
+    BBS = __decorate([
         core_1.Component({
             moduleId: module.id,
-            templateUrl: 'bbs.component.html'
+            templateUrl: 'bbs.html',
+            providers: [bbs_service_1.BBSService]
         }), 
-        __metadata('design:paramtypes', [security_service_1.SecurityService])
-    ], BBSComponent);
-    return BBSComponent;
+        __metadata('design:paramtypes', [security_service_1.SecurityService, bbs_service_1.BBSService])
+    ], BBS);
+    return BBS;
 }());
-exports.BBSComponent = BBSComponent;
-//# sourceMappingURL=bbs.component.js.map
+exports.BBS = BBS;
+//# sourceMappingURL=bbs.js.map

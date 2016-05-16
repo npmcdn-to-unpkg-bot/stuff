@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Rx";
 import "rxjs/Rx";
 
 @Injectable()
-export class SecurityService {
+export class SecurityService implements OnInit {
 	private _currentAuth : any;
 
 	constructor(private _http: Http) {

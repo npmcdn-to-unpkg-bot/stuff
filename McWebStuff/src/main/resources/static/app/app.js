@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
 var security_service_1 = require('./services/security.service');
-var home_component_1 = require('./home/home.component');
-var bbs_component_1 = require('./bbs/bbs.component');
-var AppComponent = (function () {
-    function AppComponent(_router, _securityService) {
+var home_1 = require('./home/home');
+var bbs_1 = require('./bbs/bbs');
+var App = (function () {
+    function App(_router, _securityService) {
         this._router = _router;
         this._securityService = _securityService;
     }
-    AppComponent.prototype.ngOnInit = function () {
+    App.prototype.ngOnInit = function () {
         var _this = this;
         this._securityService.getCurrentAuth().subscribe(function (auth) {
             _this.currentAuth = auth;
@@ -26,20 +26,20 @@ var AppComponent = (function () {
         });
         this._router.navigate(['/app/home']);
     };
-    AppComponent = __decorate([
+    App = __decorate([
         core_1.Component({
             selector: 'McWebStuff',
             moduleId: module.id,
-            templateUrl: 'app.component.html',
+            templateUrl: 'app.html',
             directives: [router_1.ROUTER_DIRECTIVES],
         }),
         router_1.Routes([
-            { path: '/app/home', component: home_component_1.HomeComponent },
-            { path: '/app/bbs', component: bbs_component_1.BBSComponent }
+            { path: '/app/home', component: home_1.Home },
+            { path: '/app/bbs', component: bbs_1.BBS }
         ]), 
         __metadata('design:paramtypes', [router_1.Router, security_service_1.SecurityService])
-    ], AppComponent);
-    return AppComponent;
+    ], App);
+    return App;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.App = App;
+//# sourceMappingURL=app.js.map

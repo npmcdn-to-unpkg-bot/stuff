@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SecurityService } from '../services/security.service';
-import {Observable} from 'rxjs/Observable';
-import "rxjs/Rx";
 
 @Component({
   moduleId: module.id,
-  templateUrl: 'home.component.html'
+  templateUrl: 'home.html'
 })
-export class HomeComponent { 
+export class Home { 
 	private _auth : any;
 
 	constructor(private _securityService : SecurityService ) {

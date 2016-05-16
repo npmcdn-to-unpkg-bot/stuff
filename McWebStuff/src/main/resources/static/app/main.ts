@@ -4,6 +4,6 @@ import { HTTP_PROVIDERS } from '@angular/http';
 
 import { SecurityService } from './services/security.service';
 
-import { AppComponent } from './app.component';
+import { App } from './app';
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS, HTTP_PROVIDERS, SecurityService ]);
+bootstrap(App, [ROUTER_PROVIDERS, HTTP_PROVIDERS, SecurityService ]);

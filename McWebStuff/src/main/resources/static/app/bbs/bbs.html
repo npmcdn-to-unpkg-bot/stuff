@@ -1,0 +1,21 @@
+<div class="panel panel-primary panel-sm">
+	<div class="panel-heading">
+		<h3 class="panel-title">BBS: MessageBoards</h3>
+	</div>
+	<div class="panel-body">
+ 		<div class="panel-group" id="accBoards">
+ 			<div class="panel panel-info" *ngFor="let board of messageBoards; let bi = index">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    {{board.name}}
+                </h4>
+            </div>
+            <div [id]="bi" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <p>Message list will go here</p>
+                </div>
+            </div>
+        </div>
+ 		</div>
+ 	</div>
+</div>
