@@ -11,22 +11,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var security_service_1 = require('../services/security.service');
 require("rxjs/Rx");
-var BBSComponent = (function () {
-    function BBSComponent(_securityService) {
+var HomeComponent = (function () {
+    function HomeComponent(_securityService) {
         this._securityService = _securityService;
     }
-    BBSComponent.prototype.ngOnInit = function () {
-        var bbs = this;
-        this._securityService.getCurrentAuth().subscribe(function (auth) { return bbs._auth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
+    HomeComponent.prototype.ngOnInit = function () {
+        var home = this;
+        this._securityService.getCurrentAuth().subscribe(function (auth) { return home._auth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
-    BBSComponent = __decorate([
+    HomeComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            templateUrl: 'bbs.component.html'
+            templateUrl: 'home.component.html'
         }), 
         __metadata('design:paramtypes', [security_service_1.SecurityService])
-    ], BBSComponent);
-    return BBSComponent;
+    ], HomeComponent);
+    return HomeComponent;
 }());
-exports.BBSComponent = BBSComponent;
-//# sourceMappingURL=bbs.component.js.map
+exports.HomeComponent = HomeComponent;
+//# sourceMappingURL=home.component.js.map

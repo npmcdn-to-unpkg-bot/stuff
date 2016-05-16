@@ -10,28 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
-var Observable_1 = require('rxjs/Observable');
+var Rx_1 = require("rxjs/Rx");
+require("rxjs/Rx");
 var SecurityService = (function () {
     function SecurityService(_http) {
         this._http = _http;
-        this.getCurrentAuth();
     }
+    SecurityService.prototype.ngOnInit = function () {
+        this.getCurrentAuth();
+    };
     SecurityService.prototype.getCurrentAuth = function () {
-        if (!this._currentAuth) {
-            var service = this;
-            return this._http.get('/rest/security/currentAuth')
-                .map(function (res) {
-                service._currentAuth = res.json();
-                return service._currentAuth || {};
-            })
-                .catch(function (error, caught) {
-                var errMsg = error.message || 'Server error';
-                console.error(errMsg); // log to console instead
-                return Observable_1.Observable.throw(errMsg);
+        var service = this;
+        if (this._currentAuth) {
+            return new Rx_1.Observable(function (observer) {
+                observer.next(service._currentAuth);
+                observer.complete();
+                return;
             });
         }
         else {
-            return new Observable_1.Observable(this._currentAuth);
+            return this._http.get('/rest/security/currentAuth')
+                .map(function (res) {
+                service._currentAuth = res.json();
+                return service._currentAuth;
+            });
         }
     };
     SecurityService = __decorate([

@@ -3,7 +3,9 @@ import { ROUTER_DIRECTIVES, Routes } from '@angular/router';
 
 import { SecurityService } from './services/security.service';
 
+import { HomeComponent } from './home/home.component';
 import { BBSComponent } from './bbs/bbs.component';
+
 
 @Component({
   selector: 'McWebStuff',
@@ -12,6 +14,7 @@ import { BBSComponent } from './bbs/bbs.component';
   directives: [ ROUTER_DIRECTIVES ],
 })
 @Routes([
+    { path: '/home', component: HomeComponent },
     { path: '/bbs', component: BBSComponent }
 ])
 export class AppComponent {
