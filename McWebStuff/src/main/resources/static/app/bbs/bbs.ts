@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SecurityService } from '../services/security.service';
 import { BBSService } from '../services/bbs.service';
@@ -13,9 +13,10 @@ declare var tinymce: any;
   providers: [ BBSService ],
   directives: [ TinyMCE ]
 })
-export class BBS implements OnInit { 
+export class BBS { 
 	public currentAuth : any;
     public messageBoards : MessageBoard[];
+	public htmlContent : string;
 	
 	constructor(private _securityService : SecurityService,
 			private _bbsService : BBSService )
@@ -37,7 +38,7 @@ export class BBS implements OnInit {
 	}
 	
     contentChanged(newContent) {
-        
+        this.htmlContent = newContent;
     }
 	
 }

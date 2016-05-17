@@ -35,9 +35,9 @@ var TinyMCE = (function () {
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste code'
+                'insertdatetime media table contextmenu paste code suggest'
             ],
-            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | suggest',
             elements: this.elementID,
             setup: this.tinyMCESetup.bind(this)
         });
@@ -46,7 +46,9 @@ var TinyMCE = (function () {
         //destroy cloned elements
         tinymce.get(this.elementID).remove();
         var elem = document.getElementById(this.elementID);
-        elem.parentElement.removeChild(elem);
+        if (elem) {
+            elem.parentElement.removeChild(elem);
+        }
     };
     TinyMCE.prototype.tinyMCESetup = function (ed) {
         ed.on('keyup', this.tinyMCEOnKeyup.bind(this));

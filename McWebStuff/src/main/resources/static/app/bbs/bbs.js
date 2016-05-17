@@ -23,6 +23,7 @@ var BBS = (function () {
         this._bbsService.getMessageBoards().subscribe(function (boards) { return bbs.messageBoards = boards; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
     BBS.prototype.contentChanged = function (newContent) {
+        this.htmlContent = newContent;
     };
     BBS = __decorate([
         core_1.Component({
