@@ -1,46 +1,50 @@
 /**
  * http://usejsdoc.org/
  */
-tinymce.PluginManager.add('suggest', function(editor, url) {
-    // Add a button that opens a window
+function SuggestPlugin(editor, url) {
+	this.changeSet = {
+		"changes": []
+	};
+
+	// Add a button that opens a window
     editor.addButton('suggest', {
         text: 'Suggest',
         icon: false,
-        onclick: function() {
-            // Open window
-            /*
-            editor.windowManager.open({
-                title: 'Suggest plugin',
-                body: [
-                    {type: 'textbox', name: 'title', label: 'Title'}
-                ],
-                onsubmit: function(e) {
-                    // Insert content when the window form is submitted
-                    editor.insertContent('Title: ' + e.data.title);
-                }
-            });
-            */
-        }
+        onclick: this.onButtonClick
     });
 
     // Adds a menu item to the tools menu
     editor.addMenuItem('suggest', {
         text: 'Suggest plugin',
         context: 'tools',
-        onclick: function() {
-            // Open window with a specific url
-            /*
-            editor.windowManager.open({
-                title: 'TinyMCE site',
-                url: 'http://www.tinymce.com',
-                width: 800,
-                height: 600,
-                buttons: [{
-                    text: 'Close',
-                    onclick: 'close'
-                }]
-            });
-            */
-        }
+        onclick: this.onMenuClick
     });
-});
+    
+    editor.addCommand('suggestCreateChange', this.suggestCreateChange);
+    
+    editor.on('init', this.onInit);
+}
+
+SuggestPlugin.prototype = Object.create(Object.prototype);
+SuggestPlugin.prototype.constructor = SuggestPlugin;
+
+SuggestPlugin.prototype.onInit = function() {
+	console.log('On Init');
+}
+
+SuggestPlugin.prototype.getChangeSet = function() {
+	return this.changeSet;
+}
+
+SuggestPlugin.prototype.onButtonClick = function() {
+	console.log('On Button Click');
+}
+
+SuggestPlugin.prototype.onMenuClick = function() {
+	console.log('On Menu Click');
+}
+
+SuggestPlugin.prototype.suggestCreateChange = function() {
+}
+
+tinymce.PluginManager.add('suggest', SuggestPlugin);
