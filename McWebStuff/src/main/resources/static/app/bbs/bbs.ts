@@ -3,22 +3,26 @@ import { Router } from '@angular/router';
 import { SecurityService } from '../services/security.service';
 import { BBSService } from '../services/bbs.service';
 import { MessageBoard } from './model/messageboard';
-import {Accordion, AccordionGroup} from '../shared/accordion';
+import { TinyMCE } from '../shared/tinyMCE';
+
+declare var tinymce: any;
 
 @Component({
   moduleId: module.id,
   templateUrl: 'bbs.html',
-  providers: [ BBSService ]
+  providers: [ BBSService ],
+  directives: [ TinyMCE ]
 })
 export class BBS implements OnInit { 
-	currentAuth : any;
-    messageBoards : MessageBoard[];
-
+	public currentAuth : any;
+    public messageBoards : MessageBoard[];
+	
 	constructor(private _securityService : SecurityService,
-			private _bbsService : BBSService ) {
+			private _bbsService : BBSService )
+	{
 	}
 	
-	ngOnInit() {
+	ngOnInit() {		
 		let bbs = this;
 		this._securityService.getCurrentAuth().subscribe(
 				auth => bbs.currentAuth = auth,
@@ -31,4 +35,9 @@ export class BBS implements OnInit {
 				() => console.log('done')
 		);
 	}
+	
+    contentChanged(newContent) {
+        
+    }
+	
 }

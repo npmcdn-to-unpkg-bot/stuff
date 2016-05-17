@@ -1,11 +1,1 @@
-<div class="panel panel-primary panel-sm">
-	<div class="panel-heading">
-		<h3 class="panel-title">BBS: MessageBoards</h3>
-	</div>
-	<div class="panel-body">
-		<accordion> 
-			<accordion-group heading="This is the header" isOpen="true">This is the content</accordion-group> 
-			<accordion-group [heading]="board.name" *ngFor="let board of messageBoards" isOpen="true">Messages will go here</accordion-group> 
-		</accordion>
-	</div>
-</div>
+<tinyMCE [mceContent]="" (contentChanged)="contentChanged($event)"></tinyMCE>

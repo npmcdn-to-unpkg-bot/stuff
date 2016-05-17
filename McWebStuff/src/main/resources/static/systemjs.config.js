@@ -13,7 +13,7 @@
     'ng2-redux':				  'node_modules/ng2-redux/lib',
     'requirejs':				  'node_modules/requirejs',
     'jquery':					  'node_modules/jquery/dist',
-    'bootstrap':				  'node_modules/bootstrap/dist/js'
+    'tinymce':					  'node_modules/tinymce'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
@@ -25,7 +25,7 @@
     'ng2-redux':				  { defaultExtension: 'js' },
     'requirejs':			      { defaultExtension: 'js' },
     'jquery':					  { main: 'jquery.js', defaultExtension: 'js' },
-    'bootstrap':				  { main: 'bootstrap.js', defaultExtension: 'js' }
+    'tinymce':					  { main: 'tinymce.js', defaultExtension: 'js'}
   };
 
   var packageNames = [
