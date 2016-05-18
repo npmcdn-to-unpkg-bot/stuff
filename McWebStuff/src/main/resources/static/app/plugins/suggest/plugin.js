@@ -1,5 +1,5 @@
 /**
- * http://usejsdoc.org/
+ * A Suggestion change plugin for the tinyMce editor
  */
 
 var SuggestionChangeType;
@@ -8,8 +8,10 @@ var SuggestionChangeType;
     SuggestionChangeType[SuggestionChangeType["COMMENT_ONLY"] = 1] = "COMMENT_ONLY";
 })(SuggestionChangeType || (SuggestionChangeType = {}));
 Object.defineProperties(SuggestionChangeType, {
-	values: { value: [ SuggestionChangeType[0], SuggestionChangeType[1] ], writable: false}
+	values: { value: [ SuggestionChangeType[0], SuggestionChangeType[1] 
+	], writable: false}
 });
+
 
 var SuggestionTargetQualifier;
 (function (SuggestionTargetQualifier) {
@@ -24,6 +26,13 @@ Object.defineProperties(SuggestionTargetQualifier, {
 	], writable: false}
 });
  
+/**
+ * Represents a suggested change to the document being edited.
+ * @constructor
+ * @param {SuggestionChangeType} changeType - The change type of this change.
+ * @param {SuggestionTargetQualifier} targetQualifier - The qualifier which describes how to handle the target.
+ * @param {string} target - The target of the change.
+ */
 function SuggestionChange(changeType, targetQualifier, target, change, note) {
 	this.changeType = changeType || SuggestionChangeType.UNKNOWN;
 	this.targetQualifier = targetQualifier || SuggestionTargetQualifier.UNKNOWN;
@@ -33,12 +42,35 @@ function SuggestionChange(changeType, targetQualifier, target, change, note) {
 };
  
 function SuggestPlugin(editor, url) {
+	this.editor = editor;
+	this.url = url;
+	
+	var enabled = false;
+	this.enabled = enabled;
+	
+	var suggestMenuItem;	
+	
 	this.changeSet = {
 		"changes": []
 	};
 	
-	var sc = new SuggestionChange();
+	editor.addCommand('suggestions', function() {
+		var dom = editor.dom;
+		
+		dom.toggleClass(editor.getBody(), 'suggestions');
+		enabled = editor.dom.hasClass(editor.getBody(), 'suggestions');
 
+		if (suggestMenuItem) {
+			suggestMenuItem.active(dom.hasClass(editor.getBody(), 'suggestions'));
+		}
+
+		editor.fire('Suggestions');
+    });
+    
+    editor.addCommand('suggestCreateChange', function() {
+    });
+	
+		
 	// Add a button that opens a window
     editor.addButton('suggest', {
         text: 'Suggest Change',
@@ -48,30 +80,22 @@ function SuggestPlugin(editor, url) {
 
     // Adds a menu item to the tools menu
     editor.addMenuItem('suggest', {
-        text: 'Suggest Mode',
-        context: 'tools',
-        onclick: this.onMenuClick
+		cmd: 'suggestions',    
+        text: 'Suggestions',
+        onPostRender: function() {
+        	var self = this;
+			self.active(enabled);
+			editor.on('Suggestions', function() {
+				self.active(editor.dom.hasClass(editor.getBody(), 'suggestions'));
+			});        	
+        },
+		selectable: true,
+		context: 'view',
+		prependToContext: true
     });
-    
-    editor.addCommand('suggestCreateChange', this.suggestCreateChange);
-    
-    editor.on('init', this.onInit);
-}
-
-SuggestPlugin.prototype.onInit = function() {
-}
-
-SuggestPlugin.prototype.getChangeSet = function() {
-	return this.changeSet;
-}
-
-SuggestPlugin.prototype.onButtonClick = function() {
-}
-
-SuggestPlugin.prototype.onMenuClick = function() {
-}
-
-SuggestPlugin.prototype.suggestCreateChange = function() {
+        
+    editor.on('init', function() {
+    });
 }
 
 tinymce.PluginManager.add('suggest', SuggestPlugin);
