@@ -41,19 +41,34 @@ export class TinyMCE {
         formGroup.appendChild(clonedTextArea);
 
         //Attach tinyMCE to cloned textarea
+        var plugins1 = 'advlist autolink lists link image charmap print preview anchor';
+        var plugins2 = 'searchreplace visualblocks code fullscreen';
+        var plugins3 = 'insertdatetime media table contextmenu paste code';
+        var toolbars1 = 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify';
+        var toolbars2 = ' | bullist numlist outdent indent | link image';
+        
         tinymce.init(
             {
                 mode: 'exact',
                 height: 500,
                 theme: 'modern',
                 plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table contextmenu paste code suggest'
+                    plugins1,
+                    plugins2,
+                    plugins3
                 ],
-                toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | suggest',
+                toolbar: [
+                    toolbars1,
+                    toolbars2
+                ],
                 elements: this.elementID,
-                setup: this.tinyMCESetup.bind(this)
+                setup: this.tinyMCESetup.bind(this),
+                
+                schema: 'html5',
+                entity_encoding: 'raw',
+                resize: false,
+                auto_focus: true,
+                browser_spellcheck: true
             }
         );
     }
@@ -64,7 +79,7 @@ export class TinyMCE {
 
         var elem = document.getElementById(this.elementID);
         if(elem) {
-        	elem.parentElement.removeChild(elem);
+        	elem.parentElement.removeChild(elem)
         }
     }
 
