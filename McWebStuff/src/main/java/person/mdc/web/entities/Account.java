@@ -1,4 +1,4 @@
-package person.mdc.web.model;
+package person.mdc.web.entities;
 
 import java.io.Serializable;
 import java.util.Collection;

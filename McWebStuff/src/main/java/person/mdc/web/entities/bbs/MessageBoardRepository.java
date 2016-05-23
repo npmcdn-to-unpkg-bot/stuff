@@ -1,4 +1,4 @@
-package person.mdc.web.model.bbs;
+package person.mdc.web.entities.bbs;
 
 import java.util.List;
 

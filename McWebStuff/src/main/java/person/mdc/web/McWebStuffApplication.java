@@ -17,12 +17,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import person.mdc.web.WebSecurityConfig.E_Privilege;
 import person.mdc.web.WebSecurityConfig.E_Role;
-import person.mdc.web.model.Account;
-import person.mdc.web.model.AccountRepository;
-import person.mdc.web.model.Privilege;
-import person.mdc.web.model.PrivilegeRepository;
-import person.mdc.web.model.Role;
-import person.mdc.web.model.RoleRepository;
+import person.mdc.web.entities.Account;
+import person.mdc.web.entities.AccountRepository;
+import person.mdc.web.entities.Privilege;
+import person.mdc.web.entities.PrivilegeRepository;
+import person.mdc.web.entities.Role;
+import person.mdc.web.entities.RoleRepository;
 
 @SpringBootApplication
 public class McWebStuffApplication {

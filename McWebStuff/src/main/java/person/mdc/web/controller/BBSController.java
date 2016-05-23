@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import person.mdc.web.model.bbs.MessageBoard;
-import person.mdc.web.model.bbs.MessageBoardRepository;
+import person.mdc.web.entities.bbs.MessageBoard;
+import person.mdc.web.entities.bbs.MessageBoardRepository;
 
 @RestController("bbsController")
 @RequestMapping(value = "rest/bbs")
