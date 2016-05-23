@@ -21,10 +21,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import person.mdc.web.entities.Account;
-import person.mdc.web.entities.AccountRepository;
-import person.mdc.web.entities.Privilege;
-import person.mdc.web.entities.Role;
+import person.mdc.web.model.entities.security.Account;
+import person.mdc.web.model.entities.security.AccountRepository;
+import person.mdc.web.model.entities.security.Privilege;
+import person.mdc.web.model.entities.security.Role;
 
 @Configuration
 @EnableWebSecurity

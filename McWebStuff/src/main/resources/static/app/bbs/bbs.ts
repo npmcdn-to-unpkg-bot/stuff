@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecurityService } from '../services/security.service';
+import { AppService, WebUserDTO } from '../services/app.service';
 import { BBSService } from '../services/bbs.service';
 import { MessageBoard } from './model/messageboard';
 import { TinyMCE } from '../shared/tinyMCE';
@@ -15,20 +15,20 @@ declare var tinymce: any;
   directives: [ TinyMCE, ACCORDION_DIRECTIVES ]
 })
 export class BBS { 
-	public currentAuth : any;
+	public currentUser : WebUserDTO;
     public messageBoards : MessageBoard[];
 	public htmlContent : string;
     //<tinyMCE [mceContent]="htmlContent" (contentChanged)="contentChanged($event)"></tinyMCE>
 	
-	constructor(private _securityService : SecurityService,
+	constructor(private _appService : AppService,
 			private _bbsService : BBSService )
 	{
 	}
 	
 	ngOnInit() {		
 		let bbs = this;
-		this._securityService.getCurrentAuth().subscribe(
-				auth => bbs.currentAuth = auth,
+		this._appService.getCurrentUser().subscribe(
+				user => bbs.currentUser = <WebUserDTO> user,
 				err => console.log(err),				
 				() => console.log('done')
 		);

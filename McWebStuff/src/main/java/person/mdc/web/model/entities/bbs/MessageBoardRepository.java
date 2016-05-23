@@ -1,12 +1,12 @@
-package person.mdc.web.entities.bbs;
+package person.mdc.web.model.entities.bbs;
 
 import java.util.List;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "messageBoards", path = "messageBoards")
+@Repository
 public interface MessageBoardRepository extends PagingAndSortingRepository<MessageBoard, Long> {
 	List<MessageBoard> findByName(@Param("name") String name);
 }

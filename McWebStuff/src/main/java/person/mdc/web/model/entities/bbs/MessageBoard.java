@@ -1,4 +1,4 @@
-package person.mdc.web.entities.bbs;
+package person.mdc.web.model.entities.bbs;
 
 import java.io.Serializable;
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Routes, Router } from '@angular/router';
-import { SecurityService } from './services/security.service';
+import { AppService, WebUserDTO } from './services/app.service';
 
 import { Home } from './home/home';
 import { BBS } from './bbs/bbs';
@@ -17,16 +17,15 @@ import { BBS } from './bbs/bbs';
     { path: '/app/bbs', component: BBS }
 ])
 export class App {
-	currentAuth : any;
-	currentUser : any;
+	currentUser : WebUserDTO = null);
 	
-	constructor(private _router: Router, private _securityService : SecurityService) {
+	constructor(private _router: Router, private _appService : AppService) {
 	}
 	
 	ngOnInit() {
-		this._securityService.getCurrentAuth().subscribe(auth => {
-			this.currentAuth = auth;
-			this.currentUser = auth.principal.account.display;
+		var app = this;
+		this._appService.getCurrentUser().subscribe(user => {
+			app.currentUser = <WebUserDTO> user;
 		});
 		this._router.navigate(['/app/home']);
 	}

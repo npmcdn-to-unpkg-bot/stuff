@@ -9,19 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var security_service_1 = require('../services/security.service');
+var app_service_1 = require('../services/app.service');
 var bbs_service_1 = require('../services/bbs.service');
 var tinyMCE_1 = require('../shared/tinyMCE');
 var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var BBS = (function () {
     //<tinyMCE [mceContent]="htmlContent" (contentChanged)="contentChanged($event)"></tinyMCE>
-    function BBS(_securityService, _bbsService) {
-        this._securityService = _securityService;
+    function BBS(_appService, _bbsService) {
+        this._appService = _appService;
         this._bbsService = _bbsService;
     }
     BBS.prototype.ngOnInit = function () {
         var bbs = this;
-        this._securityService.getCurrentAuth().subscribe(function (auth) { return bbs.currentAuth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
+        this._appService.getCurrentUser().subscribe(function (user) { return bbs.currentUser = user; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
         this._bbsService.getMessageBoards().subscribe(function (boards) { return bbs.messageBoards = boards; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
     BBS.prototype.contentChanged = function (newContent) {
@@ -34,7 +34,7 @@ var BBS = (function () {
             providers: [bbs_service_1.BBSService],
             directives: [tinyMCE_1.TinyMCE, ng2_bootstrap_1.ACCORDION_DIRECTIVES]
         }), 
-        __metadata('design:paramtypes', [security_service_1.SecurityService, bbs_service_1.BBSService])
+        __metadata('design:paramtypes', [app_service_1.AppService, bbs_service_1.BBSService])
     ], BBS);
     return BBS;
 }());

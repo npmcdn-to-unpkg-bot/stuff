@@ -9,21 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var security_service_1 = require('../services/security.service');
+var app_service_1 = require('../services/app.service');
 var Home = (function () {
-    function Home(_securityService) {
-        this._securityService = _securityService;
+    function Home(_appService) {
+        this._appService = _appService;
     }
     Home.prototype.ngOnInit = function () {
         var home = this;
-        this._securityService.getCurrentAuth().subscribe(function (auth) { return home._auth = auth; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
+        this._appService.getCurrentUser().subscribe(function (user) { return home._user = user; }, function (err) { return console.log(err); }, function () { return console.log('done'); });
     };
     Home = __decorate([
         core_1.Component({
             moduleId: module.id,
             templateUrl: 'home.html',
         }), 
-        __metadata('design:paramtypes', [security_service_1.SecurityService])
+        __metadata('design:paramtypes', [app_service_1.AppService])
     ], Home);
     return Home;
 }());

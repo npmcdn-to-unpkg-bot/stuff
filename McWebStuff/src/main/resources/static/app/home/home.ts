@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecurityService } from '../services/security.service';
+import { AppService, WebUserDTO } from '../services/app.service';
 
 @Component({
 	moduleId: module.id,
 	templateUrl: 'home.html',
 })
 export class Home { 
-	private _auth : any;
+	private _user : WebUserDTO;
 
-	constructor(private _securityService : SecurityService ) {
+	constructor(private _appService : AppService ) {
 	}
 	
 	ngOnInit() {
 		let home = this;
-		this._securityService.getCurrentAuth().subscribe(
-			auth => home._auth = auth,
+		this._appService.getCurrentUser().subscribe(
+			user => home._user = <WebUserDTO> user,
 			err => console.log(err),				
 			() => console.log('done')
 		);		

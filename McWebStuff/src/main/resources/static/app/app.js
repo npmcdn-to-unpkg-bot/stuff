@@ -10,19 +10,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require('@angular/router');
-var security_service_1 = require('./services/security.service');
+var app_service_1 = require('./services/app.service');
 var home_1 = require('./home/home');
 var bbs_1 = require('./bbs/bbs');
 var App = (function () {
-    function App(_router, _securityService) {
+    function App(_router, _appService) {
         this._router = _router;
-        this._securityService = _securityService;
+        this._appService = _appService;
+        this.currentUser = null;
     }
+    ;
     App.prototype.ngOnInit = function () {
-        var _this = this;
-        this._securityService.getCurrentAuth().subscribe(function (auth) {
-            _this.currentAuth = auth;
-            _this.currentUser = auth.principal.account.display;
+        var app = this;
+        this._appService.getCurrentUser().subscribe(function (user) {
+            app.currentUser = user;
         });
         this._router.navigate(['/app/home']);
     };
@@ -37,7 +38,7 @@ var App = (function () {
             { path: '/app/home', component: home_1.Home },
             { path: '/app/bbs', component: bbs_1.BBS }
         ]), 
-        __metadata('design:paramtypes', [router_1.Router, security_service_1.SecurityService])
+        __metadata('design:paramtypes', [router_1.Router, app_service_1.AppService])
     ], App);
     return App;
 }());

@@ -12,35 +12,41 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Rx_1 = require("rxjs/Rx");
 require("rxjs/Rx");
-var SecurityService = (function () {
-    function SecurityService(_http) {
+var WebUserDTO = (function () {
+    function WebUserDTO() {
+    }
+    return WebUserDTO;
+}());
+exports.WebUserDTO = WebUserDTO;
+var AppService = (function () {
+    function AppService(_http) {
         this._http = _http;
     }
-    SecurityService.prototype.ngOnInit = function () {
-        this.getCurrentAuth();
+    AppService.prototype.ngOnInit = function () {
+        this.getCurrentUser();
     };
-    SecurityService.prototype.getCurrentAuth = function () {
+    AppService.prototype.getCurrentUser = function () {
         var service = this;
-        if (this._currentAuth) {
+        if (this._currentUser) {
             return new Rx_1.Observable(function (observer) {
-                observer.next(service._currentAuth);
+                observer.next(service._currentUser);
                 observer.complete();
                 return;
             });
         }
         else {
-            return this._http.get('/rest/security/currentAuth')
+            return this._http.get('/rest/app/currentUser')
                 .map(function (res) {
-                service._currentAuth = res.json();
-                return service._currentAuth;
+                service._currentUser = res.json();
+                return service._currentUser;
             });
         }
     };
-    SecurityService = __decorate([
+    AppService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], SecurityService);
-    return SecurityService;
+    ], AppService);
+    return AppService;
 }());
-exports.SecurityService = SecurityService;
-//# sourceMappingURL=security.service.js.map
+exports.AppService = AppService;
+//# sourceMappingURL=app.service.js.map

@@ -1,4 +1,4 @@
-package person.mdc.web.entities;
+package person.mdc.web.model.entities.security;
 
 import java.io.Serializable;
 import java.util.Collection;
