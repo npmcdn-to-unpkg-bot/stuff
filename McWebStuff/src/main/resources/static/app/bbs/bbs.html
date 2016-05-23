@@ -1,1 +1,12 @@
-<tinyMCE [mceContent]="htmlContent" (contentChanged)="contentChanged($event)"></tinyMCE>
+<div class="panel panel-primary panel-sm">
+	<div class="panel-heading">
+		<h3 class="panel-title">BBS <small>(Message Boards)</small></h3>
+	</div>
+	<div class="panel-body">
+		<accordion closeOthers="false">
+			<accordion-group *ngFor="let board of messageBoards" panelClass="panel-info">
+				<label accordion-heading [title]="board.description" style="text-decoration: underline;">{{board.name}}</label>
+  			</accordion-group>
+		</accordion>
+	</div>
+</div>

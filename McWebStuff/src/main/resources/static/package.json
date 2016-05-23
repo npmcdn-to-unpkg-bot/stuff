@@ -36,6 +36,8 @@
     "angular2-in-memory-web-api": "0.0.7",
     "bootstrap": "^3.3.6",
     "tinymce": "",
+    "moment": "",
+    "ng2-bootstrap": "",
     
     "redux": "",
     "ng2-redux": "",

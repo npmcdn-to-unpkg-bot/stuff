@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Routes, Router } from '@angular/router';
-
 import { SecurityService } from './services/security.service';
 
 import { Home } from './home/home';

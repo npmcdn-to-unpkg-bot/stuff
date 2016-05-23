@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { SecurityService } from '../services/security.service';
 
 @Component({
-  moduleId: module.id,
-  templateUrl: 'home.html'
+	moduleId: module.id,
+	templateUrl: 'home.html',
 })
 export class Home { 
 	private _auth : any;

@@ -12,7 +12,9 @@ var core_1 = require('@angular/core');
 var security_service_1 = require('../services/security.service');
 var bbs_service_1 = require('../services/bbs.service');
 var tinyMCE_1 = require('../shared/tinyMCE');
+var ng2_bootstrap_1 = require('ng2-bootstrap/ng2-bootstrap');
 var BBS = (function () {
+    //<tinyMCE [mceContent]="htmlContent" (contentChanged)="contentChanged($event)"></tinyMCE>
     function BBS(_securityService, _bbsService) {
         this._securityService = _securityService;
         this._bbsService = _bbsService;
@@ -30,7 +32,7 @@ var BBS = (function () {
             moduleId: module.id,
             templateUrl: 'bbs.html',
             providers: [bbs_service_1.BBSService],
-            directives: [tinyMCE_1.TinyMCE]
+            directives: [tinyMCE_1.TinyMCE, ng2_bootstrap_1.ACCORDION_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [security_service_1.SecurityService, bbs_service_1.BBSService])
     ], BBS);

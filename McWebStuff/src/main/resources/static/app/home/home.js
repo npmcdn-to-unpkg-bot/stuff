@@ -21,7 +21,7 @@ var Home = (function () {
     Home = __decorate([
         core_1.Component({
             moduleId: module.id,
-            templateUrl: 'home.html'
+            templateUrl: 'home.html',
         }), 
         __metadata('design:paramtypes', [security_service_1.SecurityService])
     ], Home);
