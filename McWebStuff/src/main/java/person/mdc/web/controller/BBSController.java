@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import person.mdc.web.model.entities.bbs.MessageBoard;
+import person.mdc.web.model.domain.bbs.MessageBoard;
+import person.mdc.web.model.dto.bbs.MessageBoardDTO;
+import person.mdc.web.model.entities.bbs.MessageBoardEntity;
 import person.mdc.web.model.entities.bbs.MessageBoardRepository;
 
 @RestController("bbsController")
@@ -20,9 +22,12 @@ public class BBSController {
 	private MessageBoardRepository messagBoardRepository;
 	
 	@RequestMapping(value = "/messageBoard", method = {RequestMethod.GET})
-	public Collection<MessageBoard> getMessageBoards() {
-		List<MessageBoard> boards = new ArrayList<>(); 
-		boards.addAll((Collection<? extends MessageBoard>) this.messagBoardRepository.findAll());
+	public Collection<MessageBoardDTO> getMessageBoards() {
+		List<MessageBoardDTO> boards = new ArrayList<>();
+		Iterable<MessageBoardEntity> itMBE = this.messagBoardRepository.findAll();
+		for(MessageBoardEntity mbe : itMBE) {
+			boards.add(new MessageBoard(mbe).getMessageBoardDTO());
+		}
 		return boards;
 	}
 }

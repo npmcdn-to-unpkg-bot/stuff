@@ -21,24 +21,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name = "Account")
 @Table(name = "ACCOUNT")
-public class Account implements Serializable {
+public class AccountEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public static class UserDetailsImpl extends User implements UserDetails {
 		private static final long serialVersionUID = 1L;
 
-		private Account account;
+		private AccountEntity account;
 
 		public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
 			super(username, password, authorities);
 			
 		}
 
-		public Account getAccount() {
+		public AccountEntity getAccount() {
 			return account;
 		}
 
-		public void setAccount(Account account) {
+		public void setAccount(AccountEntity account) {
 			this.account = account;
 		}
 		
@@ -66,12 +66,12 @@ public class Account implements Serializable {
         name = "account_roles", 
         joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")) 
-    private Collection<Role> roles = new HashSet<>();
+    private Collection<RoleEntity> roles = new HashSet<>();
 
-	public Account() {
+	public AccountEntity() {
 	}
 	
-	public Account(String username, String password, String display, String email) {
+	public AccountEntity(String username, String password, String display, String email) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -105,7 +105,7 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 	
-	public Collection<Role> getRoles() {
+	public Collection<RoleEntity> getRoles() {
 		return roles;
 	}
 
@@ -143,7 +143,7 @@ public class Account implements Serializable {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
-		Account other = (Account) obj;
+		AccountEntity other = (AccountEntity) obj;
 		if (display == null) {
 			if (other.display != null) return false;
 		} else if (!display.equals(other.display)) return false;

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService, WebUserDTO } from '../services/app.service';
+
+import { AppService } from '../services/app.service';
+
+import { WebUserDTO } from "../services/model/webuser_dto";
 
 @Component({
 	moduleId: module.id,
@@ -15,7 +18,7 @@ export class Home {
 	ngOnInit() {
 		let home = this;
 		this._appService.getCurrentUser().subscribe(
-			user => home._user = <WebUserDTO> user,
+			user => home._user = user,
 			err => console.log(err),				
 			() => console.log('done')
 		);		

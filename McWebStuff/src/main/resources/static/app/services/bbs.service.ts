@@ -2,12 +2,13 @@ import { Injectable, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from "rxjs/Rx";
 import "rxjs/Rx";
-import { MessageBoard } from '../bbs/model/messageboard';
+
+import { MessageBoardDTO } from '../bbs/model/messageboard_dto';
 
 
 @Injectable()
 export class BBSService implements OnInit {
-	messageBoards : MessageBoard[];
+	messageBoards : MessageBoardDTO[];
 	
 	constructor(private _http: Http) {
 	}
@@ -16,10 +17,10 @@ export class BBSService implements OnInit {
 		this.getMessageBoards();
 	}
 	
-	public getMessageBoards() {
+	public getMessageBoards() : Observable<MessageBoardDTO[]> {
 		var service = this;
 		if(this.messageBoards) {
-			return new Observable(function(observer){
+			return new Observable<MessageBoardDTO[]>(function(observer){
 				observer.next(service.messageBoards);
 				observer.complete();
 				return;
@@ -27,8 +28,7 @@ export class BBSService implements OnInit {
 		} else {
 			return this._http.get('/rest/bbs/messageBoard')
 			.map(function(res: Response) {	
-				service.messageBoards = res.json();
-				return service.messageBoards;
+				return service.messageBoards = res.json();
 			});	
 		}
 	}

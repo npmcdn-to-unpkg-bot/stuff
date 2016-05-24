@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppService, WebUserDTO } from '../services/app.service';
-import { BBSService } from '../services/bbs.service';
-import { MessageBoard } from './model/messageboard';
-import { TinyMCE } from '../shared/tinyMCE';
 import { ACCORDION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+
+import { AppService } from '../services/app.service';
+import { BBSService } from '../services/bbs.service';
+import { TinyMCE } from '../shared/tinyMCE';
+
+import { WebUserDTO } from "../services/model/webuser_dto";
+import { MessageBoardDTO } from './model/messageboard_dto';
 
 declare var tinymce: any;
 
@@ -16,7 +19,7 @@ declare var tinymce: any;
 })
 export class BBS { 
 	public currentUser : WebUserDTO;
-    public messageBoards : MessageBoard[];
+    public messageBoards : MessageBoardDTO[];
 	public htmlContent : string;
     //<tinyMCE [mceContent]="htmlContent" (contentChanged)="contentChanged($event)"></tinyMCE>
 	
@@ -28,13 +31,13 @@ export class BBS {
 	ngOnInit() {		
 		let bbs = this;
 		this._appService.getCurrentUser().subscribe(
-				user => bbs.currentUser = <WebUserDTO> user,
-				err => console.log(err),				
+				user => bbs.currentUser = user,
+				err => console.error(err),				
 				() => console.log('done')
 		);
 		this._bbsService.getMessageBoards().subscribe(
-				boards => bbs.messageBoards = <MessageBoard[]> boards,
-				err => console.log(err),				
+				boards => bbs.messageBoards = boards,
+				err => console.error(err),				
 				() => console.log('done')
 		);
 	}

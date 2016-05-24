@@ -3,10 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from "rxjs/Rx";
 import "rxjs/Rx";
 
-export class WebUserDTO {
-	public userName: string;
-	public displayName: string;
-}
+import { WebUserDTO } from "./model/webuser_dto";
 
 @Injectable()
 export class AppService implements OnInit {
@@ -19,19 +16,18 @@ export class AppService implements OnInit {
 		this.getCurrentUser();
 	}
 	
-	public getCurrentUser() {
+	public getCurrentUser() : Observable<WebUserDTO> {
 		var service = this;
 		if(this._currentUser) {
-			return new Observable(function(observer){
+			return new Observable<WebUserDTO> (function(observer){
 				observer.next(service._currentUser);
 				observer.complete();
 				return;
 			});
 		} else {
 			return this._http.get('/rest/app/currentUser')
-			.map(function(res: Response) {	
-				service._currentUser = <WebUserDTO> res.json();
-				return service._currentUser;
+			.map(function(res: Response) {
+				return service._currentUser = res.json();
 			});	
 		}
 	}

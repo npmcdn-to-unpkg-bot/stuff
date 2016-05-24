@@ -5,6 +5,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PrivilegeRepository extends CrudRepository<Privilege, Long>{
-	Privilege findByName(@Param("name") String name);
+public interface PrivilegeRepository extends CrudRepository<PrivilegeEntity, Long>{
+	PrivilegeEntity findByName(@Param("name") String name);
 }

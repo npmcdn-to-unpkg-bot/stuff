@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Routes, Router } from '@angular/router';
-import { AppService, WebUserDTO } from './services/app.service';
+import { AppService } from './services/app.service';
 
 import { Home } from './home/home';
 import { BBS } from './bbs/bbs';
+import { WebUserDTO } from "./services/model/webuser_dto";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class App {
 	ngOnInit() {
 		var app = this;
 		this._appService.getCurrentUser().subscribe(user => {
-			app.currentUser = <WebUserDTO> user;
+			app.currentUser = user;
 		});
 		this._router.navigate(['/app/home']);
 	}

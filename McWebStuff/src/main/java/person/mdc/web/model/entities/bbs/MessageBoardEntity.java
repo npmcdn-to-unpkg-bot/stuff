@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity(name = "MessageBoard")
 @Table(name = "MESSAGE_BOARD")
-public class MessageBoard implements Serializable {
+public class MessageBoardEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,10 +25,10 @@ public class MessageBoard implements Serializable {
 	@Column(name = "DESCRIPTION", length = 200)
 	private String description;
 	
-	public MessageBoard() {
+	public MessageBoardEntity() {
 	}
 
-	public MessageBoard(String name, String description) {
+	public MessageBoardEntity(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -69,7 +69,7 @@ public class MessageBoard implements Serializable {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
-		MessageBoard other = (MessageBoard) obj;
+		MessageBoardEntity other = (MessageBoardEntity) obj;
 		if (description == null) {
 			if (other.description != null) return false;
 		} else if (!description.equals(other.description)) return false;

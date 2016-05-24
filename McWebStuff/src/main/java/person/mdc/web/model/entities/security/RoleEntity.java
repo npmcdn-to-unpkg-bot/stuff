@@ -17,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity(name = "Role")
 @Table(name = "ROLE")
-public class Role implements Serializable {
+public class RoleEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -32,17 +32,17 @@ public class Role implements Serializable {
         name = "roles_privileges", 
         joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
-    private Collection<Privilege> privileges = new HashSet<>();
+    private Collection<PrivilegeEntity> privileges = new HashSet<>();
     
-    public Role() {
+    public RoleEntity() {
 	}
 
-	public Role(String name) {
+	public RoleEntity(String name) {
 		super();
 		this.name = name;
 	}
 
-	public Role(String name, Collection<Privilege> privileges) {
+	public RoleEntity(String name, Collection<PrivilegeEntity> privileges) {
 		super();
 		this.name = name;
 		this.privileges = privileges;
@@ -52,7 +52,7 @@ public class Role implements Serializable {
 		return id;
 	}
 
-	public Collection<Privilege> getPrivileges() {
+	public Collection<PrivilegeEntity> getPrivileges() {
 		return privileges;
 	}
 	

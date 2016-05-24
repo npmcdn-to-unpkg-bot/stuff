@@ -19,7 +19,7 @@ public class AppController {
 	@RequestMapping(value = "/currentUser", method = {RequestMethod.GET})
 	public WebUserDTO getCurrentUser() {
 		User currentUser = securityService.getCurrentUser();
-		return currentUser.getWebUser();
+		return currentUser.getWebUserDTO();
 	}
 
 }

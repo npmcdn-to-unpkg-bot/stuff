@@ -7,9 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity
-public class Privilege implements Serializable {
+@Entity(name="Privilege")
+@Table(name="PRIVILEGE")
+public class PrivilegeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,10 +21,10 @@ public class Privilege implements Serializable {
 	@Column(name = "NAME", nullable = false)
     private String name;
 
-    public Privilege() {
+    public PrivilegeEntity() {
 	}
  
-	public Privilege(String name) {
+	public PrivilegeEntity(String name) {
 		super();
 		this.name = name;
 	}

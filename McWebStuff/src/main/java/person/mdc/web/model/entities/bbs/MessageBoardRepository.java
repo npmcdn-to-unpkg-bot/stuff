@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MessageBoardRepository extends PagingAndSortingRepository<MessageBoard, Long> {
-	List<MessageBoard> findByName(@Param("name") String name);
+public interface MessageBoardRepository extends PagingAndSortingRepository<MessageBoardEntity, Long> {
+	List<MessageBoardEntity> findByName(@Param("name") String name);
 }

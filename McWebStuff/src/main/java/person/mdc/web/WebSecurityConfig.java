@@ -21,10 +21,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import person.mdc.web.model.entities.security.Account;
+import person.mdc.web.model.entities.security.AccountEntity;
 import person.mdc.web.model.entities.security.AccountRepository;
-import person.mdc.web.model.entities.security.Privilege;
-import person.mdc.web.model.entities.security.Role;
+import person.mdc.web.model.entities.security.PrivilegeEntity;
+import person.mdc.web.model.entities.security.RoleEntity;
 
 @Configuration
 @EnableWebSecurity
@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new UserDetailsService() {
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-				Account account = accountRepository.findByUsername(username);
+				AccountEntity account = accountRepository.findByUsername(username);
 				if (account != null) {
 					UserDetails details = account.getUserDetails(getAuthorities(account.getRoles()));
 					return details;
@@ -73,17 +73,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				}
 			}
 
-			private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
+			private Collection<? extends GrantedAuthority> getAuthorities(Collection<RoleEntity> roles) {
 				return getGrantedAuthorities(getPrivileges(roles));
 			}
 
-			private List<String> getPrivileges(Collection<Role> roles) {
+			private List<String> getPrivileges(Collection<RoleEntity> roles) {
 				List<String> privileges = new ArrayList<>();
-				List<Privilege> collection = new ArrayList<>();
-				for (Role role : roles) {
+				List<PrivilegeEntity> collection = new ArrayList<>();
+				for (RoleEntity role : roles) {
 					collection.addAll(role.getPrivileges());
 				}
-				for (Privilege item : collection) {
+				for (PrivilegeEntity item : collection) {
 					privileges.add(item.getName());
 				}
 				return privileges;

@@ -5,6 +5,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends CrudRepository<Account, Long> {
-	Account findByUsername(@Param("username") String username);
+public interface AccountRepository extends CrudRepository<AccountEntity, Long> {
+	AccountEntity findByUsername(@Param("username") String username);
 }
