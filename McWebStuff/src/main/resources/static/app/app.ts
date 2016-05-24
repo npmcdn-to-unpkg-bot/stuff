@@ -17,7 +17,7 @@ import { BBS } from './bbs/bbs';
     { path: '/app/bbs', component: BBS }
 ])
 export class App {
-	currentUser : WebUserDTO = null);
+	currentUser : WebUserDTO = null;
 	
 	constructor(private _router: Router, private _appService : AppService) {
 	}

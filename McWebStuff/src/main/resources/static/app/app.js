@@ -19,7 +19,6 @@ var App = (function () {
         this._appService = _appService;
         this.currentUser = null;
     }
-    ;
     App.prototype.ngOnInit = function () {
         var app = this;
         this._appService.getCurrentUser().subscribe(function (user) {
