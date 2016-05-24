@@ -1,7 +1,6 @@
 package person.mdc.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +18,8 @@ public class AppController {
 	
 	@RequestMapping(value = "/currentUser", method = {RequestMethod.GET})
 	public WebUserDTO getCurrentUser() {
-		Authentication auth = securityService.getCurrentAuthentication();
-		User currentUser = new User(auth);
-		return new WebUserDTO(currentUser);
+		User currentUser = securityService.getCurrentUser();
+		return currentUser.getWebUser();
 	}
 
 }

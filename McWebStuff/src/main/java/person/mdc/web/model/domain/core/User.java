@@ -2,16 +2,28 @@ package person.mdc.web.model.domain.core;
 
 import org.springframework.security.core.Authentication;
 
-public class User {
-	private Authentication authentication;
+import person.mdc.web.model.dto.app.WebUserDTO;
+import person.mdc.web.model.entities.security.Account;
+import person.mdc.web.model.entities.security.Account.UserDetailsImpl;
 
-	public User(Authentication authentication) {
+public class User {
+	private Account account;
+
+	public User(Authentication auth) {
 		super();
-		this.authentication = authentication;
+		UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
+		this.account = userDetails.getAccount();
 	}
 
-	public Authentication getAuthentication() {
-		return authentication;
+	public Account getAccount() {
+		return account;
+	}
+
+	public WebUserDTO getWebUser() {
+		WebUserDTO userDTO = new WebUserDTO();
+		userDTO.setUserName(getAccount().getUsername());
+		userDTO.setDisplayName(getAccount().getDisplay());
+		return userDTO;
 	}
 	
 }

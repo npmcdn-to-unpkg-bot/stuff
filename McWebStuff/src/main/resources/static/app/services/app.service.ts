@@ -4,7 +4,8 @@ import { Observable } from "rxjs/Rx";
 import "rxjs/Rx";
 
 export class WebUserDTO {
-	public name: string;
+	public userName: string;
+	public displayName: string;
 }
 
 @Injectable()
