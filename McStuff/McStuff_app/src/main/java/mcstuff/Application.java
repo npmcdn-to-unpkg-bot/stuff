@@ -145,4 +145,10 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 		});
 	}
 
+	@Override
+	public String toString() {
+		return "Application [mainStage=" + mainStage + ", moduleStage=" + moduleStage + ", defaultView=" + defaultView
+				+ "]";
+	}
+
 }

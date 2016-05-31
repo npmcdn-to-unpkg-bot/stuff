@@ -72,10 +72,17 @@ project(':McStuff_app') {
 	dependencies {
 		compile project(':McStuff_moduleApi')
 		compile project(':McStuff_rpg_module')
+		compile project(':McStuff_bbs_module')
 	}
 }
 
 project(':McStuff_rpg_module') {
+	dependencies {
+		compile project(':McStuff_moduleApi')
+	}
+}
+
+project(':McStuff_bbs_module') {
 	dependencies {
 		compile project(':McStuff_moduleApi')
 	}

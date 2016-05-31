@@ -19,5 +19,6 @@ include 'services:webservice'
 include 'McStuff_moduleApi'
 include 'McStuff_app'
 include 'McStuff_rpg_module'
+include 'McStuff_bbs_module'
 
 rootProject.name = 'McStuff'

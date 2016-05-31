@@ -18,28 +18,32 @@ public class ClassEnumerator {
 	/**
 	 * Give a package this method returns all classes contained in that package
 	 * @param pkg
+	 * @throws Exception 
 	 */
-	public static List<Class<?>> getClassesForPackage(final String pkgName) {
+	public static List<Class<?>> getClassesForPackage(final String pkgName) throws Exception {
 		final ArrayList<Class<?>> classes = new ArrayList<>();
 
 		// Get name of package and turn it to a relative path
 		final String relPath = pkgName.replace('.', '/');
 
 		// Get a File object for the package
-		final URL resource = ClassLoader.getSystemClassLoader().getResource(relPath);
+		final Enumeration<URL> resources = ClassLoader.getSystemClassLoader().getResources(relPath);
 
 		// If we can't find the resource we throw an exception
-		if (resource == null) {
+		if (resources == null) {
 			throw new RuntimeException("Unexpected problem: No resource for " + relPath);
 		}
 
-		logger.info("Package: '" + pkgName + "' becomes Resource: '" + resource.toString() + "'");
+		while(resources.hasMoreElements()) {
+			URL resource = resources.nextElement();
+			logger.info("Package: '" + pkgName + "' becomes Resource: '" + resource.toString() + "'");
 
-		// If the resource is a jar get all classes from jar
-		if (resource.toString().startsWith("jar:")) {
-			classes.addAll(processJarfile(resource, pkgName));
-		} else {
-			classes.addAll(processDirectory(new File(resource.getPath()), pkgName));
+			// If the resource is a jar get all classes from jar
+			if (resource.toString().startsWith("jar:")) {
+				classes.addAll(processJarfile(resource, pkgName));
+			} else {
+				classes.addAll(processDirectory(new File(resource.getPath()), pkgName));
+			}
 		}
 		return classes;
 	}

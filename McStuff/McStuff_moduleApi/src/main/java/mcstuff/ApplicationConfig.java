@@ -1,6 +1,8 @@
 package mcstuff;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -45,6 +47,11 @@ public class ApplicationConfig {
 	public DataSource dataSource() {
 		return DataSourceBuilder.create().username("dbUser").password("dbPass").url("jdbc:derby:mcstuff_db;create=true")
 				.build();
+	}
+	
+	private Map<String, Object> settings = new HashMap<>();
+	public Map<String, Object> getSettings() {
+		return settings;
 	}
 
 	@Override
