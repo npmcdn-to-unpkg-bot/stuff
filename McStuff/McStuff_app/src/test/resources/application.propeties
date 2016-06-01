@@ -1,3 +1,4 @@
+spring.jpa.database = derby
 spring.jpa.show-sql = true
 
 # Hibernate ddl auto (create, create-drop, update): with "update" the database
