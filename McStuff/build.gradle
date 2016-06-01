@@ -6,44 +6,56 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * user guide available at https://docs.gradle.org/2.13/userguide/tutorial_java_projects.html
  */
- buildscript {
- 	repositories {
- 		jcenter()
- 		mavenCentral()
- 	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.3.RELEASE")
+ 
+buildscript {
+	ext {
+		springBootVersion = '1.4.0.M2'
+	}
+	
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+    dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
  
- allprojects {
+allprojects {
  	apply plugin: 'eclipse'
  	apply plugin: 'java'
  	
- }
+ 	repositories {
+	    jcenter()
+	    mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	} 	
+}
  
- subprojects {
-	apply plugin: 'spring-boot'
-	
+subprojects {		
+ 	apply plugin: 'spring-boot'
+
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
 
  	eclipse {
  		project {
  			natures 'org.springframework.ide.eclipse.core.springnature'
- 			classpath {
+			classpath {
+				containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+				containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
  				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
- 			}
+			} 			
  		}
  	}
 	
-	// In this section you declare where to find the dependencies of your project
-	repositories {
-	    // Use 'jcenter' for resolving your dependencies.
-	    // You can declare any Maven/Ivy/file repository here.
-	    jcenter()
-	    mavenCentral()
+	jar {
+		version = '0.0.1-SNAPSHOT'
 	}
+	
+	// In this section you declare where to find the dependencies of your project
 	
 	// In this section you declare the dependencies for your production and test code
 	dependencies {
@@ -67,6 +79,14 @@
 project(':McStuff_app') {
 	apply plugin: 'application'
 	
+	eclipse {
+ 		project {
+			classpath {
+ 				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+			} 			
+ 		}
+ 	}
+	
 	mainClassName = "mcstuff.application.Application"
 	
 	dependencies {
@@ -74,17 +94,57 @@ project(':McStuff_app') {
 		compile project(':McStuff_rpg_module')
 		compile project(':McStuff_bbs_module')
 	}
+	
+	
 }
 
 project(':McStuff_rpg_module') {
+	eclipse {
+ 		project {
+			classpath {
+ 				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+			} 			
+ 		}
+ 	}
+
+	dependencies {
+		compile project(':McStuff_moduleApi')
+	}
+
+}
+
+project(':McStuff_bbs_module') {
+	eclipse {
+ 		project {
+			classpath {
+ 				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+			} 			
+ 		}
+ 	}
+
 	dependencies {
 		compile project(':McStuff_moduleApi')
 	}
 }
 
-project(':McStuff_bbs_module') {
+project(':McStuff_web') {
+	apply plugin: 'application'
+
+	mainClassName = "mcstuff.web.McWebStuffApplication"
+
 	dependencies {
-		compile project(':McStuff_moduleApi')
+		compile('org.springframework.boot:spring-boot-starter-data-rest')
+		compile('org.springframework.boot:spring-boot-starter-security')
+		compile('org.springframework.boot:spring-boot-starter-web')				
 	}
 }
+
+dependencies {
+	compile project(':McStuff_app')
+	compile project(':McStuff_moduleApi')
+	compile project(':McStuff_bbs_module')
+	compile project(':McStuff_rpg_module')
+	compile project(':McStuff_web')
+}
+
 

@@ -1,1 +1,0 @@
-An Angular 2 sample webapp.
