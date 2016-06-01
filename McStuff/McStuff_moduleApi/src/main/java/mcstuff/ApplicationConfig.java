@@ -25,6 +25,13 @@ import mcstuff.javafx.spring.SpringFXMLLoader;
 @Component
 @Configuration
 public class ApplicationConfig {
+	
+	@Bean
+	@Primary
+	public DataSource dataSource() {
+		return DataSourceBuilder.create().username("dbUser").password("dbPass").url("jdbc:derby:mcstuff_db;create=true")
+				.build();
+	}
 
 	@Autowired
 	private SpringFXMLLoader fxmlLoader;
@@ -41,13 +48,6 @@ public class ApplicationConfig {
 
 	private final Set<I_Module> modules = new HashSet<>();
 	private I_Module currentModule;
-
-	@Bean
-	@Primary
-	public DataSource dataSource() {
-		return DataSourceBuilder.create().username("dbUser").password("dbPass").url("jdbc:derby:mcstuff_db;create=true")
-				.build();
-	}
 		
 	private Map<String, Object> settings = new HashMap<>();
 	public Map<String, Object> getSettings() {
