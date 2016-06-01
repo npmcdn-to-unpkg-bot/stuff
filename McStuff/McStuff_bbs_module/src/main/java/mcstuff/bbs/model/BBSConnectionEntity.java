@@ -9,9 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name = "Connection")
-@Table(name = "CONNECTION")
-public class ConnectionEntity implements Serializable {
+@Entity(name = "BBSConnection")
+@Table(name = "BBS_CONNECTION")
+public class BBSConnectionEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,7 +28,7 @@ public class ConnectionEntity implements Serializable {
 	@Column(name = "BASE_URL", length = 250)
 	private String baseUrl;
 
-	public ConnectionEntity() {
+	public BBSConnectionEntity() {
 		
 	}
 

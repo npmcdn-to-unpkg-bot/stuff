@@ -11,10 +11,13 @@ import mcstuff.api.module.ModuleBase;
 @Component
 public class RPGModule extends ModuleBase implements I_Module {
 	
-@Override
+	public RPGModule() {
+		setTitle("RPG Module");
+	}
+	
+	@Override
 	public void initialize(I_ModuleHost host) {
 		super.initialize(host);
-		setTitle("RPG Module");
 	}
 	
 	@Override

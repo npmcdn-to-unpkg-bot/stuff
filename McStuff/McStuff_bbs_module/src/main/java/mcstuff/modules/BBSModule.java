@@ -8,10 +8,13 @@ import mcstuff.api.module.ModuleBase;
 
 @Component
 public class BBSModule extends ModuleBase implements I_Module {
+	
+	public BBSModule() {
+		setTitle("BBS Module");
+	}
 
 	@Override
 	public void initialize(I_ModuleHost host) {
 		super.initialize(host);
-		setTitle("BBS Module");
 	}
 }

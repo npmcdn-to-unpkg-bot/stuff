@@ -64,7 +64,7 @@ public class McWebStuffApplication {
 			}
 
 			@Override
-			public void run(final String... arg0) throws Exception {
+			public void run(final String... args) throws Exception {
 
 				final PrivilegeEntity readPrivilege = createPrivilegeIfNotFound(E_Privilege.READ);
 				final PrivilegeEntity writePrivilege = createPrivilegeIfNotFound(E_Privilege.WRITE);

@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.orm.jpa.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -21,6 +23,8 @@ import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
 import mcstuff.util.ClassEnumerator;
 
 @SpringBootApplication
+@EnableJpaRepositories(basePackages="mcstuff.bbs.model.BBSConnectionRepository")
+@EntityScan(basePackages="mcstuff.bbs.model.BBSConnectionEntity")
 public class Application extends AbstractJavaFxApplicationSupport implements I_ModuleHost {
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 	private static final String MODULE_PACKAGE = "mcstuff.modules";
