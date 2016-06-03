@@ -99,6 +99,16 @@ project(':McStuff_rpg_module') {
 
 }
 
+project(':McStuff_bbs_lib') {
+	eclipse {
+ 		project {
+			classpath {
+ 				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
+			} 			
+ 		}
+ 	}
+}
+
 project(':McStuff_bbs_module') {
 	eclipse {
  		project {
@@ -110,6 +120,7 @@ project(':McStuff_bbs_module') {
 
 	dependencies {
 		compile project(':McStuff_moduleApi')
+		compile project(':McStuff_bbs_lib')
 	}
 }
 
@@ -122,12 +133,15 @@ project(':McStuff_web') {
 		compile('org.springframework.boot:spring-boot-starter-data-rest')
 		compile('org.springframework.boot:spring-boot-starter-security')
 		compile('org.springframework.boot:spring-boot-starter-web')				
+
+		compile project(':McStuff_bbs_lib')
 	}
 }
 
 dependencies {
 	compile project(':McStuff_app')
 	compile project(':McStuff_moduleApi')
+	compile project(':McStuff_bbs_lib')
 	compile project(':McStuff_bbs_module')
 	compile project(':McStuff_rpg_module')
 	compile project(':McStuff_web')
