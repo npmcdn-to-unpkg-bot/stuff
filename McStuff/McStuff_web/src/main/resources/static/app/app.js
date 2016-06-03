@@ -5,6 +5,7 @@
 
 	angular.module('app', [
 		'ngComponentRouter',
+		'ui.bootstrap',
 		'home'
 	])
 	

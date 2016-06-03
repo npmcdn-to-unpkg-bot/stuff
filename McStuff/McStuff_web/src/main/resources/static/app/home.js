@@ -13,7 +13,6 @@
 		
 	function HomeComponent($location, $scope, $element, $attrs) {
 		var $comp = this;
-		debugger;
 	}
 
 })();
