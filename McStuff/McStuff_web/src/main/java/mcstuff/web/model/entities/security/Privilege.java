@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity(name = "Privilege")
 @Table(name = "PRIVILEGE")
-public class PrivilegeEntity implements Serializable {
+public class Privilege implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,10 +21,10 @@ public class PrivilegeEntity implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	public PrivilegeEntity() {
+	public Privilege() {
 	}
 
-	public PrivilegeEntity(final String name) {
+	public Privilege(final String name) {
 		super();
 		this.name = name;
 	}

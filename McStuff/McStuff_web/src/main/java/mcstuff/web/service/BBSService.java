@@ -2,7 +2,7 @@ package mcstuff.web.service;
 
 import org.springframework.stereotype.Service;
 
-@Service(value = "securityService")
+@Service(value = "bbsService")
 public class BBSService {
 
 }

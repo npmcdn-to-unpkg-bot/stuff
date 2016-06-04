@@ -21,11 +21,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name = "Account")
 @Table(name = "ACCOUNT")
-public class AccountEntity implements Serializable {
+public class Account implements Serializable {
 	public static class UserDetailsImpl extends User implements UserDetails {
 		private static final long serialVersionUID = 1L;
 
-		private AccountEntity account;
+		private Account account;
 
 		public UserDetailsImpl(final String username, final String password,
 				final Collection<? extends GrantedAuthority> authorities) {
@@ -33,11 +33,11 @@ public class AccountEntity implements Serializable {
 
 		}
 
-		public AccountEntity getAccount() {
+		public Account getAccount() {
 			return account;
 		}
 
-		public void setAccount(final AccountEntity account) {
+		public void setAccount(final Account account) {
 			this.account = account;
 		}
 
@@ -64,12 +64,12 @@ public class AccountEntity implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	private final Collection<RoleEntity> roles = new HashSet<>();
+	private final Collection<Role> roles = new HashSet<>();
 
-	public AccountEntity() {
+	public Account() {
 	}
 
-	public AccountEntity(final String username, final String password, final String display, final String email) {
+	public Account(final String username, final String password, final String display, final String email) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -88,7 +88,7 @@ public class AccountEntity implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final AccountEntity other = (AccountEntity) obj;
+		final Account other = (Account) obj;
 		if (display == null) {
 			if (other.display != null) {
 				return false;
@@ -150,7 +150,7 @@ public class AccountEntity implements Serializable {
 		return password;
 	}
 
-	public Collection<RoleEntity> getRoles() {
+	public Collection<Role> getRoles() {
 		return roles;
 	}
 

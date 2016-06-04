@@ -21,10 +21,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import mcstuff.web.model.entities.security.AccountEntity;
+import mcstuff.web.model.entities.security.Account;
 import mcstuff.web.model.entities.security.AccountRepository;
-import mcstuff.web.model.entities.security.PrivilegeEntity;
-import mcstuff.web.model.entities.security.RoleEntity;
+import mcstuff.web.model.entities.security.Privilege;
+import mcstuff.web.model.entities.security.Role;
 
 @Configuration
 @EnableWebSecurity
@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected UserDetailsService userDetailsService() {
 
 		return new UserDetailsService() {
-			private Collection<? extends GrantedAuthority> getAuthorities(final Collection<RoleEntity> roles) {
+			private Collection<? extends GrantedAuthority> getAuthorities(final Collection<Role> roles) {
 				return getGrantedAuthorities(getPrivileges(roles));
 			}
 
@@ -89,13 +89,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				return authorities;
 			}
 
-			private List<String> getPrivileges(final Collection<RoleEntity> roles) {
+			private List<String> getPrivileges(final Collection<Role> roles) {
 				final List<String> privileges = new ArrayList<>();
-				final List<PrivilegeEntity> collection = new ArrayList<>();
-				for (final RoleEntity role : roles) {
+				final List<Privilege> collection = new ArrayList<>();
+				for (final Role role : roles) {
 					collection.addAll(role.getPrivileges());
 				}
-				for (final PrivilegeEntity item : collection) {
+				for (final Privilege item : collection) {
 					privileges.add(item.getName());
 				}
 				return privileges;
@@ -103,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 			@Override
 			public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-				final AccountEntity account = accountRepository.findByUsername(username);
+				final Account account = accountRepository.findByUsername(username);
 				if (account != null) {
 					final UserDetails details = account.getUserDetails(getAuthorities(account.getRoles()));
 					return details;
