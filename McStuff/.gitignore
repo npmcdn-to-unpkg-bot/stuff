@@ -2,6 +2,6 @@
 /.gradle
 /.project
 /.settings
-/build
-/bin
+build
+bin
 /.dbeaver-data-sources.xml

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
 <?import java.net.URL?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
-		fx:controller="mcstuff.bbs.ui.BBSModuleHomeController" fx:id="rootPane" prefHeight="400" prefWidth="600" >
-	<stylesheets>
-		<URL value="@bbs_module.css" />
-	</stylesheets>
-</BorderPane>
-
+<StackPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="mcstuff.bbs.ui.BBSModuleHomeController">
+	<BorderPane fx:id="layoutContent">
+		<stylesheets>
+			<URL value="@bbs_module.css" />
+		</stylesheets>
+		<center>
+			<ScrollPane fx:id="paneContent" />
+		</center>
+	</BorderPane>
+	<AnchorPane fx:id="layoutConnection" prefWidth="100" prefHeight="-1">
+		
+	</AnchorPane>
+</StackPane>

@@ -14,7 +14,7 @@ import mcstuff.bbs.model.BBSConnection;
 import mcstuff.modules.BBSModule;
 
 @Component("bbsFXMLLoader")
-public class BBSFXMLLoader extends FXMLLoader {
+public class BBSFXMLLoader {
 		
 	@Autowired
 	protected ApplicationConfig config;
@@ -43,14 +43,13 @@ public class BBSFXMLLoader extends FXMLLoader {
 			
 			String sFullUrl = connection.getBaseUrl() + (connection.getBaseUrl().endsWith("/")?"":"/")
 				+ url;
-			//final FXMLLoader loader = new FXMLLoader(new URL(fullUrl));
 			URL fullURL = new URL(sFullUrl);
-			setLocation(fullURL);
+			FXMLLoader loader = new FXMLLoader(fullURL);
 			HttpURLConnection urlConnection = (HttpURLConnection) fullURL.openConnection();
 			urlConnection.setRequestMethod("GET");
 			urlConnection.connect();
-			setController(bbsController);
-			return load(urlConnection.getInputStream());
+			loader.setController(bbsController);
+			return loader.load(urlConnection.getInputStream());
 		} catch (final Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(String.format("Failed to load BBS FXML file '%s' from server", fullUrl), e);

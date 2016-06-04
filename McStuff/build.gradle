@@ -73,7 +73,7 @@ project(':McStuff_app') {
  		}
  	}
 	
-	mainClassName = "mcstuff.application.Application"
+	mainClassName = "mcstuff.Application"
 	
 	dependencies {
 		compile project(':McStuff_moduleApi')

@@ -10,17 +10,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Component;
+import org.springframework.core.env.Environment;
 
 import javafx.stage.Stage;
-
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.javafx.spring.SpringFXMLLoader;
@@ -34,6 +30,9 @@ public class ApplicationConfig {
 		return DataSourceBuilder.create().username("dbUser").password("dbPass").url("jdbc:derby:mcstuff_db;create=true")
 				.build();
 	}
+	
+	@Autowired
+	private Environment env;
 
 	@Autowired
 	private SpringFXMLLoader defaultFXMLLoader;
@@ -57,75 +56,14 @@ public class ApplicationConfig {
 	}
 	
 	public ApplicationConfig() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ApplicationConfig other = (ApplicationConfig) obj;
-		if (appTitle == null) {
-			if (other.appTitle != null) {
-				return false;
-			}
-		} else if (!appTitle.equals(other.appTitle)) {
-			return false;
-		}
-		if (applicationContext == null) {
-			if (other.applicationContext != null) {
-				return false;
-			}
-		} else if (!applicationContext.equals(other.applicationContext)) {
-			return false;
-		}
-		if (currentModule == null) {
-			if (other.currentModule != null) {
-				return false;
-			}
-		} else if (!currentModule.equals(other.currentModule)) {
-			return false;
-		}
-		if (currentStage == null) {
-			if (other.currentStage != null) {
-				return false;
-			}
-		} else if (!currentStage.equals(other.currentStage)) {
-			return false;
-		}
-		if (defaultFXMLLoader == null) {
-			if (other.defaultFXMLLoader != null) {
-				return false;
-			}
-		} else if (!defaultFXMLLoader.equals(other.defaultFXMLLoader)) {
-			return false;
-		}
-		if (moduleHost == null) {
-			if (other.moduleHost != null) {
-				return false;
-			}
-		} else if (!moduleHost.equals(other.moduleHost)) {
-			return false;
-		}
-		if (modules == null) {
-			if (other.modules != null) {
-				return false;
-			}
-		} else if (!modules.equals(other.modules)) {
-			return false;
-		}
-		return true;
 	}
 
 	public ApplicationContext getApplicationContext() {
 		return applicationContext;
+	}
+	
+	public Environment getEnvironment() {
+		return env;
 	}
 
 	public String getAppTitle() {
@@ -150,20 +88,6 @@ public class ApplicationConfig {
 
 	public Set<I_Module> getModules() {
 		return modules;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (appTitle == null ? 0 : appTitle.hashCode());
-		result = prime * result + (applicationContext == null ? 0 : applicationContext.hashCode());
-		result = prime * result + (currentModule == null ? 0 : currentModule.hashCode());
-		result = prime * result + (currentStage == null ? 0 : currentStage.hashCode());
-		result = prime * result + (defaultFXMLLoader == null ? 0 : defaultFXMLLoader.hashCode());
-		result = prime * result + (moduleHost == null ? 0 : moduleHost.hashCode());
-		result = prime * result + (modules == null ? 0 : modules.hashCode());
-		return result;
 	}
 
 	public void setCurrentModule(final I_Module currentModule) {
@@ -192,8 +116,11 @@ public class ApplicationConfig {
 
 	@Override
 	public String toString() {
-		return "ApplicationConfig [fxmlLoader=" + defaultFXMLLoader + ", appTitle=" + appTitle + ", moduleHost=" + moduleHost
-				+ ", currentStage=" + currentStage + ", modules=" + modules + ", currentModule=" + currentModule + "]";
+		return "ApplicationConfig [env=" + env + ", defaultFXMLLoader=" + defaultFXMLLoader + ", applicationContext="
+				+ applicationContext + ", appTitle=" + appTitle + ", moduleHost=" + moduleHost + ", currentStage="
+				+ currentStage + ", modules=" + modules + ", currentModule=" + currentModule + ", settings=" + settings
+				+ "]";
 	}
+
 
 }

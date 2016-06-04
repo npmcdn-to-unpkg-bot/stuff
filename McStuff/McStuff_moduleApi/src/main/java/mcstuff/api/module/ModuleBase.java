@@ -68,9 +68,9 @@ public abstract class ModuleBase implements I_Module {
 		setVisible(true);
 	}
 	
-	public void showScene(final Stage stage, final String fxmlPath) {
-		final Parent root = (Parent) getAppConfig().getFXMLLoader().load(fxmlPath);
-		final Scene scene = new Scene(root);
+	public void showScene(Stage stage, String fxmlPath) {
+		Parent root = (Parent) getAppConfig().getFXMLLoader().load(fxmlPath);
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
