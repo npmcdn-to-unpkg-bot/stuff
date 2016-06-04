@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import javafx.fxml.FXMLLoader;
 import javafx.util.Callback;
 
-@Component
+@Component("defaultFXMLLoader")
 public class SpringFXMLLoader {
 
 	@Autowired
@@ -19,7 +19,7 @@ public class SpringFXMLLoader {
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
 				@Override
 				public Object call(final Class<?> aClass) {
-					return context.getBean(aClass);
+					return controllerFactory(aClass);
 				}
 			});
 			return loader.load();
@@ -27,5 +27,9 @@ public class SpringFXMLLoader {
 			e.printStackTrace();
 			throw new RuntimeException(String.format("Failed to load FXML file '%s'", url));
 		}
+	}
+	
+	protected Object controllerFactory(final Class<?> aClass) {
+		return context.getBean(aClass);
 	}
 }

@@ -34,7 +34,7 @@ public class ApplicationConfig {
 	}
 
 	@Autowired
-	private SpringFXMLLoader fxmlLoader;
+	private SpringFXMLLoader defaultFXMLLoader;
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -94,11 +94,11 @@ public class ApplicationConfig {
 		} else if (!currentStage.equals(other.currentStage)) {
 			return false;
 		}
-		if (fxmlLoader == null) {
-			if (other.fxmlLoader != null) {
+		if (defaultFXMLLoader == null) {
+			if (other.defaultFXMLLoader != null) {
 				return false;
 			}
-		} else if (!fxmlLoader.equals(other.fxmlLoader)) {
+		} else if (!defaultFXMLLoader.equals(other.defaultFXMLLoader)) {
 			return false;
 		}
 		if (moduleHost == null) {
@@ -135,7 +135,7 @@ public class ApplicationConfig {
 	}
 
 	public SpringFXMLLoader getFXMLLoader() {
-		return fxmlLoader;
+		return defaultFXMLLoader;
 	}
 
 	public I_ModuleHost getModuleHost() {
@@ -154,7 +154,7 @@ public class ApplicationConfig {
 		result = prime * result + (applicationContext == null ? 0 : applicationContext.hashCode());
 		result = prime * result + (currentModule == null ? 0 : currentModule.hashCode());
 		result = prime * result + (currentStage == null ? 0 : currentStage.hashCode());
-		result = prime * result + (fxmlLoader == null ? 0 : fxmlLoader.hashCode());
+		result = prime * result + (defaultFXMLLoader == null ? 0 : defaultFXMLLoader.hashCode());
 		result = prime * result + (moduleHost == null ? 0 : moduleHost.hashCode());
 		result = prime * result + (modules == null ? 0 : modules.hashCode());
 		return result;
@@ -186,7 +186,7 @@ public class ApplicationConfig {
 
 	@Override
 	public String toString() {
-		return "ApplicationConfig [fxmlLoader=" + fxmlLoader + ", appTitle=" + appTitle + ", moduleHost=" + moduleHost
+		return "ApplicationConfig [fxmlLoader=" + defaultFXMLLoader + ", appTitle=" + appTitle + ", moduleHost=" + moduleHost
 				+ ", currentStage=" + currentStage + ", modules=" + modules + ", currentModule=" + currentModule + "]";
 	}
 

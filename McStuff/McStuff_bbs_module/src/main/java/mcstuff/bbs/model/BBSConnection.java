@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity(name = "BBSConnection")
 @Table(name = "BBS_CONNECTION")
-public class BBSConnectionEntity implements Serializable {
+public class BBSConnection implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,7 +28,7 @@ public class BBSConnectionEntity implements Serializable {
 	@Column(name = "BASE_URL", length = 250)
 	private String baseUrl;
 
-	public BBSConnectionEntity() {
+	public BBSConnection() {
 		
 	}
 
