@@ -25,7 +25,7 @@ public class SpringFXMLLoader {
 			return loader.load();
 		} catch (final Exception e) {
 			e.printStackTrace();
-			throw new RuntimeException(String.format("Failed to load FXML file '%s'", url));
+			throw new RuntimeException(String.format("Failed to load FXML file '%s'", url), e);
 		}
 	}
 	

@@ -10,6 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.MimeMappings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +28,7 @@ import mcstuff.web.model.entities.security.Role;
 import mcstuff.web.model.entities.security.RoleRepository;
 
 @SpringBootApplication
-public class McWebStuffApplication {
+public class McWebStuffApplication implements EmbeddedServletContainerCustomizer {
 	public static void main(final String[] args) {
 		SpringApplication.run(McWebStuffApplication.class, args);
 	}
@@ -84,5 +87,13 @@ public class McWebStuffApplication {
 				}
 			}
 		};
+	}
+
+	@Override
+	public void customize(ConfigurableEmbeddedServletContainer container) {
+		MimeMappings mimeMappings = new MimeMappings(MimeMappings.DEFAULT);
+		mimeMappings.add("fxml", "application/xml");
+		container.setMimeMappings(mimeMappings);
+		
 	}
 }

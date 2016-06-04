@@ -4,22 +4,19 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Component;
 
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.api.module.ModuleBase;
 import mcstuff.bbs.model.BBSConnection;
-import mcstuff.bbs.util.BBSFXMLLoader;
+import mcstuff.bbs.model.BBSConnectionRepository;
+import mcstuff.bbs.ui.BBSFXMLLoader;
 
-@Component
 @Configuration
-@EntityScan(basePackages={"mcstuff.bbs.model.BBSConnectionEntity"})
-@EnableJpaRepositories(basePackages={"mcstuff.bbs.model.BBSConnectionRepository"})
 public class BBSModule extends ModuleBase implements I_Module {
 	
 	@Bean
@@ -33,6 +30,9 @@ public class BBSModule extends ModuleBase implements I_Module {
 	@Autowired
 	private BBSFXMLLoader bbsFXMLLoader;
 	
+	@Autowired
+	private BBSConnectionRepository bbsConnectionRepository;
+	
 	private BBSConnection currentConnection;
 	
 	public BBSModule() {
@@ -44,10 +44,6 @@ public class BBSModule extends ModuleBase implements I_Module {
 		super.initialize(host);
 	}
 	
-	public BBSFXMLLoader getBBSFXMLLoader() {
-		return bbsFXMLLoader;
-	}
-
 	public BBSConnection getCurrentConnection() {
 		return currentConnection;
 	}
@@ -56,5 +52,12 @@ public class BBSModule extends ModuleBase implements I_Module {
 		this.currentConnection = currentConnection;
 	}
 	
-	
+	@Override
+	public void show(Stage stage) {
+		showScene(stage, "/mcstuff/bbs/ui/BBSModuleHome.fxml");
+	}
+		
+	public void onConnection() {
+		final Parent root = (Parent) bbsFXMLLoader.load("Index.fxml");
+	}
 }

@@ -25,8 +25,17 @@ public class BBSConnection implements Serializable {
 	@Column(name = "DESCRIPTION", length = 200)
 	private String description;
 	
-	@Column(name = "BASE_URL", length = 250)
-	private String baseUrl;
+	@Column(name = "SERVER_URL", nullable = false, length = 250)
+	private String serverUrl;
+	
+	@Column(name = "BBS_TAG", nullable = false, length = 50)
+	private String bbsTag;
+	
+	@Column(name = "USER_NAME", nullable = false, length = 50)
+	private String userName;
+	
+	@Column(name = "PASSWORD", nullable = false, length = 50)
+	private String password;
 
 	public BBSConnection() {
 		
@@ -52,12 +61,41 @@ public class BBSConnection implements Serializable {
 		this.description = description;
 	}
 
-	public String getBaseUrl() {
-		return baseUrl;
+	public String getServerUrl() {
+		return serverUrl;
 	}
 
-	public void setBaseUrl(String baseUrl) {
-		this.baseUrl = baseUrl;
+	public void setServerUrl(String serverUrl) {
+		this.serverUrl = serverUrl;
 	}
+
+	public String getBBSTag() {
+		return bbsTag;
+	}
+
+	public void setBBSTag(String bbsTag) {
+		this.bbsTag = bbsTag;
+	}
+
+	public String getBaseUrl() {
+		return serverUrl + "/" +bbsTag;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	
 }

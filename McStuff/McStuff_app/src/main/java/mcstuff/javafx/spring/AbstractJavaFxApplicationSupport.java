@@ -76,7 +76,8 @@ public abstract class AbstractJavaFxApplicationSupport extends Application {
 			Platform.exit();
 			return;
 		}
-		applicationContext = SpringApplication.run(getClass(), savedArgs);
+		SpringApplication app = new SpringApplication(getClass());
+		applicationContext = app.run(savedArgs);
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 	}
 
