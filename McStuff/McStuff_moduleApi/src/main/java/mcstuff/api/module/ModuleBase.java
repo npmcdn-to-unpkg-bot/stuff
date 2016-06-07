@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import mcstuff.ApplicationConfig;
+import mcstuff.javafx.spring.SpringFXMLLoader.NodeWithController;
 
 public abstract class ModuleBase implements I_Module {
 	
@@ -69,7 +70,8 @@ public abstract class ModuleBase implements I_Module {
 	}
 	
 	public void showScene(Stage stage, String fxmlPath) {
-		Parent root = (Parent) getAppConfig().getFXMLLoader().load(fxmlPath);
+		NodeWithController nodeWithController = getAppConfig().getFXMLLoader().load(fxmlPath);
+		Parent root = (Parent) nodeWithController.node; 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();

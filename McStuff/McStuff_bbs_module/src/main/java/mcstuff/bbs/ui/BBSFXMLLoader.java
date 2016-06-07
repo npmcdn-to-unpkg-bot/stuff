@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javafx.fxml.FXMLLoader;
+
 import mcstuff.ApplicationConfig;
 import mcstuff.bbs.model.BBSConnection;
 import mcstuff.modules.BBSModule;
@@ -28,20 +29,14 @@ public class BBSFXMLLoader {
 	public Object load(final String url) {
 		String fullUrl = url;
 		try {
-			//BBSConnection connection = bbsModule.getCurrentConnection();
-			BBSConnection connection = new BBSConnection();
-			connection.setServerUrl("http://localhost:8090");
-			connection.setBBSTag("apc");
-			connection.setUserName("misha");
-			connection.setPassword("masha");
-			
+			BBSConnection connection = bbsModule.getCurrentConnection();
 			Authenticator.setDefault (new Authenticator() {
 			    protected PasswordAuthentication getPasswordAuthentication() {
 			        return new PasswordAuthentication (connection.getUserName(), connection.getPassword().toCharArray());
 			    }
 			});
 			
-			String sFullUrl = connection.getBaseUrl() + (connection.getBaseUrl().endsWith("/")?"":"/")
+			String sFullUrl = connection.getBaseURL() + (connection.getBaseURL().endsWith("/")?"":"/")
 				+ url;
 			URL fullURL = new URL(sFullUrl);
 			FXMLLoader loader = new FXMLLoader(fullURL);

@@ -38,9 +38,12 @@ subprojects {
  	eclipse {
  		project {
  			natures 'org.springframework.ide.eclipse.core.springnature'
+ 			natures 'org.eclipse.xtext.ui.shared.xtextNature'
+ 			natures 'org.eclipse.fx.ide.css.nature'
 			classpath {
 				containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
 				containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+				containers 'org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER'
 			} 			
  		}
  	}

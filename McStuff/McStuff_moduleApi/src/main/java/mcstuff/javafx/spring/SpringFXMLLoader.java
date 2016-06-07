@@ -13,7 +13,7 @@ public class SpringFXMLLoader {
 	@Autowired
 	ApplicationContext context;
 
-	public Object load(final String url) {
+	public NodeWithController load(final String url) {
 		try {
 			final FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -22,7 +22,10 @@ public class SpringFXMLLoader {
 					return controllerFactory(aClass);
 				}
 			});
-			return loader.load();
+			NodeWithController ret = new NodeWithController();
+			ret.node = loader.load();
+			ret.controller = loader.getController();
+			return ret;
 		} catch (final Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException(String.format("Failed to load FXML file '%s'", url), e);
@@ -31,5 +34,10 @@ public class SpringFXMLLoader {
 	
 	protected Object controllerFactory(final Class<?> aClass) {
 		return context.getBean(aClass);
+	}
+	
+	public static class NodeWithController {
+		public Object node;
+		public Object controller;
 	}
 }
