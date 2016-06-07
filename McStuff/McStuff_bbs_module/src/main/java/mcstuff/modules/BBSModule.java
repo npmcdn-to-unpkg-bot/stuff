@@ -35,13 +35,13 @@ public class BBSModule extends ModuleBase implements I_Module {
 	}
 	
 	@Autowired
-	private BBSFXMLLoader bbsFXMLLoader;
+	protected BBSFXMLLoader bbsFXMLLoader;
 	
 	@Autowired
-	private BBSConnectionRepository bbsConnectionRepository;
+	protected BBSConnectionRepository bbsConnectionRepository;
 	
 	@Autowired
-	private BBSModuleHomeController bbsModuleHomeController;
+	protected BBSModuleHomeController bbsModuleHomeController;
 	
 	private I_BBSController currentController;
 	
