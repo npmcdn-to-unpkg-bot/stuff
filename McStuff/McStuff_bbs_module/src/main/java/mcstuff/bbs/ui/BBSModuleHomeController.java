@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -63,7 +64,14 @@ public class BBSModuleHomeController implements Initializable {
 	@FXML TextField txtConnectionName;
 
 	@FXML TextArea taConnectionDescription;
-	
+
+	@FXML Button btnSaveChanges;
+
+	@FXML Button btnCancelChanges;
+
+	@FXML Button btnRemove;
+
+	@FXML Button btnNewConnection;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -96,28 +104,77 @@ public class BBSModuleHomeController implements Initializable {
 		});
 		lvConnections.getFocusModel().focus(0);
 		lvConnections.scrollTo(0);
-		lvConnections.getSelectionModel().clearAndSelect(0);
 		
+		if(lvConnections.getItems().size() > 0) {
+			lvConnections.getSelectionModel().clearAndSelect(0);
+		} else {
+			onConnectionSelectionChange(null, null);
+		}
 	}
 	
 	@FXML public void onCloseConnection() {
 		bbsModule.setCurrentConnection(null);
 	}
+	
+	@FXML public void onSaveChanges() {
+		bbsModule.updateConnection(getCurrentConnection());
+	}
+
+	@FXML public void onCancelChanges() {
+		if(getCurrentConnection() != null && getCurrentConnection().getId() > 0) {
+    		int idxConn = bbsModule.getConnectionList().indexOf(getCurrentConnection());
+    		bbsModule.restoreConnection(getCurrentConnection());
+    		lvConnections.getSelectionModel().clearAndSelect(idxConn);
+		} else {
+			onRemoveConnection();
+		}
+	}
+	
+	@FXML public void onRemoveConnection() {
+		if(getCurrentConnection() != null) {
+			if(currentConnection.get().getId() > 0) {
+				bbsModule.removeConnection(getCurrentConnection());
+			}
+			onConnectionSelectionChange(getCurrentConnection(), null);
+		}
+	}
+	
+	@FXML public void onNewConnection() {
+		BBSConnection connection = new BBSConnection();
+		lvConnections.getSelectionModel().clearSelection();
+		onConnectionSelectionChange(null, connection);
+	}
 
 	
 	public void onConnectionSelectionChange(BBSConnection oldValue,
 			BBSConnection newValue) {
-		if(oldValue != null) {
+		if(oldValue != null) {			
 			Bindings.unbindBidirectional(oldValue.nameProperty(), txtConnectionName.textProperty());
+			txtConnectionName.setText(null);
 			Bindings.unbindBidirectional(oldValue.descriptionProperty(), taConnectionDescription.textProperty());
+			taConnectionDescription.setText(null);
+			oldValue.trackChanges(false);
 		}
+		
+		btnSaveChanges.visibleProperty().unbind();
+		btnSaveChanges.setVisible(false);
+		btnCancelChanges.visibleProperty().unbind();
+		btnCancelChanges.setVisible(false);
+		btnRemove.setVisible(false);
 		currentConnection.set(newValue);
+		
 		if(newValue != null) {
 			txtConnectionName.setText(newValue.getName());
 			Bindings.bindBidirectional(newValue.nameProperty(), txtConnectionName.textProperty());
 			taConnectionDescription.setText(newValue.getDescription());
 			Bindings.bindBidirectional(newValue.descriptionProperty(), taConnectionDescription.textProperty());
-		}
+			newValue.trackChanges(true);
+			
+			btnSaveChanges.visibleProperty().bind(newValue.dirtyProperty());
+			btnCancelChanges.visibleProperty().bind(newValue.dirtyProperty());
+			
+			btnRemove.setVisible(true);
+		} 
 	}
 	
 	public void onConnectionInvalidated() {
@@ -151,8 +208,6 @@ public class BBSModuleHomeController implements Initializable {
 	}
 	public final void setCurrentConnection(final BBSConnection currentConnection) {
 		this.currentConnectionProperty().set(currentConnection);
-	}
-	
-
+	}	
 	
 }

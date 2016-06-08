@@ -33,19 +33,27 @@
 			<ScrollPane fx:id="paneContent" />
 		</center>
 	</BorderPane>
-	<SplitPane fx:id="layoutConnection" visible="false" >
-		<ListView fx:id="lvConnections" prefWidth="310">
-		</ListView>
+	<SplitPane fx:id="layoutConnection" visible="false">
+		<VBox prefWidth="310">
+			<Button fx:id="btnNewConnection" text="New Connection" onAction="#onNewConnection"/>
+			<ListView fx:id="lvConnections">
+			</ListView>
+		</VBox>
 		<BorderPane minWidth="500">
 			<center>
 				<GridPane fx:id="paneConnectionEdit">
-					<Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-					<TextField fx:id="txtConnectionName" minWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-					
-					<Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+					<Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+					<TextField fx:id="txtConnectionName" minWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+					<Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
 					<TextArea fx:id="taConnectionDescription" minWidth="400" GridPane.rowIndex="2" GridPane.columnIndex="0"
-						GridPane.columnSpan="2"/>
-					
+						GridPane.columnSpan="2" />
+
+					<HBox GridPane.rowIndex="10" GridPane.columnSpan="2">
+						<Button fx:id="btnRemove" text="Remove" onAction="#onRemoveConnection"  />
+						<Button fx:id="btnSaveChanges" text="Save Changes" onAction="#onSaveChanges"  />
+						<Button fx:id="btnCancelChanges" text="Cancel Changes" onAction="#onCancelChanges" />
+					</HBox>
 				</GridPane>
 			</center>
 		</BorderPane>

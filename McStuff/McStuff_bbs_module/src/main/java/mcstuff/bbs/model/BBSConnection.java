@@ -15,7 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -24,93 +28,106 @@ import javafx.beans.property.StringProperty;
 @Table(name = "BBS_CONNECTION")
 @Access(AccessType.PROPERTY)
 public class BBSConnection implements Externalizable {
-	
+		
 	private LongProperty id = new SimpleLongProperty();
-	public final LongProperty idProperty() {
+	public LongProperty idProperty() {
 		return this.id;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
-	public final Long getId() {
+	public Long getId() {
 		return this.idProperty().get();
 	}
-	public final void setId(final Long id) {
+	public void setId(Long id) {
 		this.idProperty().set(id);
 	}
 		
 	private StringProperty name = new SimpleStringProperty();
-	public final StringProperty nameProperty() {
+	public  StringProperty nameProperty() {
 		return this.name;
 	}
 	@Column(name = "NAME", nullable= false, unique = true,  length = 100)	
-	public final java.lang.String getName() {
+	public  java.lang.String getName() {
 		return this.nameProperty().get();
 	}
-	public final void setName(final java.lang.String name) {
+	public  void setName( java.lang.String name) {
 		this.nameProperty().set(name);
 	}
 	
 	private StringProperty description = new SimpleStringProperty();
-	public final StringProperty descriptionProperty() {
+	public  StringProperty descriptionProperty() {
 		return this.description;
 	}
 	@Column(name = "DESCRIPTION", length = 200)
-	public final java.lang.String getDescription() {
+	public  java.lang.String getDescription() {
 		return this.descriptionProperty().get();
 	}
-	public final void setDescription(final java.lang.String description) {
+	public  void setDescription( java.lang.String description) {
 		this.descriptionProperty().set(description);
 	}
 	
 	private StringProperty serverURL = new SimpleStringProperty();
-	public final StringProperty serverURLProperty() {
+	public  StringProperty serverURLProperty() {
 		return this.serverURL;
 	}
 	@Column(name = "SERVER_URL", nullable = false, length = 250)
-	public final java.lang.String getServerURL() {
+	public  java.lang.String getServerURL() {
 		return this.serverURLProperty().get();
 	}
-	public final void setServerURL(final java.lang.String serverURL) {
+	public  void setServerURL( java.lang.String serverURL) {
 		this.serverURLProperty().set(serverURL);
 	}
 	
-	private StringProperty BBSTag = new SimpleStringProperty();
-	public final StringProperty BBSTagProperty() {
-		return this.BBSTag;
+	private StringProperty bbsTag = new SimpleStringProperty();
+	public  StringProperty bbsTagProperty() {
+		return this.bbsTag;
 	}
-	@Column(name = "BBS_TAG", nullable = false, length = 50)
-	public final java.lang.String getBBSTag() {
-		return this.BBSTagProperty().get();
-	}	
-	public final void setBBSTag(final java.lang.String BBSTag) {
-		this.BBSTagProperty().set(BBSTag);
+	
+	public  java.lang.String getBbsTag() {
+		return this.bbsTagProperty().get();
+	}
+	
+	public  void setBbsTag( java.lang.String bbsTag) {
+		this.bbsTagProperty().set(bbsTag);
 	}
 		
 	private StringProperty userName = new SimpleStringProperty();
-	public final StringProperty userNameProperty() {
+	public  StringProperty userNameProperty() {
 		return this.userName;
 	}
 	@Column(name = "USER_NAME", nullable = false, length = 50)
-	public final java.lang.String getUserName() {
+	public  java.lang.String getUserName() {
 		return this.userNameProperty().get();
 	}
-	public final void setUserName(final java.lang.String userName) {
+	public  void setUserName( java.lang.String userName) {
 		this.userNameProperty().set(userName);
 	}
 	
 	private StringProperty password = new SimpleStringProperty();
-	public final StringProperty passwordProperty() {
+	public  StringProperty passwordProperty() {
 		return this.password;
 	}
 	@Column(name = "PASSWORD", nullable = false, length = 50)
-	public final java.lang.String getPassword() {
+	public  java.lang.String getPassword() {
 		return this.passwordProperty().get();
 	}
-	public final void setPassword(final java.lang.String password) {
+	public  void setPassword( java.lang.String password) {
 		this.passwordProperty().set(password);
 	}
 	
+	private BooleanProperty dirty = new SimpleBooleanProperty();
+	
+	public  BooleanProperty dirtyProperty() {
+		return this.dirty;
+	}
+	@Transient
+	public  boolean isDirty() {
+		return this.dirtyProperty().get();
+	}
+	public  void setDirty( boolean dirty) {
+		this.dirtyProperty().set(dirty);
+	}
 	
 	public BBSConnection() {}
 
@@ -121,15 +138,43 @@ public class BBSConnection implements Externalizable {
 		this.name.set(name);
 		this.description.set(description);
 		this.serverURL.set(serverURL);
-		this.BBSTag.set(BBSTag);
+		this.bbsTag.set(BBSTag);
 		this.userName.set(userName);
 		this.password.set(password);
 	}
 	
 	@Transient 
 	public String getBaseURL() {
-		return getServerURL() + "/" +getBBSTag();
+		return getServerURL() + "/" +getBbsTag();
 	}
+	
+	protected InvalidationListener dirtyListener = new InvalidationListener() {
+		@Override
+		public void invalidated(Observable observable) {
+			dirty.set(true);
+		}
+	};
+	
+	public void trackChanges(boolean bTrackChanges) {
+		if(bTrackChanges) {
+			id.addListener(dirtyListener);
+			name.addListener(dirtyListener);
+			description.addListener(dirtyListener);
+			serverURL.addListener(dirtyListener);
+			bbsTag.addListener(dirtyListener);
+			userName.addListener(dirtyListener);
+			password.addListener(dirtyListener);
+		} else {
+			id.removeListener(dirtyListener);
+			name.removeListener(dirtyListener);
+			description.removeListener(dirtyListener);
+			serverURL.removeListener(dirtyListener);
+			bbsTag.removeListener(dirtyListener);
+			userName.removeListener(dirtyListener);
+			password.removeListener(dirtyListener);
+		}
+	}
+
 	
 	@Override
 	public void writeExternal(ObjectOutput out) throws IOException {
@@ -137,7 +182,7 @@ public class BBSConnection implements Externalizable {
 		out.writeUTF(getName());
 		out.writeUTF(getDescription());
 		out.writeUTF(getServerURL());
-		out.writeUTF(getBBSTag());
+		out.writeUTF(getBbsTag());
 		out.writeUTF(getUserName());
 		out.writeUTF(getPassword());
 	}
@@ -148,15 +193,15 @@ public class BBSConnection implements Externalizable {
 		setName(in.readUTF());
 		setDescription(in.readUTF());
 		setServerURL(in.readUTF());
-		setBBSTag(in.readUTF());
+		setBbsTag(in.readUTF());
 		setUserName(in.readUTF());
 		setPassword(in.readUTF());
 	}
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		 int prime = 31;
 		int result = 1;
-		result = prime * result + ((BBSTag.get() == null) ? 0 : BBSTag.get().hashCode());
+		result = prime * result + ((bbsTag.get() == null) ? 0 : bbsTag.get().hashCode());
 		result = prime * result + ((description.get() == null) ? 0 : description.get().hashCode());
 		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
 		result = prime * result + ((name.get() == null) ? 0 : name.get().hashCode());
@@ -171,9 +216,9 @@ public class BBSConnection implements Externalizable {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		BBSConnection other = (BBSConnection) obj;
-		if (BBSTag.get() == null) {
-			if (other.BBSTag.get() != null) return false;
-		} else if (!BBSTag.get().equals(other.BBSTag.get())) return false;
+		if (bbsTag.get() == null) {
+			if (other.bbsTag.get() != null) return false;
+		} else if (!bbsTag.get().equals(other.bbsTag.get())) return false;
 		if (description.get() == null) {
 			if (other.description.get() != null) return false;
 		} else if (!description.get().equals(other.description.get())) return false;
@@ -198,9 +243,8 @@ public class BBSConnection implements Externalizable {
 	@Override
 	public String toString() {
 		return "BBSConnection [id=" + getId() + ", name=" + getName() + ", description="
-				+ getDescription() + ", serverURL=" + getServerURL() + ", BBSTag=" + getBBSTag()
+				+ getDescription() + ", serverURL=" + getServerURL() + ", BBSTag=" + getBbsTag()
 				+ ", userName=" + getUserName() + ", password=" + getPassword() + "]";
 	}
-	
 	
 }

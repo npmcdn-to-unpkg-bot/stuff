@@ -1,11 +1,14 @@
 package mcstuff.modules;
 
+import java.util.Collection;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -41,6 +44,27 @@ public class BBSModule extends ModuleBase implements I_Module {
 		return scriptEngine;
 	}
 	
+	@Bean
+	CommandLineRunner init(final BBSConnectionRepository connectionRepository) {
+		return new CommandLineRunner() {
+			
+			@Override
+			public void run(final String... args) throws Exception {
+				BBSConnection connection = connectionRepository.findByBbsTag("apc");
+				if(connection == null) {
+					connection = new BBSConnection();
+    				connection.setName("Amateur Programmer's Club BBS");
+    				connection.setDescription("A BBS Dedicated to the hobbyist programmer who enjoys the sport...");
+    				connection.setServerURL("http://localhost:8090");
+    				connection.setBbsTag("apc");
+    				connection.setUserName("misha");
+    				connection.setPassword("masha");
+    				connectionRepository.save(connection);
+				}
+			}
+		};
+	}
+	
 	@Autowired
 	protected BBSFXMLLoader bbsFXMLLoader;
 	
@@ -63,31 +87,15 @@ public class BBSModule extends ModuleBase implements I_Module {
 	@Override
 	public void initialize(I_ModuleHost host) {
 		super.initialize(host);	
+		
+		connectionList.set(FXCollections.observableArrayList());
+		connectionList.addAll((Collection<? extends BBSConnection>) bbsConnectionRepository.findAll());
 	}
 	
 	@Override
 	public void show(Stage stage) throws Exception {
 		this.stage.set(stage);
-		
-		connectionList.set(FXCollections.observableArrayList());
-		BBSConnection connection = new BBSConnection();
-		connection.setName("Amateur Programmer's Club BBS");
-		connection.setDescription("A BBS Dedicated to the hobbyist programmer who enjoys the sport...");
-		connection.setServerURL("http://localhost:8090");
-		connection.setBBSTag("apc");
-		connection.setUserName("misha");
-		connection.setPassword("mash");
-		connectionList.add(connection);
-		
-		connection = new BBSConnection();
-		connection.setName("BBS");
-		connection.setServerURL("http://localhost:8090");
-		connection.setBBSTag("apc");
-		connection.setUserName("misha");
-		connection.setPassword("masha");
-		connectionList.add(connection);
-
-		
+				
 		showScene(stage, "/mcstuff/bbs/ui/BBSModuleHome.fxml");
 	}
 		
@@ -95,19 +103,58 @@ public class BBSModule extends ModuleBase implements I_Module {
 		try {
 			final Pane bbsRoot = (Pane) bbsFXMLLoader.load("Index.fxml");
 			bbsModuleHomeController.setContent(getStage(), bbsRoot);
-		} catch(Exception ex) {			
-			logger.error("Error connecting to {}", getCurrentConnection().getName(), ex);
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Connection Error");
-			alert.setHeaderText("Connection Error");
-			String s = String.format("Error Connecting to %s: %s", getCurrentConnection().getName(), ex.getMessage());
-			alert.setContentText(s);
-			alert.show();
-
+		} catch(Exception ex) {
+			String connectionName = getCurrentConnection() != null && 
+					getCurrentConnection().getName() != null ? getCurrentConnection().getName() : "[Unknown Connection]";
+			logger.error("Error connecting to {}", connectionName, ex);
+			showErrorPopup("Connection Error",
+					String.format("Error Connecting to %s: %s", connectionName, ex.getMessage()));
 			setCurrentConnection(null);
 		}
 	}
+	
+	public void restoreConnection(BBSConnection connection) {
+		int idxConn = connectionList.indexOf(connection);
+		connectionList.remove(connection);
+		connection = bbsConnectionRepository.findById(connection.getId());
+		connectionList.add(idxConn, connection);
+	}
 
+	public void updateConnection(BBSConnection connection) {
+		try {
+    		bbsConnectionRepository.save(connection);
+    		connection.setDirty(false);
+    		if(!connectionList.contains(connection)) {
+    			connectionList.add(connection);
+    		}
+		} catch(Exception ex) {
+			String connectionName = connection != null && connection.getName() != null ? connection.getName() : "[Unknown Connection]";
+			logger.error("Error updating connection {}", connectionName, ex);
+			showErrorPopup("Update Error",
+					String.format("Error updating connection %s: %s", connectionName, ex.getMessage()));
+		}
+	}
+	
+	public void removeConnection(BBSConnection connection) {
+		try {
+    		connectionList.remove(connection);
+    		bbsConnectionRepository.delete(connection);
+		} catch(Exception ex) {
+			String connectionName = connection != null && connection.getName() != null ? connection.getName() : "[Unknown Connection]";
+			logger.error("Error removing connection {}", connectionName, ex);
+			showErrorPopup("Remove Error",
+					String.format("Error removing connection %s: %s",connectionName, ex.getMessage()));
+		}
+	}
+	
+	public void showErrorPopup(String title, String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setHeaderText(title);
+		alert.setContentText(message);
+		alert.show();
+
+	}
 	
 	public I_BBSController getCurrentController() {
 		return currentController;
