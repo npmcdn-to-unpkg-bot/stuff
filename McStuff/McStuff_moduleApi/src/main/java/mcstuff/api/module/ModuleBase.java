@@ -1,5 +1,7 @@
 package mcstuff.api.module;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javafx.scene.Parent;
@@ -65,11 +67,11 @@ public abstract class ModuleBase implements I_Module {
 	}
 
 	@Override
-	public void show(final Stage stage) {
+	public void show(final Stage stage) throws Exception {
 		setVisible(true);
 	}
 	
-	public void showScene(Stage stage, String fxmlPath) {
+	public void showScene(Stage stage, String fxmlPath) throws IOException {
 		NodeWithController nodeWithController = getAppConfig().getFXMLLoader().load(fxmlPath);
 		Parent root = (Parent) nodeWithController.node; 
 		Scene scene = new Scene(root);

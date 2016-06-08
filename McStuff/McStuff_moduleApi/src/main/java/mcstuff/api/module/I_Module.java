@@ -18,7 +18,7 @@ public interface I_Module {
 
 	void initialize(I_ModuleHost host);
 
-	void show(Stage stage);
+	void show(Stage stage) throws Exception;
 
 	@Override
 	String toString();

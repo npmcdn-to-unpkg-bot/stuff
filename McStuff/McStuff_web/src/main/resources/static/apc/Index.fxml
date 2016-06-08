@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"  xmlns:fx="http://javafx.com/fxml/1"
-		prefHeight="600" prefWidth="1000" >
-	<!-- TODO Add Nodes -->
+		fx:id="apcRoot" prefHeight="600" prefWidth="1000" >
+	<stylesheets>
+		<URL value="@apc.css" />
+	</stylesheets>
 	<center><Button text="Hello World"></Button></center>
 </BorderPane>
 
