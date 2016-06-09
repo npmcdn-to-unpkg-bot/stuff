@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 
 import mcstuff.Application;
@@ -26,7 +27,7 @@ public class StartupSceneController implements Initializable {
 	private ApplicationConfig appConfig;
 
 	@FXML
-	AnchorPane rootPane;
+	Pane rootPane;
 	@FXML
 	TilePane paneModules;
 
