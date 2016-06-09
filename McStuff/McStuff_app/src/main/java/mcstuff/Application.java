@@ -17,9 +17,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.javafx.spring.AbstractJavaFxApplicationSupport;
+import mcstuff.javafx.spring.SpringFXMLLoader.NodeWithController;
 import mcstuff.util.ClassEnumerator;
 
 @SpringBootApplication
@@ -136,7 +138,8 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 
 					mainStage.setTitle(appConfig.getAppTitle());
 
-					final Parent root = (Parent) appConfig.getFXMLLoader().load("/mcstuff/startup/StartupScene.fxml");
+					NodeWithController nodeWithController = appConfig.getFXMLLoader().load("/mcstuff/startup/StartupScene.fxml");
+					final Parent root = (Parent) nodeWithController.node;
 					defaultView = new Scene(root);
 
 					appConfig.setCurrentStage(mainStage);

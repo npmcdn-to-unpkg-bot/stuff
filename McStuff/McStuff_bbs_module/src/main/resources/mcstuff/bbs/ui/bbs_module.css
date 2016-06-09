@@ -1,0 +1,21 @@
+
+#layoutContent {
+	
+}
+
+#layoutConnection {
+	-fx-background-color: rgb(69,106,143);
+}
+
+#connectionCellPane {
+}
+
+#lblConnectionName {
+	-fx-padding: 5
+}
+
+#paneConnectionEdit {
+	-fx-background-color: rgb(251,250,210);
+	-fx-padding:5;
+}
+

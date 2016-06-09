@@ -21,7 +21,7 @@ public class RPGModule extends ModuleBase implements I_Module {
 	}
 	
 	@Override
-	public void show(final Stage stage) {	
+	public void show(final Stage stage) throws Exception {	
 		showScene(stage, "/mcstuff/rpg/ui/RPGMain.fxml");
 		super.show(stage);
 	}

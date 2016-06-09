@@ -1,14 +1,28 @@
 package mcstuff.modules;
 
+import java.util.Collection;
+
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javafx.scene.Parent;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import mcstuff.api.module.I_Module;
 import mcstuff.api.module.I_ModuleHost;
 import mcstuff.api.module.ModuleBase;
@@ -20,6 +34,7 @@ import mcstuff.bbs.ui.I_BBSController;
 
 @Configuration
 public class BBSModule extends ModuleBase implements I_Module {
+	private static final Logger logger = LoggerFactory.getLogger(BBSModule.class);
 	
 	@Bean
 	public ScriptEngine bbsScriptEngine() {
@@ -29,20 +44,41 @@ public class BBSModule extends ModuleBase implements I_Module {
 		return scriptEngine;
 	}
 	
-	@Autowired
-	private BBSFXMLLoader bbsFXMLLoader;
+	@Bean
+	CommandLineRunner init(final BBSConnectionRepository connectionRepository) {
+		return new CommandLineRunner() {
+			
+			@Override
+			public void run(final String... args) throws Exception {
+				BBSConnection connection = connectionRepository.findByBbsTag("apc");
+				if(connection == null) {
+					connection = new BBSConnection();
+    				connection.setName("Amateur Programmer's Club BBS");
+    				connection.setDescription("A BBS Dedicated to the hobbyist programmer who enjoys the sport...");
+    				connection.setServerURL("http://localhost:8090");
+    				connection.setBbsTag("apc");
+    				connection.setUserName("misha");
+    				connection.setPassword("masha");
+    				connectionRepository.save(connection);
+				}
+			}
+		};
+	}
 	
 	@Autowired
-	private BBSConnectionRepository bbsConnectionRepository;
+	protected BBSFXMLLoader bbsFXMLLoader;
 	
 	@Autowired
-	private BBSModuleHomeController bbsModuleHomeController;
+	protected BBSConnectionRepository bbsConnectionRepository;
+	
+	@Autowired
+	protected BBSModuleHomeController bbsModuleHomeController;
 	
 	private I_BBSController currentController;
 	
-	private BBSConnection currentConnection;
-	
-	private Stage stage;
+	private ObjectProperty<BBSConnection> currentConnection = new SimpleObjectProperty<>();
+	private ReadOnlyListWrapper<BBSConnection> connectionList = new ReadOnlyListWrapper<>();		
+	private ObjectProperty<Stage> stage = new SimpleObjectProperty<>();
 	
 	public BBSModule() {
 		setTitle("BBS Module");
@@ -50,33 +86,112 @@ public class BBSModule extends ModuleBase implements I_Module {
 
 	@Override
 	public void initialize(I_ModuleHost host) {
-		super.initialize(host);
+		super.initialize(host);	
+		
+		connectionList.set(FXCollections.observableArrayList());
+		connectionList.addAll((Collection<? extends BBSConnection>) bbsConnectionRepository.findAll());
+	}
+	
+	@Override
+	public void show(Stage stage) throws Exception {
+		this.stage.set(stage);
+				
+		showScene(stage, "/mcstuff/bbs/ui/BBSModuleHome.fxml");
+	}
+		
+	public void connect() {
+		try {
+			final Pane bbsRoot = (Pane) bbsFXMLLoader.load("Index.fxml");
+			bbsModuleHomeController.setContent(getStage(), bbsRoot);
+		} catch(Exception ex) {
+			String connectionName = getCurrentConnection() != null && 
+					getCurrentConnection().getName() != null ? getCurrentConnection().getName() : "[Unknown Connection]";
+			logger.error("Error connecting to {}", connectionName, ex);
+			showErrorPopup("Connection Error",
+					String.format("Error Connecting to %s: %s", connectionName, ex.getMessage()));
+			setCurrentConnection(null);
+		}
+	}
+	
+	public void restoreConnection(BBSConnection connection) {
+		int idxConn = connectionList.indexOf(connection);
+		connectionList.remove(connection);
+		connection = bbsConnectionRepository.findById(connection.getId());
+		connectionList.add(idxConn, connection);
+	}
+
+	public void updateConnection(BBSConnection connection) {
+		try {
+    		bbsConnectionRepository.save(connection);
+    		connection.setDirty(false);
+    		if(!connectionList.contains(connection)) {
+    			connectionList.add(connection);
+    		}
+		} catch(Exception ex) {
+			String connectionName = connection != null && connection.getName() != null ? connection.getName() : "[Unknown Connection]";
+			logger.error("Error updating connection {}", connectionName, ex);
+			showErrorPopup("Update Error",
+					String.format("Error updating connection %s: %s", connectionName, ex.getMessage()));
+		}
+	}
+	
+	public void removeConnection(BBSConnection connection) {
+		try {
+    		connectionList.remove(connection);
+    		bbsConnectionRepository.delete(connection);
+		} catch(Exception ex) {
+			String connectionName = connection != null && connection.getName() != null ? connection.getName() : "[Unknown Connection]";
+			logger.error("Error removing connection {}", connectionName, ex);
+			showErrorPopup("Remove Error",
+					String.format("Error removing connection %s: %s",connectionName, ex.getMessage()));
+		}
+	}
+	
+	public void showErrorPopup(String title, String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle(title);
+		alert.setHeaderText(title);
+		alert.setContentText(message);
+		alert.show();
+
 	}
 	
 	public I_BBSController getCurrentController() {
 		return currentController;
 	}
-
 	public void setCurrentController(I_BBSController currentController) {
 		this.currentController = currentController;
 	}
 
-	public BBSConnection getCurrentConnection() {
-		return currentConnection;
+	
+	public final ObjectProperty<BBSConnection> currentConnectionProperty() {
+		return this.currentConnection;
+	}
+	public final BBSConnection getCurrentConnection() {
+		return this.currentConnectionProperty().get();
+	}
+	public final void setCurrentConnection(final BBSConnection currentConnection) {
+		this.currentConnectionProperty().set(currentConnection);
 	}
 
-	public void setCurrentConnection(BBSConnection currentConnection) {
-		this.currentConnection = currentConnection;
+	public final ReadOnlyListProperty<BBSConnection> connectionListProperty() {
+		return this.connectionList.getReadOnlyProperty();
+	}
+	public final ObservableList<BBSConnection> getConnectionList() {
+		return this.connectionListProperty().get();
+	}
+
+	public final ObjectProperty<Stage> stageProperty() {
+		return this.stage;
+	}
+	public final Stage getStage() {
+		return this.stageProperty().get();
+	}
+	public final void setStage(final Stage stage) {
+		this.stageProperty().set(stage);
 	}
 	
-	@Override
-	public void show(Stage stage) {
-		this.stage = stage;
-		showScene(stage, "/mcstuff/bbs/ui/BBSModuleHome.fxml");
-	}
-		
-	public void connect() {
-		final Parent bbsRoot = (Parent) bbsFXMLLoader.load("Index.fxml");
-		bbsModuleHomeController.setContent(stage, bbsRoot);
-	}
+	
+	
+	
 }

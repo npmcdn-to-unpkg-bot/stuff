@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BBSConnectionRepository extends CrudRepository<BBSConnection, Long> {
 	BBSConnection findById(Long id);
+	BBSConnection findByBbsTag(String BBSTag);
 }

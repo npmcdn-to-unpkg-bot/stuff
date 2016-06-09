@@ -1,23 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 <?import java.net.URL?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
 
-<StackPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="mcstuff.bbs.ui.BBSModuleHomeController">
+<StackPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:id="rootPane"
+	fx:controller="mcstuff.bbs.ui.BBSModuleHomeController" prefWidth="800" prefHeight="600">
+	<stylesheets>
+		<URL value="@bbs_module.css" />
+	</stylesheets>
 	<BorderPane fx:id="layoutContent">
-		<stylesheets>
-			<URL value="@bbs_module.css" />
-		</stylesheets>
+		<top>
+			<BorderPane>
+				<left>
+					<MenuBar fx:id="mbBBS">
+						<Menu text="BBS">
+							<MenuItem text="Close Connection" onAction="#onCloseConnection" />
+						</Menu>
+					</MenuBar>
+				</left>
+				<center>
+					<Label fx:id="lblConnectionTitle" />
+				</center>
+			</BorderPane>
+		</top>
 		<center>
 			<ScrollPane fx:id="paneContent" />
 		</center>
 	</BorderPane>
-	<AnchorPane fx:id="layoutConnection" prefWidth="100" prefHeight="-1">
-		
-	</AnchorPane>
+	<SplitPane fx:id="layoutConnection" visible="false">
+		<VBox prefWidth="310">
+			<Button fx:id="btnNewConnection" text="New Connection" onAction="#onNewConnection"/>
+			<ListView fx:id="lvConnections">
+			</ListView>
+		</VBox>
+		<BorderPane minWidth="500">
+			<center>
+				<GridPane fx:id="paneConnectionEdit">
+					<Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+					<TextField fx:id="txtConnectionName" minWidth="300" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+					<Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+					<TextArea fx:id="taConnectionDescription" minWidth="400" GridPane.rowIndex="2" GridPane.columnIndex="0"
+						GridPane.columnSpan="2" />
+
+					<HBox GridPane.rowIndex="10" GridPane.columnSpan="2">
+						<Button fx:id="btnRemove" text="Remove" onAction="#onRemoveConnection"  />
+						<Button fx:id="btnSaveChanges" text="Save Changes" onAction="#onSaveChanges"  />
+						<Button fx:id="btnCancelChanges" text="Cancel Changes" onAction="#onCancelChanges" />
+					</HBox>
+				</GridPane>
+			</center>
+		</BorderPane>
+	</SplitPane>
 </StackPane>

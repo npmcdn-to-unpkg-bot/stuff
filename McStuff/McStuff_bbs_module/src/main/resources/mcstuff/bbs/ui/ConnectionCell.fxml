@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import java.net.URL?>
+
+<HBox xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+		fx:id="connectionCellPane" fx:controller="mcstuff.bbs.ui.ConnectionCellController" spacing="5">
+	<stylesheets>
+		<URL value="@bbs_module.css" />
+	</stylesheets>
+	<Button fx:id="btnConnect" text="Connect" visible="false" onAction="#onConnect"/>
+	<Label fx:id="lblConnectionName" text="${controller.connection.name}"/>
+</HBox>
+
