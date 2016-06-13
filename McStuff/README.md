@@ -21,3 +21,9 @@ client application and server-based content and REST services.
     along with McStuff.  If not, see <http://www.gnu.org/licenses/>. 
 */
 ```
+
+The [license file](https://github.com/mishalas/stuff) is provided at 
+
+The McStuff_rpg_module uses content covered under the OGL, see the 
+[file](https://github.com/mishalas/stuff/McStuff/OGL.txt.) for more
+information.
