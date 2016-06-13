@@ -1,3 +1,19 @@
+/* Copyright (C) 2016+ Michael Cassidy - All Rights Reserved
+	This file is a part of McStuff
+
+    McStuff is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    McStuff is distributed as sample code in the hope that it will be 
+    useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with McStuff.  If not, see <http://www.gnu.org/licenses/>. 
+ */
 package mcstuff.web;
 
 import java.util.Arrays;
@@ -71,9 +87,7 @@ public class McWebStuffApplication implements EmbeddedServletContainerCustomizer
 
 				final Privilege readPrivilege = createPrivilegeIfNotFound(E_Privilege.READ);
 				final Privilege writePrivilege = createPrivilegeIfNotFound(E_Privilege.WRITE);
-				final Privilege suggestPrivilege = createPrivilegeIfNotFound(E_Privilege.SUGGEST);
-				final List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege,
-						suggestPrivilege);
+				final List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
 				createRoleIfNotFound(E_Role.ROLE_ADMIN, adminPrivileges);
 				createRoleIfNotFound(E_Role.ROLE_USER, Arrays.asList(readPrivilege));
 
