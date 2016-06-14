@@ -29,6 +29,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -45,6 +46,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import mcstuff.bbs.model.BBSConnection;
@@ -197,10 +199,7 @@ public class BBSModuleHomeController implements Initializable {
 		BBSConnection currentConnection = bbsModule.getCurrentConnection();
 		if(currentConnection == null) {
 			// show the connections UI
-			bbsModule.getStage().setWidth(rootPane.prefWidth(-1) + 30);
-			bbsModule.getStage().setHeight(rootPane.prefHeight(-1) + 55);
-			lblConnectionTitle.setText("");
-			layoutConnection.setVisible(true);
+			resizeForConnectionList();
 		} else {
 			lblConnectionTitle.setText(currentConnection.getName());
 			layoutConnection.setVisible(false);
@@ -208,9 +207,17 @@ public class BBSModuleHomeController implements Initializable {
 		}
 	}
 	
+	protected void resizeForConnectionList() {
+		bbsModule.getStage().setWidth(rootPane.prefWidth(-1) + 30);
+		bbsModule.getStage().setHeight(rootPane.prefHeight(-1) + 55);
+		lblConnectionTitle.setText("");
+		layoutConnection.setVisible(true);
+	}
+	
 	public void setContent(Stage stage, Parent bbsRoot) {
 		stage.setWidth(bbsRoot.prefWidth(-1) + 30);
 		stage.setHeight(bbsRoot.prefHeight(-1) + 85);
+				
 		paneContent.setContent(bbsRoot);
 		
 		layoutConnection.setVisible(false);

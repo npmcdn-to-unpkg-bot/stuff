@@ -114,6 +114,12 @@ public class BBSModule extends ModuleBase implements I_Module {
 				
 		showScene(stage, "/mcstuff/bbs/ui/BBSModuleHome.fxml");
 	}
+	
+	@Override
+	public void hide() {
+		setCurrentConnection(null);
+		super.hide();
+	}
 		
 	public void connect() {
 		try {

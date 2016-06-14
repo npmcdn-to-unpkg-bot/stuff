@@ -52,11 +52,15 @@
 		</center>
 	</BorderPane>
 	<SplitPane fx:id="layoutConnection" visible="false">
-		<VBox prefWidth="310">
-			<Button fx:id="btnNewConnection" text="New Connection" onAction="#onNewConnection"/>
-			<ListView fx:id="lvConnections">
-			</ListView>
-		</VBox>
+		<BorderPane prefWidth="310">
+			<top>
+				<Button fx:id="btnNewConnection" text="New Connection" onAction="#onNewConnection"/>
+			</top>
+			<center>
+				<ListView fx:id="lvConnections">
+				</ListView>
+			</center>
+		</BorderPane>
 		<BorderPane minWidth="500">
 			<center>
 				<GridPane fx:id="paneConnectionEdit">
@@ -66,7 +70,6 @@
 					<Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
 					<TextArea fx:id="taConnectionDescription" minWidth="400" GridPane.rowIndex="2" GridPane.columnIndex="0"
 						GridPane.columnSpan="2" />
-
 					<HBox GridPane.rowIndex="10" GridPane.columnSpan="2">
 						<Button fx:id="btnRemove" text="Remove" onAction="#onRemoveConnection"  />
 						<Button fx:id="btnSaveChanges" text="Save Changes" onAction="#onSaveChanges"  />

@@ -146,6 +146,9 @@ public class Application extends AbstractJavaFxApplicationSupport implements I_M
 					moduleStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 						@Override
 						public void handle(final WindowEvent event) {
+							if(appConfig.getCurrentModule() != null) {
+								appConfig.getCurrentModule().hide();
+							}
 							moduleStage.hide();
 							showDefaultView();
 							event.consume();
