@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_LbKpcDlxEeac-fvgkHXZKg" name="McStuffBBS">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_LwmG4DlxEeac-fvgkHXZKg">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_dmrXoDlxEeac-fvgkHXZKg" name="MessageWall">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_ES04UDlyEeac-fvgkHXZKg" name="messageboard" type="_i7ybIDlxEeac-fvgkHXZKg" association="_ESTT4DlyEeac-fvgkHXZKg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UXa9UDlyEeac-fvgkHXZKg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UXcygDlyEeac-fvgkHXZKg" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Vjy-8Dl0Eeac-fvgkHXZKg" name="bbsId">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_YtsIEDl0Eeac-fvgkHXZKg" name="id">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_i7ybIDlxEeac-fvgkHXZKg" name="MessageBoard">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_7xmBojlyEeac-fvgkHXZKg" name="message" type="_h0_8wDlyEeac-fvgkHXZKg" association="_7xkzgDlyEeac-fvgkHXZKg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__WUsoDlyEeac-fvgkHXZKg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__WWh0DlyEeac-fvgkHXZKg" value="*"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_fHUjoDl0Eeac-fvgkHXZKg" name="bbsId">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_h5o6QDl0Eeac-fvgkHXZKg" name="id">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_ESTT4DlyEeac-fvgkHXZKg" memberEnd="_ES04UDlyEeac-fvgkHXZKg _ES1fYDlyEeac-fvgkHXZKg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ESzqMDlyEeac-fvgkHXZKg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ESzqMTlyEeac-fvgkHXZKg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_ES1fYDlyEeac-fvgkHXZKg" name="messagewall" type="_dmrXoDlxEeac-fvgkHXZKg" association="_ESTT4DlyEeac-fvgkHXZKg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_M1gEADlyEeac-fvgkHXZKg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_M1jHUDlyEeac-fvgkHXZKg" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_h0_8wDlyEeac-fvgkHXZKg" name="Message">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_WpZxkDlzEeac-fvgkHXZKg" name="id">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_uwrwETlyEeac-fvgkHXZKg" name="messagethread" type="_kZAxoDlyEeac-fvgkHXZKg" association="_uwrJADlyEeac-fvgkHXZKg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ySb_kDlyEeac-fvgkHXZKg"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ySd0wDlyEeac-fvgkHXZKg" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_JL5qoDlzEeac-fvgkHXZKg" name="threadIndex">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EInt"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_kZAxoDlyEeac-fvgkHXZKg" name="MessageThread">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_MwAOEDl0Eeac-fvgkHXZKg" name="id">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#ELong"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_uwrJADlyEeac-fvgkHXZKg" memberEnd="_uwrwETlyEeac-fvgkHXZKg _uwrwEjlyEeac-fvgkHXZKg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_uwrJATlyEeac-fvgkHXZKg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_uwrwEDlyEeac-fvgkHXZKg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_uwrwEjlyEeac-fvgkHXZKg" name="message" type="_h0_8wDlyEeac-fvgkHXZKg" association="_uwrJADlyEeac-fvgkHXZKg">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_0aSc4DlyEeac-fvgkHXZKg" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_0aTrADlyEeac-fvgkHXZKg" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_7xkzgDlyEeac-fvgkHXZKg" memberEnd="_7xmBojlyEeac-fvgkHXZKg _7xmBozlyEeac-fvgkHXZKg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_7xmBoDlyEeac-fvgkHXZKg" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_7xmBoTlyEeac-fvgkHXZKg" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7xmBozlyEeac-fvgkHXZKg" name="messageboard" type="_i7ybIDlxEeac-fvgkHXZKg" association="_7xkzgDlyEeac-fvgkHXZKg"/>
+  </packagedElement>
+  <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_LnOvgDlxEeac-fvgkHXZKg">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_LnQksDlxEeac-fvgkHXZKg" source="http://www.eclipse.org/uml2/2.0.0/UML">
+      <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard#/"/>
+    </eAnnotations>
+    <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
+  </profileApplication>
+</uml:Model>
