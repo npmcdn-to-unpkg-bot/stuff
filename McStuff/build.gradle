@@ -125,6 +125,17 @@ project(':McStuff_bbs_lib') {
 			} 			
  		}
  	}
+ 	
+ 	sourceSets {
+	    main {
+	        java {
+	            srcDir 'src'
+	        }
+	        resources {
+	            srcDir 'resources'
+	        }
+	    }
+	}
 }
 
 project(':McStuff_bbs_module') {
