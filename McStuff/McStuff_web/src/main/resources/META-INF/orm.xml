@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+	version="2.0">
+
+	<entity class="mcstuff.bbs.model.BBS" access="FIELD">
+		<table name="bbs">
+			<unique-constraint>
+				<column-name>tag</column-name>
+			</unique-constraint>
+		</table>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+			<basic name="tag">
+				<column length="50" />
+			</basic>
+		</attributes>
+	</entity>
+
+	<entity class="mcstuff.bbs.model.message.Message" access="FIELD">
+		<table name="message" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+			<one-to-one name="messageThread">
+				<join-column table="message_thread"/>
+			</one-to-one>			
+		</attributes>
+	</entity>
+
+	<entity class="mcstuff.bbs.model.message.MessageBoard" access="FIELD">
+		<table name="message_board" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity class="mcstuff.bbs.model.message.MessageThread" access="FIELD">
+		<table name="message_thread" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity class="mcstuff.bbs.model.message.MessageWall" access="FIELD">
+		<table name="message_wall" />
+		<attributes>
+			<id name="id">
+				<generated-value strategy="AUTO" />
+			</id>
+		</attributes>
+	</entity>
+</entity-mappings>
