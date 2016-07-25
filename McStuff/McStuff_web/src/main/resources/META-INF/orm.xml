@@ -20,6 +20,16 @@
 			<one-to-many name="messageWalls" target-entity="mcstuff.bbs.model.message.MessageWall" mapped-by="bbs" />
 		</attributes>
 	</entity>
+	
+	<entity name="User" class="mcstuff.bbs.model.security.User" access="FIELD">
+		<table name="bbs_user"></table>
+		<attributes>
+			<id name="accountId"></id>
+			<basic name="displayName">
+				<column length="100" />
+			</basic>
+		</attributes>
+	</entity>
 
 	<entity name="MessageWall" class="mcstuff.bbs.model.message.MessageWall"
 		access="FIELD">
@@ -56,13 +66,21 @@
 			<id name="id">
 				<generated-value strategy="AUTO" />
 			</id>
+			<basic name="subject">
+				<column length="200" />
+			</basic>
+			<basic name="content">
+				<lob/>
+			</basic>
 			<many-to-one name="messageBoard" fetch="LAZY">
 				<join-column name="message_board_id" />
 			</many-to-one>
+			<one-to-many name="messages" target-entity="mcstuff.bbs.model.message.Message" mapped-by="messageThread">
+				<order-by>threadIndex asc</order-by>
+			</one-to-many>
 			<one-to-one name="rootMessage" target-entity="mcstuff.bbs.model.message.Message">
 				<join-column name="root_message_id" />
 			</one-to-one>
-			<one-to-many name="messages" target-entity="mcstuff.bbs.model.message.Message" mapped-by="messageThread" />
 		</attributes>
 	</entity>
 
@@ -76,6 +94,9 @@
 			<many-to-one name="messageThread" fetch="LAZY">
 				<join-column name="message_thread_id" />
 			</many-to-one>
+			<one-to-one name="author" target-entity="mcstuff.bbs.model.security.User">
+				<join-column name="author_id" />
+			</one-to-one>
 		</attributes>
 	</entity>
 
