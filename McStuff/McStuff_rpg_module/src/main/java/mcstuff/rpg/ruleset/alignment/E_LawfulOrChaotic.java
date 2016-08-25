@@ -16,7 +16,9 @@
  */
 package mcstuff.rpg.ruleset.alignment;
 
-public enum E_LawfulOrChaotic {
+import mcstuff.rpg.ruleset.shared.I_Displayable;
+
+public enum E_LawfulOrChaotic implements I_Displayable {
 	NONE,
 	ANY,
 

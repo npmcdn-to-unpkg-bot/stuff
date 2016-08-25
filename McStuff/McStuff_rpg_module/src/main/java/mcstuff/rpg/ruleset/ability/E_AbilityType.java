@@ -16,7 +16,9 @@
  */
 package mcstuff.rpg.ruleset.ability;
 
-public enum E_AbilityType {
+import mcstuff.rpg.ruleset.shared.I_Displayable;
+
+public enum E_AbilityType implements I_Displayable {
 	NONE("-"),
 	ANY("*"),
 
